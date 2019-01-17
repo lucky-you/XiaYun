@@ -1,7 +1,9 @@
-package com.goulala.xiayun;
+package com.goulala.xiayun.common.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.goulala.xiayun.R;
 
 public class MainActivity extends AppCompatActivity {
 
