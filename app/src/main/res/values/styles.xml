@@ -36,6 +36,9 @@
         <item name="android:textColor">@drawable/select_home_bottom_color</item>
     </style>
 
+    <style name="myProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="TextViewStyleOf14Sp">
         <item name="android:gravity">center_vertical</item>

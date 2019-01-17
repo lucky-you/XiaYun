@@ -7,19 +7,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
 
+import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.model.Notice;
 import com.goulala.xiayun.common.utils.InputMethodUtils;
 import com.goulala.xiayun.common.utils.ToastUtils;
+import com.goulala.xiayun.common.view.MProgressDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 
 public abstract class LibActivity extends AppCompatActivity implements BaseView {
 
+    protected MProgressDialog progressDialog;
     protected Context mContext;
     protected View mContentView;
     /**
@@ -109,6 +113,37 @@ public abstract class LibActivity extends AppCompatActivity implements BaseView 
      */
     public void EventPost(Notice notice) {
         EventBus.getDefault().post(notice);
+    }
+
+
+    /**
+     * 显示对话框
+     */
+    public MProgressDialog showDialog(String hitMessage) {
+        if (progressDialog == null) {
+            progressDialog = new MProgressDialog(mContext);
+            if (TextUtils.isEmpty(hitMessage)) {
+                progressDialog = progressDialog.createLoadingDialog(mContext.getString(R.string.In_the_load));
+            } else {
+                progressDialog = progressDialog.createLoadingDialog(hitMessage);
+            }
+            progressDialog.show();
+        } else if (!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+        return progressDialog;
+    }
+
+    /**
+     * 关闭提示框
+     */
+    public void dismissDialog() {
+        if (progressDialog != null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            progressDialog = null;
+        }
     }
 
     @Override

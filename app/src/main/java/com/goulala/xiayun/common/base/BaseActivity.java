@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.lib.LibActivity;
-import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.view.TitleBuilder;
 
 
