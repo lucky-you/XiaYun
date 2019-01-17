@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.BaseActivity;
 import com.goulala.xiayun.common.fragment.FragmentController;
+import com.goulala.xiayun.common.lib.ActivityManager;
 import com.goulala.xiayun.common.utils.StatusBarUtil;
 
 public class MainActivity extends BaseActivity {
@@ -71,6 +72,16 @@ public class MainActivity extends BaseActivity {
         tab.setSelected(true);
         lastSelected = tab;
         controller.showFragment(position);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            showToast(mContext.getString(R.string.Press_exit_procedure_again));
+            exitTime = System.currentTimeMillis();
+        } else {
+            ActivityManager.getAppInstance().finishAllActivity();
+        }
     }
 
     @Override
