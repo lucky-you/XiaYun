@@ -36,9 +36,6 @@
         <item name="android:textColor">@drawable/select_home_bottom_color</item>
     </style>
 
-    <style name="myProgressDialog" parent="@style/CustomDialog">
-        <item name="android:windowNoTitle">true</item>
-    </style>
 
     <style name="TextViewStyleOf14Sp">
         <item name="android:gravity">center_vertical</item>
@@ -157,6 +154,21 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">0dp</item>
     </style>
+
+    <!-- 自定义progressdialog -->
+    <style name="myProgressDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/shape_progress_dialog_background</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+
 
     <style name="customDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>  <!-- 边框 -->

@@ -5,8 +5,12 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.goulala.xiayun.BuildConfig;
+import com.goulala.xiayun.common.utils.CrashHandler;
 import com.goulala.xiayun.common.utils.FileUtils;
 import com.goulala.xiayun.common.utils.SPUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
 /**
@@ -22,8 +26,20 @@ public class BaseApplication extends Application {
         instance = this;
         SPUtils.init(this);
         FileUtils.init("xiayun");
+        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(instance));
+        initImageLoader();
     }
 
+    private void initImageLoader() {
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(instance);
+        config.memoryCacheExtraOptions(480, 800);
+        config.diskCacheExtraOptions(720, 1280, null);
+        config.diskCacheSize(100 * 1024 * 1024); // 100 MiB
+        if (BuildConfig.DEBUG) {
+            config.writeDebugLogs(); // Remove for release app
+        }
+        ImageLoader.getInstance().init(config.build());
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
