@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--base size-->
+    <dimen name="tv_56sp">56sp</dimen>
+    <dimen name="tv_57sp">57sp</dimen>
+    <dimen name="tv_58sp">58sp</dimen>
+    <dimen name="tv_40sp">40sp</dimen>
+    <dimen name="tv_30sp">30sp</dimen>
+    <dimen name="tv_22sp">22sp</dimen>
+    <dimen name="tv_20sp">20sp</dimen>
+    <dimen name="tv_18sp">18sp</dimen>
+    <dimen name="tv_17sp">17sp</dimen>
+    <dimen name="tv_16sp">16sp</dimen>
+    <dimen name="tv_15sp">15sp</dimen>
+    <dimen name="tv_14sp">14sp</dimen>
+    <dimen name="tv_13sp">13sp</dimen>
+    <dimen name="tv_12sp">12sp</dimen>
+    <dimen name="tv_11sp">11sp</dimen>
+    <dimen name="tv_10sp">10sp</dimen>
+    <dimen name="tv_9sp">9sp</dimen>
+    <dimen name="tv_8sp">8sp</dimen>
+    <!--base size-->
+
+
+</resources>

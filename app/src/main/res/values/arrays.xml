@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="home_titles">
+
+        <item>首页</item>
+        <!--<item>发现</item>-->
+        <item>购物袋</item>
+        <item>个人中心</item>
+    </string-array>
+
+    <string-array name="withdrawal_subsidiary_titles">
+        <item>签到金明细</item>
+        <item>提现明细</item>
+    </string-array>
+
+    <string-array name="My_coupon_title">
+        <item>可用优惠券(0)</item>
+        <item>不可用优惠券(0)</item>
+    </string-array>
+
+
+    <string-array name="commonly_tool_titles">
+        <item>优惠券</item>
+        <item>收货地址</item>
+        <item>联系客服</item>
+        <item>我的佣金</item>
+        <!--<item>我的签到</item>-->
+        <item>会员中心</item>
+    </string-array>
+
+    <string-array name="all_orders_titles">
+
+        <item>全部</item>
+        <item>待支付</item>
+        <item>待发货</item>
+        <item>待收货</item>
+        <item>退款/售后</item>
+
+    </string-array>
+
+
+    <string-array name="my_collection_titles">
+        <item>商品</item>
+        <item>虾记</item>
+    </string-array>
+
+    <string-array name="apply_after_refund_money">
+        <item>商品少件</item>
+        <item>未收到货</item>
+        <item>物流无追踪</item>
+        <item>其他原因</item>
+    </string-array>
+
+    <string-array name="apply_after_refund_good">
+        <item>拍错商品</item>
+        <item>质量问题</item>
+        <item>发错商品</item>
+        <item>其他原因</item>
+    </string-array>
+
+
+</resources>

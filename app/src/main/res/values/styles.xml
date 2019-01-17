@@ -6,6 +6,216 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+
+
+    <style name="ThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@drawable/layer_splash_image_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <!--首页底部的button-->
+    <style name="homeButtonStyle">
+        <item name="android:drawablePadding">@dimen/spacing_2</item>
+        <item name="android:padding">@dimen/spacing_4</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@drawable/select_home_bottom_color</item>
+    </style>
+
+
+    <style name="TextViewStyleOf14Sp">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_6f6f6f_black</item>
+        <item name="android:textSize">@dimen/tv_14sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="TextViewStyleOf14SpAndColor3f">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_3f3f3f_black</item>
+        <item name="android:textSize">@dimen/tv_14sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="TextViewOf9f9f9fColorStyle">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_9f9f9f_black</item>
+        <item name="android:textSize">@dimen/tv_14sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="DivideLIneStyleOf12dp">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/spacing_12</item>
+        <item name="android:background">@color/color_f3f3f3</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textSize">@dimen/tv_14sp</item>
+        <item name="android:textColor">@color/color_3f3f3f_black</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:textCursorDrawable">@color/color_3f3f3f_black</item>
+    </style>
+
+    <style name="LinearLayoutStyleOf44dp">
+        <item name="android:layout_height">@dimen/spacing_44</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="RecyclerViewStyleOf16Dp">
+        <item name="android:layout_marginRight">@dimen/spacing_16</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_16</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="RelativeLayoutStyleOf44dp">
+        <item name="android:layout_marginRight">@dimen/spacing_16</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_16</item>
+        <item name="android:layout_height">@dimen/spacing_44</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="bottomInWindowAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_out</item>
+    </style>
+
+
+    <!--虚线-->
+    <style name="DivideDottedLineStyle">
+        <item name="android:layout_marginRight">@dimen/spacing_16</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_16</item>
+        <item name="android:layerType">software</item>
+        <item name="android:background">@drawable/shape_dotted_line_background</item>
+        <item name="android:layout_height">@dimen/spacing_1</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+
+    <style name="DivideStyleOfColorDDD">
+        <item name="android:background">@color/color_ddd</item>
+        <item name="android:layout_height">@dimen/spacing_1</item>
+        <item name="android:layout_width">match_parent</item>
+
+    </style>
+
+    <style name="RecycleViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+
+    <style name="DivideLineStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/color_f3f3f3</item>
+    </style>
+
+    <style name="VerticalDivideViewStyle">
+        <item name="android:background">@color/color_ddd</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">1dp</item>
+
+    </style>
+
+    <style name="DivideLineStyle0f0dp">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="VerticalLineStyleOf0dp">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="customDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>  <!-- 边框 -->
+        <item name="android:windowNoTitle">true</item> <!-- 无标题 -->
+        <item name="android:windowIsFloating">true</item> <!-- 是否位于activity之上 -->
+        <item name="android:windowIsTranslucent">true</item> <!-- 半透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <!--白色主题样式，，注意每一项都不能少-->
+    <style name="picture.white.style" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <!--标题栏背景色-->
+        <item name="colorPrimary">@color/white</item>
+        <!--状态栏背景色-->
+        <item name="colorPrimaryDark">@color/white</item>
+        <!--是否改变图片列表界面状态栏字体颜色为黑色-->
+        <item name="picture.statusFontColor">true</item>
+        <!--返回键图标-->
+        <item name="picture.leftBack.icon">@drawable/ic_back_return</item>
+        <!--标题下拉箭头-->
+        <item name="picture.arrow_down.icon">@drawable/icon_down</item>
+        <!--标题上拉箭头-->
+        <item name="picture.arrow_up.icon">@drawable/icon_upwards</item>
+        <!--标题文字颜色-->
+        <item name="picture.title.textColor">@color/black</item>
+        <!--标题栏右边文字-->
+        <item name="picture.right.textColor">@color/black</item>
+        <!--图片列表勾选样式-->
+        <item name="picture.checked.style">@drawable/select_picture_checkbox_background</item>
+        <!--开启图片列表勾选数字模式,开启的话勾选样式要换-->
+        <item name="picture.style.checkNumMode">false</item>
+        <!--选择图片样式0/9-->
+        <item name="picture.style.numComplete">true</item>
+        <!--图片列表底部背景色-->
+        <item name="picture.bottom.bg">@color/color_fa</item>
+        <!--图片列表预览文字颜色-->
+        <item name="picture.preview.textColor">@color/tab_color_false</item>
+        <!--图片列表已完成文字颜色-->
+        <item name="picture.complete.textColor">@color/tab_color_false</item>
+        <!--图片已选数量圆点背景色-->
+        <item name="picture.num.style">@drawable/num_oval</item>
+        <!--预览界面标题栏背景色-->
+        <item name="picture.ac_preview.title.bg">@color/white</item>
+        <!--预览界面标题文字颜色-->
+        <item name="picture.ac_preview.title.textColor">@color/black</item>
+        <!--预览界面已完成文字颜色-->
+        <item name="picture.ac_preview.complete.textColor">@color/tab_color_false</item>
+        <!--预览界面底部背景色-->
+        <item name="picture.ac_preview.bottom.bg">@color/color_fa</item>
+        <!--预览界面返回箭头-->
+        <item name="picture.preview.leftBack.icon">@drawable/ic_back_return</item>
+        <!--裁剪页面标题背景色-->
+        <item name="picture.crop.toolbar.bg">@color/bar_grey</item>
+        <!--裁剪页面状态栏颜色-->
+        <item name="picture.crop.status.color">@color/bar_grey</item>
+        <!--裁剪页面标题文字颜色-->
+        <item name="picture.crop.title.color">@color/white</item>
+        <!--相册文件夹列表选中图标-->
+        <item name="picture.folder_checked_dot">@drawable/orange_oval</item>
+    </style>
+
 
 </resources>

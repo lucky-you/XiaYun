@@ -1,10 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".common.activity.MainActivity">
+    android:orientation="vertical">
 
 
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View style="@style/DivideLineStyle" />
+
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_49"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_home_page"
+            style="@style/homeButtonStyle"
+            android:drawableTop="@drawable/select_tab_home"
+            android:text="@string/home_page" />
+
+        <TextView
+            android:id="@+id/tv_engagement"
+            style="@style/homeButtonStyle"
+            android:drawableTop="@drawable/select_tab_find"
+            android:text="@string/find_page" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_message"
+                style="@style/homeButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/select_tab_shop_car"
+                android:text="@string/shop_car_page" />
+
+            <com.goulala.xiayun.common.view.MsgView
+                android:id="@+id/tvMessageNumber"
+                android:layout_width="@dimen/spacing_16"
+                android:layout_height="@dimen/spacing_16"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/spacing_2"
+                android:layout_marginRight="@dimen/spacing_12"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:mv_backgroundColor="@color/color_ff4c30"
+                app:mv_cornerRadius="@dimen/spacing_8" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_my_center"
+            style="@style/homeButtonStyle"
+            android:drawableTop="@drawable/select_tab_my_center"
+            android:text="@string/my_center_page" />
+
+    </LinearLayout>
+</LinearLayout>
