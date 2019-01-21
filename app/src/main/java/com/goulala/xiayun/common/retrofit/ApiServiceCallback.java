@@ -65,7 +65,6 @@ public abstract class ApiServiceCallback<T> extends DisposableObserver<ResultRes
 
     @Override
     public void onComplete() {
-        onFinish();
     }
 
     /**
@@ -90,12 +89,6 @@ public abstract class ApiServiceCallback<T> extends DisposableObserver<ResultRes
      */
     public abstract void onErrorThrowable(String errorMessage);
 
-    /**
-     * 网络请求结束
-     */
-    public void onFinish() {
-
-    }
 
 
 }
