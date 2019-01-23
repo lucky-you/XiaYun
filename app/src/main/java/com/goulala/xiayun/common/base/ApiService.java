@@ -55,11 +55,12 @@ public interface ApiService {
 
 
     //baseUrl
-//    String API_SERVER_URL = "https://miyue.nacy.cc/";  //-->线下
-    String API_SERVER_URL = "https://demo.nacy.cc/"; //-->线上
+//    String API_SERVER_URL = "https://demo.xiayun.com/"; //----》线上
+    String API_SERVER_URL = "https://xiayun.nacy.cc/";  //----》线下
+
     String TOKEN = "token";
     String PARAM = "param";
-    String HEADER_URL = "api/v1";
+    String HEADER_URL = "api/v1/";
     String BASE_KEY = "method";
     String PAGE_SIZE_VALUE = "10";//每次加载10条数据
 
@@ -99,6 +100,7 @@ public interface ApiService {
     @POST(HEADER_URL)
     Observable<ResultResponse<Boolean>> publicResultOfBooleanDate(@Field(TOKEN) String userToken, @Field(PARAM) String param);
 
+
     /**
      * 使用余额支付、支付宝支付
      * 全局返回数据为String类型的通用
@@ -116,7 +118,7 @@ public interface ApiService {
 
 
     /**
-     * 热门搜索
+     * 热门搜索 和 搜索的关键字联想
      */
     @FormUrlEncoded
     @POST(HEADER_URL)
@@ -128,13 +130,6 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(HEADER_URL)
     Observable<ResultResponse<DefaultSearchKeyWords>> getDefaultSearchResult(@Field(TOKEN) String userToken, @Field(PARAM) String param);
-
-    /**
-     * 搜索的关键字联想
-     */
-    @FormUrlEncoded
-    @POST(HEADER_URL)
-    Observable<ResultResponse<List<SearchHistory>>> getSearchRelevance(@Field(TOKEN) String userToken, @Field(PARAM) String param);
 
     /**
      * 搜索商品

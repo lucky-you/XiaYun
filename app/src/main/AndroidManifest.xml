@@ -101,8 +101,9 @@
 
 
         <activity
-            android:name=".common.activity.MainActivity"
-            android:launchMode="singleTask">
+            android:name=".common.activity.SplashActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/ThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -110,7 +111,61 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".common.activity.LoginActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.activity.MainActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.activity.GuidePageActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.activity.BindPhoneNumberActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".common.activity.WebDetailsActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".home.activity.SellLotsOfDetailsActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.SearchActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".home.activity.SearchResultActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".home.activity.MemberSignInActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.WithdrawalSubsidiaryActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.WithdrawalZoneActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.NewExclusiveActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.activity.HomeGoodsDetailsActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
 
     </application>

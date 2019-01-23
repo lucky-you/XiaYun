@@ -5,11 +5,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.common.model.SearchHistory;
+import com.goulala.xiayun.common.db.SearchHistory;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 
 import java.util.List;
+
 
 /**
  * @author : Z_B

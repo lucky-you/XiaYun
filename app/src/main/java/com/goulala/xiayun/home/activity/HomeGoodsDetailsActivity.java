@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,38 +19,25 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
-import com.goulala.utils.CommonUtil;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
-import com.goulala.xiayun.base.ApiService;
-import com.goulala.xiayun.common.activity.LoginActivity;
-import com.goulala.xiayun.common.db.DaoManagerUtils;
+import com.goulala.xiayun.common.banner.BannerUtils;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.model.UserInfo;
-import com.goulala.xiayun.common.share.ShareSDKShareUtils;
+import com.goulala.xiayun.common.pickerview.PickerViewCityUtils;
+import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.ButtonClickUtils;
 import com.goulala.xiayun.common.utils.ConstantValue;
-import com.goulala.xiayun.common.utils.LocationMapUtils;
-import com.goulala.xiayun.common.utils.UserUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.home.adapter.ProductDetailsMessageAdapter;
-import com.goulala.xiayun.home.contact.HomeGoodsDetailsContact;
 import com.goulala.xiayun.home.dialog.ShareCommissionDialog;
 import com.goulala.xiayun.home.model.DetailsDescriptionList;
 import com.goulala.xiayun.home.model.GoodActivityBean;
 import com.goulala.xiayun.home.model.GoodsDetailsMessage;
-import com.goulala.xiayun.home.model.LocationBean;
-import com.goulala.xiayun.home.model.TouristsGoodList;
 import com.goulala.xiayun.home.presenter.HomeGoodsDetailsPresenter;
-import com.goulala.xiayun.home.utils.BannerUtils;
-import com.goulala.xiayun.home.utils.ButtonClickUtils;
-import com.goulala.xiayun.home.utils.PickerViewCityUtils;
-import com.goulala.xiayun.mycenter.activity.TheMemberCenterActivity;
-import com.goulala.xiayun.shopcar.activity.MakeSureTheOrderActivity;
-import com.goulala.xiayun.shopcar.activity.ShopCarActivity;
+import com.goulala.xiayun.home.view.IHomeGoodsDetailsView;
 import com.goulala.xiayun.shopcar.model.GoodItemList;
-import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -67,7 +55,7 @@ import cn.iwgang.countdownview.CountdownView;
 /**
  * 首页的商品详情
  */
-public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsContact.presenter> implements HomeGoodsDetailsContact.view {
+public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPresenter> implements IHomeGoodsDetailsView {
 
 
     private Banner homeGoodDetailBanner;
@@ -118,7 +106,6 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
     private ImageView ivHint;
     private TextView tvHint;
     private RelativeLayout rlEmptyLayout;
-
     private ProductDetailsMessageAdapter productDetailsMessageAdapter;
     private List<DetailsDescriptionList> goodsDetailsMessages = new ArrayList<>(); //详情描述的数据
     private int goodId; //商品的ID
@@ -132,7 +119,7 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
     private String goodActivityTitle;//活动的标题
     private int goodActivityId; //商品活动的id
     private double shareFeeMix, shareFeeMax;
-    private LocationMapUtils locationMapUtils;
+    //    private LocationMapUtils locationMapUtils;
     private boolean goodStatus;//商品状态--》失效为false，正常为true
     private int classType;
 
@@ -144,9 +131,26 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
         context.startActivity(intent);
     }
 
+
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_home_goods_details);
+    protected HomeGoodsDetailsPresenter createPresenter() {
+        return new HomeGoodsDetailsPresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+        goodId = getIntent().getIntExtra(ConstantValue.ID, -1);
+        classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_home_goods_details;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+//        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
         homeGoodDetailBanner = get(R.id.homeGoodDetailBanner);
         tvHaveSold = get(R.id.tv_have_sold);
         tvNoActivityGoodPrice = get(R.id.tv_no_activity_good_price);
@@ -209,11 +213,6 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
         tvIsFailure = get(R.id.tvIsFailure);
         llNotFailureLayout = get(R.id.llNotFailureLayout);
 
-    }
-
-    @Override
-    protected void bindViews() {
-
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
         smartRefreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         smartRefreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
@@ -221,122 +220,10 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
 
     }
 
-    //定位当前城市
-    public void localCurrentAddress() {
-        locationMapUtils = new LocationMapUtils(this);
-        locationMapUtils.initOnLocationMap(new LocationMapUtils.LocationChangeListener() {
-            @Override
-            public void onLocationChangedSuccess(AMapLocation aMapLocation) {
-                if (aMapLocation != null && aMapLocation.getErrorCode() == 0) { //定位成功
-                    double Longitude = aMapLocation.getLongitude();
-                    double Latitude = aMapLocation.getLatitude();
-                    String provinceName = aMapLocation.getProvince();
-                    String cityName = aMapLocation.getCity();
-                    String areaName = aMapLocation.getDistrict();//城区信息,定位到县区
-                    defaultShippingAddress = provinceName + cityName + areaName;
-                    setShippingAddress(defaultDeliveryAddress, defaultShippingAddress);//收货配送地址
-                    LocationBean locationBean = new LocationBean(Longitude, Latitude, provinceName, cityName, areaName);
-                    DaoManagerUtils.insertLocationBeanData(locationBean);
-                }
-            }
-
-            @Override
-            public void onLocationChangedFailed(String message) {
-                Logger.e("xy", mContext.getString(R.string.To_locate_failure) + message);
-                //如果没有，就通过ip去获取
-                String ipAddress = CommonUtil.getIPAddress(mContext);
-                if (!TextUtils.isEmpty(ipAddress)) {
-                    presenter.getIpLocationBean(ipAddress, "JSON", ApiService.WAB_SERVICE_MAP_KEY);
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-        goodId = getIntent().getIntExtra(ConstantValue.ID, -1);
-        classType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
-        localCurrentAddress();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getDate();
-    }
-
-
-    private void getDate() {
-        if (goodsDetailsMessages.size() > 0) goodsDetailsMessages.clear();
-        List<TouristsGoodList> touristsGoodLists = DaoManagerUtils.queryAll();
-        if (touristsGoodLists != null && touristsGoodLists.size() > 0) {
-            tvShopCarNumber.setVisibility(View.VISIBLE);
-            tvShopCarNumber.setText(String.valueOf(touristsGoodLists.size()));
-        }
-        //商品详情
-        getGoodDetails();
-        //检查token是否过期
-        checkTokenIsOverdue();
-        //获取商品分享的url链接
-        getGoodShareUrl();
-        //获取购物车中的商品数量
-        getTotalNumberOfShopCar();
-    }
-
-    /**
-     * 获取商品分享的url链接
-     */
-    private void getGoodShareUrl() {
-        Map<String, String> shareParam = new HashMap<>();
-        shareParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_GOOD_SHARE_URL);
-        shareParam.put(ApiParam.ITEM_ID_KEY, String.valueOf(goodId));
-        String shareParamJson = JsonUtils.toJson(shareParam);
-        Logger.d("xy", shareParamJson + "token=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.getGoodShareUrl(userToken, shareParamJson);
-        }
-    }
-
-    /**
-     * 商品详情
-     */
-    private void getGoodDetails() {
-        Map<String, String> goodDetailsParam = new HashMap<>();
-        goodDetailsParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_GOOD_DETAILS_VALUE);
-        goodDetailsParam.put(ApiParam.ITEM_ID_KEY, String.valueOf(goodId));
-        String goodDetailsJson = JsonUtils.toJson(goodDetailsParam);
-        Logger.d("xy", goodDetailsJson + "token:" + userToken);
-        presenter.getHomeGoodDetailsMessage(mContext, userToken, goodDetailsJson);
-    }
-
-    /**
-     * 获取购物车中的商品数量
-     */
-    private void getTotalNumberOfShopCar() {
-        Map<String, String> totalParam = new HashMap<>();
-        totalParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_TOTAL_GOOD_ITEMS_OF_YOU_SHOP_CAR);
-        String totalParamJson = JsonUtils.toJson(totalParam);
-        Logger.d("xy", totalParamJson + "token=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.getTheTotalNumberOfShopCar(userToken, totalParamJson);
-        }
-    }
-
-    /**
-     * 检查token是否过期
-     */
-    private void checkTokenIsOverdue() {
-        Map<String, String> tokenParam = new HashMap<>();
-        tokenParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.CHECK_TOKEN_IS_OVERDUE_VALUE);
-        String tokenParamJson = JsonUtils.toJson(tokenParam);
-        presenter.checkUserTokenIsOverdue(userToken, tokenParamJson);
-    }
-
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void setListener() {
+    public void processLogic(Bundle savedInstanceState) {
+
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -363,21 +250,94 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    protected void onResume() {
+        super.onResume();
+        getDate();
+    }
+
+    private void getDate() {
+        if (goodsDetailsMessages.size() > 0) goodsDetailsMessages.clear();
+//        List<TouristsGoodList> touristsGoodLists = DaoManagerUtils.queryAll();
+//        if (touristsGoodLists != null && touristsGoodLists.size() > 0) {
+//            tvShopCarNumber.setVisibility(View.VISIBLE);
+//            tvShopCarNumber.setText(String.valueOf(touristsGoodLists.size()));
+//        }
+        //商品详情
+        getGoodDetails();
+        //检查token是否过期
+        checkTokenIsOverdue();
+        //获取商品分享的url链接
+        getGoodShareUrl();
+        //获取购物车中的商品数量
+        getTotalNumberOfShopCar();
+    }
+
+    /**
+     * 获取商品分享的url链接
+     */
+    private void getGoodShareUrl() {
+        Map<String, String> shareParam = new HashMap<>();
+        shareParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_GOOD_SHARE_URL);
+        shareParam.put(ApiParam.ITEM_ID_KEY, String.valueOf(goodId));
+        String shareParamJson = JsonUtils.toJson(shareParam);
+        LogUtils.showLog(userToken, shareParamJson);
+        if (!TextUtils.isEmpty(userToken)) {
+            mvpPresenter.getGoodShareUrl(userToken, shareParamJson);
+        }
+    }
+
+    /**
+     * 商品详情
+     */
+    private void getGoodDetails() {
+        Map<String, String> goodDetailsParam = new HashMap<>();
+        goodDetailsParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_GOOD_DETAILS_VALUE);
+        goodDetailsParam.put(ApiParam.ITEM_ID_KEY, String.valueOf(goodId));
+        String goodDetailsJson = JsonUtils.toJson(goodDetailsParam);
+        LogUtils.showLog(userToken, goodDetailsJson);
+        mvpPresenter.getHomeGoodDetailsMessage(userToken, goodDetailsJson);
+    }
+
+    /**
+     * 获取购物车中的商品数量
+     */
+    private void getTotalNumberOfShopCar() {
+        Map<String, String> totalParam = new HashMap<>();
+        totalParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_TOTAL_GOOD_ITEMS_OF_YOU_SHOP_CAR);
+        String totalParamJson = JsonUtils.toJson(totalParam);
+        LogUtils.showLog(userToken, totalParamJson);
+        if (!TextUtils.isEmpty(userToken)) {
+            mvpPresenter.getTheTotalNumberOfShopCar(userToken, totalParamJson);
+        }
+    }
+
+    /**
+     * 检查token是否过期
+     */
+    private void checkTokenIsOverdue() {
+        Map<String, String> tokenParam = new HashMap<>();
+        tokenParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.CHECK_TOKEN_IS_OVERDUE_VALUE);
+        String tokenParamJson = JsonUtils.toJson(tokenParam);
+        mvpPresenter.checkUserTokenIsOverdue(userToken, tokenParamJson);
+    }
+
+
+    @Override
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.ic_details_nb_return:
                 finish();
                 break;
             case R.id.ic_details_nb_follow:
                 //收藏
                 if (TextUtils.isEmpty(userToken)) {
-                    LoginActivity.start(mContext);
+//                    LoginActivity.start(mContext);
                 } else {
                     if (thatGoodIsCollect) {
-                        collectionOrCancelThatGood(ApiParam.CANCEL_COLLECTION_THAT_GOOD_VALUE, HomeGoodsDetailsContact.CANCEL_COLLECTION_THAT_GOOD_TYPE);
+                        collectionOrCancelThatGood(ApiParam.CANCEL_COLLECTION_THAT_GOOD_VALUE, ConstantValue.CANCEL_COLLECTION_THAT_GOOD_TYPE);
                         thatGoodIsCollect = !thatGoodIsCollect;
                     } else {
-                        collectionOrCancelThatGood(ApiParam.COLLECTION_THAT_GOOD_VALUE, HomeGoodsDetailsContact.COLLECTION_THAT_GOOD_TYPE);
+                        collectionOrCancelThatGood(ApiParam.COLLECTION_THAT_GOOD_VALUE, ConstantValue.COLLECTION_THAT_GOOD_TYPE);
                         thatGoodIsCollect = !thatGoodIsCollect;
                     }
                 }
@@ -385,7 +345,7 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
             case R.id.ic_details_nb_share:
                 //分享
                 if (TextUtils.isEmpty(userToken)) {
-                    LoginActivity.start(mContext);
+//                    LoginActivity.start(mContext);
                 } else {
                     startShareGood();
                 }
@@ -394,9 +354,9 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
             case R.id.tv_Open_membership_now:
                 //立即开通会员
                 if (TextUtils.isEmpty(userToken)) {
-                    LoginActivity.start(mContext);
+//                    LoginActivity.start(mContext);
                 } else {
-                    TheMemberCenterActivity.start(mContext);
+//                    TheMemberCenterActivity.start(mContext);
                 }
                 break;
             case R.id.tv_Check_the_details:
@@ -416,9 +376,9 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
             case R.id.ll_Customer_service:
                 //客服
                 if (TextUtils.isEmpty(userToken)) {
-                    LoginActivity.start(mContext);
+//                    LoginActivity.start(mContext);
                 } else {
-                    helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
+//                    helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
                 }
                 break;
             case R.id.ll_Shopping_bags:
@@ -428,9 +388,9 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
                     finish();
                 } else {
                     if (TextUtils.isEmpty(userToken)) {
-                        LoginActivity.start(mContext);
+//                        LoginActivity.start(mContext);
                     } else {
-                        ShopCarActivity.start(mContext);
+//                        ShopCarActivity.start(mContext);
                     }
                 }
 
@@ -440,15 +400,15 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
                 if (!goodStatus) return;
                 if (TextUtils.isEmpty(userToken)) {
                     //游客登录,先把信息存储到本地，登陆之后，再合并到购物车
-                    if (goodId != 0 && merchant_id != 0) {
-                        TouristsGoodList touristsGoodList = new TouristsGoodList();
-                        touristsGoodList.setItem_id((long) goodId);
-                        touristsGoodList.setItem_num(goodNumber);
-                        touristsGoodList.setMerchant_id(merchant_id);
-                        DaoManagerUtils.saveTouristsGoodListDate(touristsGoodList);
-                        showToast(mContext.getString(R.string.Add_shopping_cart_successfully));
-                        getDate();
-                    }
+//                    if (goodId != 0 && merchant_id != 0) {
+//                        TouristsGoodList touristsGoodList = new TouristsGoodList();
+//                        touristsGoodList.setItem_id((long) goodId);
+//                        touristsGoodList.setItem_num(goodNumber);
+//                        touristsGoodList.setMerchant_id(merchant_id);
+//                        DaoManagerUtils.saveTouristsGoodListDate(touristsGoodList);
+//                        showToast(mContext.getString(R.string.Add_shopping_cart_successfully));
+//                        getDate();
+//                    }
                 } else {
                     if (goodInventoryNumber > 0) {
                         addThatGoodToShopCar();
@@ -461,13 +421,13 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
                 //立即购买
                 if (!goodStatus) return;
                 if (TextUtils.isEmpty(userToken)) {
-                    LoginActivity.start(mContext);
+//                    LoginActivity.start(mContext);
                 } else {
                     //还需要判断库存
                     if (goodInventoryNumber > 0) {
                         ArrayList<GoodItemList> goodItemLists = new ArrayList<>();
                         goodItemLists.add(new GoodItemList(goodId, goodNumber, merchant_id, ""));
-                        MakeSureTheOrderActivity.start(mContext, goodItemLists, "", "");
+//                        MakeSureTheOrderActivity.start(mContext, goodItemLists, "", "");
                     } else {
                         showToast(mContext.getString(R.string.Insufficient_inventory_two));
                     }
@@ -490,29 +450,30 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
                 }
                 break;
         }
+
     }
 
     /**
      * 分享商品
      */
     protected void startShareGood() {
-        ShareSDKShareUtils.showShare(mContext,
-                goodTitleName,
-                goodDescription,
-                goodShareUrl,
-                goodImageView,
-                new ShareSDKShareUtils.ShareCallBackListener() {
-                    @Override
-                    public void onSuccess() {
-                        showToast(mContext.getString(R.string.share_success));
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        showToast(mContext.getString(R.string.share_cancel));
-                    }
-                }
-        );
+//        ShareSDKShareUtils.showShare(mContext,
+//                goodTitleName,
+//                goodDescription,
+//                goodShareUrl,
+//                goodImageView,
+//                new ShareSDKShareUtils.ShareCallBackListener() {
+//                    @Override
+//                    public void onSuccess() {
+//                        showToast(mContext.getString(R.string.share_success));
+//                    }
+//
+//                    @Override
+//                    public void onCancel() {
+//                        showToast(mContext.getString(R.string.share_cancel));
+//                    }
+//                }
+//        );
 
     }
 
@@ -539,9 +500,8 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
         addToShopCarParam.put(ApiParam.ITEM_NUMBER_KEY, String.valueOf(goodNumber));
         addToShopCarParam.put(ApiParam.MERCHANT_ID_KEY, String.valueOf(merchant_id));
         String addShopCarJson = JsonUtils.toJson(addToShopCarParam);
-        Logger.d("xy", addShopCarJson + "userToken:" + userToken);
         if (!TextUtils.isEmpty(userToken)) {
-            presenter.addGoodToShopCar(mContext, HomeGoodsDetailsContact.ADD_THAT_GOOD_TO_SHOP_CAR_TYPE, userToken, addShopCarJson);
+            mvpPresenter.commodityOperatingThatGood(ConstantValue.ADD_THAT_GOOD_TO_SHOP_CAR_TYPE, userToken, addShopCarJson);
         }
     }
 
@@ -551,32 +511,26 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
     private void collectionOrCancelThatGood(String requestUrl, int requestType) {
         Map<String, String> cancelCollectionGood = new HashMap<>();
         cancelCollectionGood.put(ApiParam.BASE_METHOD_KEY, requestUrl);
-        if (requestType == HomeGoodsDetailsContact.COLLECTION_THAT_GOOD_TYPE) {
+        if (requestType == ConstantValue.COLLECTION_THAT_GOOD_TYPE) {
             cancelCollectionGood.put(ApiParam.ITEM_ID_KEY, String.valueOf(goodId));
         } else {
             cancelCollectionGood.put(ApiParam.ITEM_IDS_KEY, String.valueOf(goodId));
         }
         String cancelCollectionGoodJson = JsonUtils.toJson(cancelCollectionGood);
-        Logger.d("xy", cancelCollectionGoodJson + "userToken:" + userToken);
         if (!TextUtils.isEmpty(userToken)) {
             switch (requestType) {
-                case HomeGoodsDetailsContact.COLLECTION_THAT_GOOD_TYPE:
+                case ConstantValue.COLLECTION_THAT_GOOD_TYPE:
                     //收藏
-                    presenter.collectTheGood(mContext, HomeGoodsDetailsContact.COLLECTION_THAT_GOOD_TYPE, userToken, cancelCollectionGoodJson);
+                    mvpPresenter.commodityOperatingThatGood(ConstantValue.COLLECTION_THAT_GOOD_TYPE, userToken, cancelCollectionGoodJson);
                     break;
-                case HomeGoodsDetailsContact.CANCEL_COLLECTION_THAT_GOOD_TYPE:
+                case ConstantValue.CANCEL_COLLECTION_THAT_GOOD_TYPE:
                     //取消收藏
-                    presenter.cancelCollectGood(mContext, HomeGoodsDetailsContact.CANCEL_COLLECTION_THAT_GOOD_TYPE, userToken, cancelCollectionGoodJson);
+                    mvpPresenter.commodityOperatingThatGood(ConstantValue.CANCEL_COLLECTION_THAT_GOOD_TYPE, userToken, cancelCollectionGoodJson);
                     break;
 
             }
 
         }
-    }
-
-    @Override
-    public HomeGoodsDetailsContact.presenter createPresenter() {
-        return new HomeGoodsDetailsPresenter(this);
     }
 
     @SuppressLint("StringFormatInvalid")
@@ -748,32 +702,6 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
         }
     }
 
-    @Override
-    public void loadHomeGoodDetailsMessageFailed(String message) {
-        showToast(message);
-        //获取详情失败，加载失败布局
-        rlEmptyLayout.setVisibility(View.VISIBLE);
-        smartRefreshLayout.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        tvDistanceEndTime.stop();
-        locationMapUtils.stopLocation();
-        locationMapUtils.destroyLocation();
-        super.onDestroy();
-    }
-
-    /**
-     * @param deliveryAddress 发货地址
-     * @param shippingAddress 收货地址
-     */
-    private void setShippingAddress(String deliveryAddress, String shippingAddress) {
-        tvTheDeliveryAddress.setText(deliveryAddress);
-        tvShippingAddress.setText(shippingAddress);
-    }
-
     /**
      * 商品详情
      */
@@ -803,16 +731,46 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
 
     }
 
+    /**
+     * @param deliveryAddress 发货地址
+     * @param shippingAddress 收货地址
+     */
+    private void setShippingAddress(String deliveryAddress, String shippingAddress) {
+        tvTheDeliveryAddress.setText(deliveryAddress);
+        tvShippingAddress.setText(shippingAddress);
+    }
+
+    private void goodIsCollection() {
+        if (thatGoodIsCollect) {
+            icDetailsNbFollow.setImageResource(R.drawable.ic_details_nb_follow_p);
+        } else {
+            icDetailsNbFollow.setImageResource(R.drawable.ic_details_nb_follow);
+        }
+    }
+
+    @Override
+    public void loadHomeGoodDetailsMessageFailed(String message) {
+        //获取详情失败，加载失败布局
+        rlEmptyLayout.setVisibility(View.VISIBLE);
+        smartRefreshLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        tvDistanceEndTime.stop();
+//        locationMapUtils.stopLocation();
+//        locationMapUtils.destroyLocation();
+        super.onDestroy();
+    }
+
     @Override
     public void collectTheGoodSuccess(String message) {
-        showToast(message);
-        icDetailsNbFollow.setImageResource(R.drawable.ic_details_nb_follow_p);
+
     }
 
     @Override
     public void addGoodToShopCarSuccess(String message) {
-        showToast(message);
-        getTotalNumberOfShopCar();
+
     }
 
     @Override
@@ -825,14 +783,6 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
     public void thatGoodIsCollect(Boolean isCollect) {
         thatGoodIsCollect = isCollect;
         goodIsCollection();
-    }
-
-    private void goodIsCollection() {
-        if (thatGoodIsCollect) {
-            icDetailsNbFollow.setImageResource(R.drawable.ic_details_nb_follow_p);
-        } else {
-            icDetailsNbFollow.setImageResource(R.drawable.ic_details_nb_follow);
-        }
     }
 
     @Override
@@ -856,17 +806,16 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
 
     @Override
     public void formIpLoadCityBeanFailed(String error) {
-        List<LocationBean> locationList = DaoManagerUtils.queryAllLocationList();
-        if (locationList != null && locationList.size() > 0) {
-            Logger.e("xy", "size=" + locationList.size());
-            String provinceName = locationList.get(locationList.size() - 1).getProvince();
-            String cityName = locationList.get(locationList.size() - 1).getCity();
-            String areaName = locationList.get(locationList.size() - 1).getArea();
-            if (!TextUtils.isEmpty(cityName)) {
-                defaultShippingAddress = provinceName + cityName + areaName;
-                setShippingAddress(defaultDeliveryAddress, defaultShippingAddress);//收货配送地址
-            }
-        }
+//        List<LocationBean> locationList = DaoManagerUtils.queryAllLocationList();
+//        if (locationList != null && locationList.size() > 0) {
+//            String provinceName = locationList.get(locationList.size() - 1).getProvince();
+//            String cityName = locationList.get(locationList.size() - 1).getCity();
+//            String areaName = locationList.get(locationList.size() - 1).getArea();
+//            if (!TextUtils.isEmpty(cityName)) {
+//                defaultShippingAddress = provinceName + cityName + areaName;
+//                setShippingAddress(defaultDeliveryAddress, defaultShippingAddress);//收货配送地址
+//            }
+//        }
     }
 
     @Override
@@ -877,24 +826,16 @@ public class HomeGoodsDetailsActivity extends BaseMVPActivity<HomeGoodsDetailsCo
         } else {
             tvShopCarNumber.setVisibility(View.GONE);
         }
-
-
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
+    public void onNewWorkException(String message) {
+        showToast(message);
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
 
     }
-
 }

@@ -5,9 +5,10 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.common.model.SearchHistory;
+import com.goulala.xiayun.common.db.SearchHistory;
 
 import java.util.List;
+
 
 /**
  * @author : Z_B

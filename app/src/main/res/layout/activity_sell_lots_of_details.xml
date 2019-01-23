@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
     <include layout="@layout/include_titlebar_layout" />
 
@@ -45,8 +47,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/spacing_10"
-                        android:layout_marginRight="@dimen/spacing_10"
                         android:layout_marginTop="@dimen/spacing_16"
+                        android:layout_marginRight="@dimen/spacing_10"
                         android:scrollbars="none" />
 
                 </LinearLayout>
@@ -61,7 +63,7 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-    <include layout="@layout/include_bottom_right_layout"/>
+    <include layout="@layout/include_bottom_right_layout" />
 
 
 </RelativeLayout>

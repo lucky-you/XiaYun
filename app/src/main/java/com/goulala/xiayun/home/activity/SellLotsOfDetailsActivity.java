@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,24 +16,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.goulala.utils.ImageLoaderUtils;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
+import com.goulala.xiayun.common.imageloader.ImageLoaderUtils;
+import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.ConstantValue;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.widget.DividerGridItemDecoration;
 import com.goulala.xiayun.common.widget.GridSpacingItemDecoration;
 import com.goulala.xiayun.common.widget.SmartRefreshLoadPageHelper;
 import com.goulala.xiayun.home.adapter.SellLotsOfDetailsAdapter;
-import com.goulala.xiayun.home.contact.SellLotsOfDetailsContact;
 import com.goulala.xiayun.home.model.GoodItemMessage;
 import com.goulala.xiayun.home.model.HomeValueSellingBean;
 import com.goulala.xiayun.home.presenter.SellLotsOfDetailsPresenter;
-import com.goulala.xiayun.shopcar.activity.ShopCarActivity;
-import com.orhanobut.logger.Logger;
+import com.goulala.xiayun.home.view.ISellLotsOfDetailsView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -48,8 +48,8 @@ import java.util.Map;
 /**
  * 超值热卖详情的activity
  */
-public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetailsContact.presenter>
-        implements SellLotsOfDetailsContact.view, SmartRefreshLoadPageHelper.DataProvider {
+public class SellLotsOfDetailsActivity extends BaseMvpActivity<SellLotsOfDetailsPresenter> implements ISellLotsOfDetailsView,
+        SmartRefreshLoadPageHelper.DataProvider {
 
     private ImageView ivDetailsImageView;
     private RecyclerView detailsRecyclerView;
@@ -81,8 +81,25 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
     }
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_sell_lots_of_details);
+    protected SellLotsOfDetailsPresenter createPresenter() {
+        return new SellLotsOfDetailsPresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+        goodTitle = getIntent().getStringExtra(ConstantValue.TITLE);
+        activityId = getIntent().getStringExtra(ConstantValue.ACTIVE_ID);
+        classFormType = getIntent().getIntExtra(ConstantValue.INDEX, -1);
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_sell_lots_of_details;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
         ivDetailsImageView = get(R.id.iv_details_imageView);
         detailsRecyclerView = get(R.id.details_RecyclerView);
         nestedScrollView = get(R.id.nestedScrollView);
@@ -99,26 +116,20 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
         llBottomRightLayout = get(R.id.ll_bottom_right_Layout);
         rlEmptyLayout = get(R.id.rl_empty_layout);
 
-    }
-
-    @Override
-    protected void bindViews() {
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
         smartRefreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         smartRefreshLayout.setRefreshFooter(new ClassicsFooter(mContext).setSpinnerStyle(SpinnerStyle.Scale));
         smartRefreshLayout.setEnableLoadMore(false);
-        goodTitle = getIntent().getStringExtra(ConstantValue.TITLE);
-        activityId = getIntent().getStringExtra(ConstantValue.ACTIVE_ID);
-        classFormType = getIntent().getIntExtra(ConstantValue.INDEX, -1);
+
         if (!TextUtils.isEmpty(goodTitle)) {
             initTitle(goodTitle);
         }
         getTotalNumberOfShopCar();
     }
 
-
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
+
 
         sellLotsOfDetailsAdapter = new SellLotsOfDetailsAdapter(goodItemMessageList, SellLotsOfDetailsAdapter.HIDE_SALE_OFF_TYPE);
         detailsRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
@@ -129,8 +140,38 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
         detailsRecyclerView.setAdapter(sellLotsOfDetailsAdapter);
         pageLimitDelegate.attachView(smartRefreshLayout, detailsRecyclerView, sellLotsOfDetailsAdapter);
         EmptyViewUtils.bindEmptyView(mContext, sellLotsOfDetailsAdapter);
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageLimitDelegate.refreshPage();
+                refreshLayout.finishRefresh();
+            }
+        });
+        sellLotsOfDetailsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                int goodId = sellLotsOfDetailsAdapter.getItem(position).getId();
+                HomeGoodsDetailsActivity.start(mContext, goodId, ConstantValue.THE_TYPE_OF_OTHER);
+            }
+        });
+
     }
 
+    @Override
+    public void setClickListener(View view) {
+        switch (view.getId()) {
+            case R.id.rl_shop_car_number:
+                //购物车
+                if (classFormType == ConstantValue.THAT_CLASS_TYPE_OF_SHOP_CAR) {
+                    finish();
+                } else {
+//                    ShopCarActivity.start(mContext);
+                }
+                break;
+
+        }
+    }
 
     /**
      * 获取购物车中的商品数量
@@ -140,8 +181,13 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
         totalParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_TOTAL_GOOD_ITEMS_OF_YOU_SHOP_CAR);
         String totalParamJson = JsonUtils.toJson(totalParam);
         if (!TextUtils.isEmpty(userToken)) {
-            presenter.getTheTotalNumberOfShopCar(userToken, totalParamJson);
+            mvpPresenter.getTheTotalNumberOfShopCar(userToken, totalParamJson);
         }
+    }
+
+    @Override
+    public void loadMorePageDate(int page) {
+        getActivityDateList(page);
     }
 
     /**
@@ -156,53 +202,13 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
         activityParam.put(ApiParam.PAGE_KEY, String.valueOf(currentPage));
         activityParam.put(ApiParam.SIZE_KEY, ApiParam.SIZE_NUMBER_VALUE);
         String activityParamJson = JsonUtils.toJson(activityParam);
-        Logger.d("xy", activityParamJson + "token=" + userToken);
-        presenter.getActivityDateList(mContext, userToken, activityParamJson);
-    }
-
-    @Override
-    protected void setListener() {
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pageLimitDelegate.refreshPage();
-                refreshLayout.finishRefresh();
-            }
-        });
-        sellLotsOfDetailsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                int goodId = sellLotsOfDetailsAdapter.getItem(position).getId();
-                HomeGoodsDetailsActivity.start(mContext, goodId,ConstantValue.THE_TYPE_OF_OTHER);
-            }
-        });
-
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_shop_car_number:
-                //购物车
-                if (classFormType == ConstantValue.THAT_CLASS_TYPE_OF_SHOP_CAR) {
-                    finish();
-                } else {
-                    ShopCarActivity.start(mContext);
-                }
-                break;
-
-        }
-    }
-
-    @Override
-    public SellLotsOfDetailsContact.presenter createPresenter() {
-        return new SellLotsOfDetailsPresenter(this);
+        LogUtils.showLog(userToken, activityParamJson);
+        mvpPresenter.getActivityDateList(mContext, userToken, activityParamJson);
     }
 
     @Override
     public void getActivityDateList(List<HomeValueSellingBean> activityDateList) {
-        if (activityDateList != null && activityDateList.size() > 0) {
+        if (activityDateList != null && !activityDateList.isEmpty()) {
             rlEmptyLayout.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
             llBottomRightLayout.setVisibility(View.VISIBLE);
@@ -218,7 +224,6 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
             nestedScrollView.setVisibility(View.GONE);
             llBottomRightLayout.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -232,22 +237,12 @@ public class SellLotsOfDetailsActivity extends BaseMVPActivity<SellLotsOfDetails
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
+    public void onNewWorkException(String message) {
+        showToast(message);
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
-    }
-
-    @Override
-    public void loadMorePageDate(int page) {
-        getActivityDateList(page);
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
     }
 }

@@ -26,7 +26,10 @@
                 android:background="@color/white"
                 android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical">
-
+                <View
+                    android:id="@+id/fake_status_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
                 <include layout="@layout/include_home_good_details_top_banner_layout" />
 
                 <LinearLayout
@@ -510,6 +513,7 @@
 
         <View
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="@dimen/spacing_20" />
 
         <RelativeLayout

@@ -7,17 +7,17 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.goulala.utils.ImageLoaderUtils;
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.common.imageloader.ImageLoaderUtils;
 import com.goulala.xiayun.home.model.GoodActivityBean;
 import com.goulala.xiayun.home.model.GoodItemMessage;
 
 import java.util.List;
 
 /**
- * @author : Z_B
- * @date : 2018/8/7
- * @function : 秒杀商品的adapter
+ * author : Z_B
+ * date : 2018/8/7
+ * function : 秒杀商品的adapter
  */
 public class HomeSecondKillGoodAdapter extends BaseQuickAdapter<GoodItemMessage, BaseViewHolder> {
     public HomeSecondKillGoodAdapter(@Nullable List<GoodItemMessage> data) {

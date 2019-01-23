@@ -3,27 +3,25 @@ package com.goulala.xiayun.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.goulala.utils.CommonUtil;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
-import com.goulala.xiayun.common.activity.LoginActivity;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
+import com.goulala.xiayun.common.widget.DividerGridItemDecoration;
 import com.goulala.xiayun.home.adapter.NewExclusiveAdapter;
-import com.goulala.xiayun.home.contact.NewExclusiveCouponContact;
 import com.goulala.xiayun.home.model.CoupleCouponsBean;
 import com.goulala.xiayun.home.model.CouponsList;
-import com.goulala.xiayun.home.presenter.NewExclusiveCouponPresenter;
-import com.goulala.xiayun.mycenter.decoration.VipSpacesItemDecoration;
-import com.orhanobut.logger.Logger;
+import com.goulala.xiayun.home.presenter.NewExclusivePresenter;
+import com.goulala.xiayun.home.view.INewExclusiveView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +30,7 @@ import java.util.Map;
 /**
  * 新人专享
  */
-public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponContact.presenter> implements NewExclusiveCouponContact.view {
+public class NewExclusiveActivity extends BaseMvpActivity<NewExclusivePresenter> implements INewExclusiveView {
 
     RecyclerView newExclusiveRecyclerView;
     private NewExclusiveAdapter newExclusiveAdapter;
@@ -46,14 +44,22 @@ public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponCont
 
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_new_exclusive);
-        newExclusiveRecyclerView = get(R.id.new_Exclusive_RecyclerView);
+    protected NewExclusivePresenter createPresenter() {
+        return new NewExclusivePresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
     @Override
-    protected void bindViews() {
+    public int loadViewLayout() {
+        return R.layout.activity_new_exclusive;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.New_exclusive))
                 .setRightImage(R.drawable.ic_np_icon_refresh)
                 .setRightOnClickListener(new View.OnClickListener() {
@@ -62,6 +68,7 @@ public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponCont
                         getCouponDate();
                     }
                 });
+        newExclusiveRecyclerView = get(R.id.new_Exclusive_RecyclerView);
         getCouponDate();
 
     }
@@ -75,24 +82,19 @@ public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponCont
         couponParam.put(ApiParam.PAGE_KEY, "1");
         couponParam.put(ApiParam.SIZE_KEY, "999");
         String couponParamJson = JsonUtils.toJson(couponParam);
-        Logger.d("xy", couponParamJson + "token=" + userToken);
-        presenter.getCouponDateList(mContext, userToken, couponParamJson);
+        LogUtils.showLog(userToken, couponParamJson);
+        mvpPresenter.getCouponDateList(userToken, couponParamJson);
 
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
         newExclusiveRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        // newExclusiveRecyclerView.addItemDecoration(new DividerGridItemDecoration(mContext, mContext.getResources().getColor(R.color.white), 7));
-        newExclusiveRecyclerView.addItemDecoration(new VipSpacesItemDecoration(CommonUtil.dip2px(mContext,15),CommonUtil.dip2px(mContext,15),CommonUtil.dip2px(mContext,15),CommonUtil.dip2px(mContext,15)));
+        newExclusiveRecyclerView.addItemDecoration(new DividerGridItemDecoration(mContext, mContext.getResources().getColor(R.color.white), 7));
         newExclusiveAdapter = new NewExclusiveAdapter(couponList);
         newExclusiveRecyclerView.setAdapter(newExclusiveAdapter);
         EmptyViewUtils.bindEmptyView(mContext, newExclusiveAdapter, mContext.getString(R.string.No_coupons));
 
-    }
-
-    @Override
-    protected void setListener() {
         newExclusiveAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -102,11 +104,11 @@ public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponCont
                     couponParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_COUPONS_URL);
                     couponParam.put(ApiParam.COUPON_ID, String.valueOf(coupon_id));
                     String couponParamJson = JsonUtils.toJson(couponParam);
-                    Logger.d("xy", couponParamJson + "token=" + userToken);
+                    LogUtils.showLog(userToken, couponParamJson);
                     if (TextUtils.isEmpty(userToken)) {
-                        LoginActivity.start(mContext);
+//                        LoginActivity.start(mContext);
                     } else {
-                        presenter.getTheCoupon(userToken, couponParamJson);
+                        mvpPresenter.getTheCoupon(userToken, couponParamJson);
                     }
                 } else {
                     showToast(mContext.getString(R.string.Coupons_received));
@@ -116,8 +118,8 @@ public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponCont
     }
 
     @Override
-    public NewExclusiveCouponContact.presenter createPresenter() {
-        return new NewExclusiveCouponPresenter(this);
+    public void setClickListener(View view) {
+
     }
 
     @Override
@@ -133,21 +135,15 @@ public class NewExclusiveActivity extends BaseMVPActivity<NewExclusiveCouponCont
     @Override
     public void getTheCouponSuccess(String message) {
         showToast(message);
-        getCouponDate();
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
+    public void onNewWorkException(String message) {
+        showToast(message);
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
     }
 }

@@ -3,6 +3,7 @@ package com.goulala.xiayun.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,22 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.goulala.utils.InputMethodKeyBroadUtils;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
-import com.goulala.xiayun.common.db.DBManager;
-import com.goulala.xiayun.common.model.SearchHistory;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
+import com.goulala.xiayun.common.db.SearchHistory;
+import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.ConstantValue;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
+import com.goulala.xiayun.common.utils.InputMethodKeyBroadUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
 import com.goulala.xiayun.home.adapter.HistoryAndHotSearchTagAdapter;
 import com.goulala.xiayun.home.adapter.StartSearchAdapter;
-import com.goulala.xiayun.home.contact.SearchContact;
 import com.goulala.xiayun.home.presenter.SearchPresenter;
-import com.orhanobut.logger.Logger;
+import com.goulala.xiayun.home.view.ISearchView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * 搜索的activity
  */
-public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> implements SearchContact.view {
+public class SearchActivity extends BaseMvpActivity<SearchPresenter> implements ISearchView {
 
 
     private EditText editKey;
@@ -73,8 +73,18 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
     }
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_search);
+    public void initData(@Nullable Bundle bundle) {
+        defaultSearchKeyWord = getIntent().getStringExtra(ConstantValue.TITLE);
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_search;
+    }
+
+
+    @Override
+    public void bindViews(View contentView) {
         editKey = get(R.id.edit_key);
         llHomeSearch = get(R.id.ll_home_search);
         llHomeSearch.setOnClickListener(this);
@@ -91,58 +101,25 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
         searchRecyclerView = get(R.id.search_recyclerView);
         get(R.id.rl_back).setOnClickListener(this);
 
+        editKey.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        editKey.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+
+        hotSearch();//热门搜索
+
     }
 
     @Override
-    protected void bindViews() {
-        editKey.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        editKey.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-        defaultSearchKeyWord = getIntent().getStringExtra(ConstantValue.TITLE);
+    public void processLogic(Bundle savedInstanceState) {
         if (!TextUtils.isEmpty(defaultSearchKeyWord)) {
             editKey.setHint(defaultSearchKeyWord);
         }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        historyList = getHistoryData();
-        if (historyList.size() > 0) {
-            rlSearchHistory.setVisibility(View.VISIBLE);
-            historyDivide.setVisibility(View.VISIBLE);
-            historyAndHotSearchTagAdapter = new HistoryAndHotSearchTagAdapter(getHistoryData(), mContext);
-            flyHistoryList.setAdapter(historyAndHotSearchTagAdapter);
-        } else {
-            rlSearchHistory.setVisibility(View.GONE);
-            historyDivide.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-        topSearch();
         //关键词联想的adapter
         startSearchAdapter = new StartSearchAdapter(lenovoSearchList);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         searchRecyclerView.addItemDecoration(new DivideLineItemDecoration(mContext, mContext.getResources().getColor(R.color.color_f3f3f3), 1));
         searchRecyclerView.setAdapter(startSearchAdapter);
 
-    }
-
-    /**
-     * 热门搜索
-     */
-    private void topSearch() {
-        Map<String, String> hotSearchParam = new HashMap<>();
-        hotSearchParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_HOT_SEARCH_GOOD_LIST_VALUE);
-        String hotSearchParamJson = JsonUtils.toJson(hotSearchParam);
-        Logger.d("xy", hotSearchParamJson + "token=" + userToken);
-        presenter.getHotSearch(userToken, hotSearchParamJson);
-
-    }
-
-    @Override
-    protected void setListener() {
         tagFlowLayoutAdapterClick(HISTORY_SEARCH_TAG_CLICK_TYPE, flyHistoryList);
         tagFlowLayoutAdapterClick(HOT_SEARCH_TAG_CLICK_TYPE, flyHotSearchList);
         //搜索键盘
@@ -168,8 +145,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
                 // 输入的内容变化的监听
                 String keyWords = charSequence.toString().trim();
                 if (TextUtils.isEmpty(keyWords)) {
-//                    showToast(mContext.getString(R.string.please_edit_key_words));
-//                    return;
                     llHaveSearchAndHotSearchList.setVisibility(View.VISIBLE);
                     searchRecyclerView.setVisibility(View.GONE);
                     lenovoSearchList.clear();
@@ -178,7 +153,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
                     keywordAssociation.put(ApiParam.BASE_METHOD_KEY, ApiParam.THE_KEYWORD_ASSOCIATION_VALUE);
                     keywordAssociation.put(ApiParam.KEYWORD_KEY, keyWords);
                     String keywordAssociationJson = JsonUtils.toJson(keywordAssociation);
-                    presenter.getSearchRelevanceDate(userToken, keywordAssociationJson);
+                    mvpPresenter.getSearchRelevanceDate(userToken, keywordAssociationJson);
                 }
             }
 
@@ -193,23 +168,73 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String keyWords = startSearchAdapter.getItem(position).getName();
                 SearchResultActivity.start(mContext, keyWords);
-                insertHistoryDao(keyWords);
+//                insertHistoryDao(keyWords);
                 editKey.getText().clear();
             }
         });
+
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (historyList.size() > 0) {
+            rlSearchHistory.setVisibility(View.VISIBLE);
+            historyDivide.setVisibility(View.VISIBLE);
+//            historyAndHotSearchTagAdapter = new HistoryAndHotSearchTagAdapter(getHistoryData(), mContext);
+//            flyHistoryList.setAdapter(historyAndHotSearchTagAdapter);
+        } else {
+            rlSearchHistory.setVisibility(View.GONE);
+            historyDivide.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setClickListener(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.ll_home_search:
+                InputMethodKeyBroadUtils.showKeyboard(this, editKey);
+                break;
+            case R.id.tv_cancel:
+                //右上角搜索
+                editTextSearchListener();
+                break;
+            case R.id.tv_delete:
+                //删除
+                rlSearchHistory.setVisibility(View.GONE);
+                historyDivide.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    /**
+     * 热门搜索
+     */
+    private void hotSearch() {
+        Map<String, String> hotSearchParam = new HashMap<>();
+        hotSearchParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_HOT_SEARCH_GOOD_LIST_VALUE);
+        String hotSearchParamJson = JsonUtils.toJson(hotSearchParam);
+        LogUtils.showLog("xy", hotSearchParamJson + "token=" + userToken);
+        mvpPresenter.getHotSearch(userToken, hotSearchParamJson);
+
+    }
+
 
     //搜索键盘和右上角搜索的处理
     private void editTextSearchListener() {
         String keyWords = editKey.getText().toString().trim();
         if (TextUtils.isEmpty(keyWords)) {
             String defaultKeyWord = editKey.getHint().toString().trim();
-            insertHistoryDao(defaultKeyWord);
+//            insertHistoryDao(defaultKeyWord);
             InputMethodKeyBroadUtils.hideKeyboard(this);
             SearchResultActivity.start(mContext, defaultKeyWord);
             editKey.getText().clear();
         } else {
-            insertHistoryDao(keyWords);
+//            insertHistoryDao(keyWords);
             InputMethodKeyBroadUtils.hideKeyboard(this);
             SearchResultActivity.start(mContext, keyWords);
             editKey.getText().clear();
@@ -224,43 +249,16 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 if (HISTORY_SEARCH_TAG_CLICK_TYPE == tagType) {
                     String keyWords = historyList.get(position).getName();
-                    insertHistoryDao(keyWords);
+//                    insertHistoryDao(keyWords);
                     SearchResultActivity.start(mContext, keyWords);
                 } else {
                     String keyWords = hotSearchList.get(position).getName();
-                    insertHistoryDao(keyWords);
+//                    insertHistoryDao(keyWords);
                     SearchResultActivity.start(mContext, keyWords);
                 }
                 return true;
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_back:
-                finish();
-                break;
-            case R.id.ll_home_search:
-                InputMethodKeyBroadUtils.showKeyboard(this, editKey);
-                break;
-            case R.id.tv_cancel:
-                //右上角搜索
-                editTextSearchListener();
-                break;
-            case R.id.tv_delete:
-                //删除
-                DBManager.getInstance().getHistoryDao().deleteAll();
-                rlSearchHistory.setVisibility(View.GONE);
-                historyDivide.setVisibility(View.GONE);
-                break;
-        }
-    }
-
-    @Override
-    public SearchContact.presenter createPresenter() {
-        return new SearchPresenter(this);
     }
 
 
@@ -286,7 +284,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
             llHaveSearchAndHotSearchList.setVisibility(View.GONE);
             searchRecyclerView.setVisibility(View.VISIBLE);
             startSearchAdapter.setNewData(lenovoSearchList);
-
         } else {
             llHaveSearchAndHotSearchList.setVisibility(View.GONE);
             searchRecyclerView.setVisibility(View.VISIBLE);
@@ -295,20 +292,21 @@ public class SearchActivity extends BaseMVPActivity<SearchContact.presenter> imp
 
     }
 
+
     @Override
-    public void showLoadingDialog(String msg) {
-        LoadDialog.show(mContext);
+    public void onNewWorkException(String message) {
+        showToast(message);
+    }
+
+    @Override
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
 
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showLoadingDialog(error);
+    protected SearchPresenter createPresenter() {
+        return new SearchPresenter(this);
     }
 
 }

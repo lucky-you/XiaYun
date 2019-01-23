@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.BaseFragment;
+import com.goulala.xiayun.common.utils.BarUtils;
 
 /**
  * author      : Z_B
@@ -32,6 +33,7 @@ public class MyCenterFragment extends BaseFragment {
 
     @Override
     public void bindViews(View contentView) {
+        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.home_fake_status_bar));
 
     }
 

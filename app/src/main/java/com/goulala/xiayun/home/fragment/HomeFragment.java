@@ -326,7 +326,6 @@ public class HomeFragment extends BaseMvpFragment<HomeFragmentPresenter> impleme
 
     /**
      * banner 的点击跳转时间处理
-     *
      * @param scheme 定义的跳转协议,和后台约定好的字段
      */
     private void bannerClickToActivity(String scheme, String title, String url, String Id) {

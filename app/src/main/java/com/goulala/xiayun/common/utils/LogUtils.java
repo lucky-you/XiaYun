@@ -10,7 +10,7 @@ import android.util.Log;
 public class LogUtils {
 
     public static void showLog(String token, String param) {
-        Log.d("my", "token:" + token + "\n" + "param:" + param);
+        Log.d("xy", "token:" + token + "\n" + "param:" + param);
     }
 
 

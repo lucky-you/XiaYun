@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -19,15 +20,21 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
+import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.ConstantValue;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
+import com.goulala.xiayun.common.utils.InputMethodKeyBroadUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.KeyboardUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.widget.DividerGridItemDecoration;
 import com.goulala.xiayun.common.widget.SmartRefreshLoadPageHelper;
 import com.goulala.xiayun.home.adapter.SellLotsOfDetailsAdapter;
 import com.goulala.xiayun.home.model.GoodItemMessage;
 import com.goulala.xiayun.home.model.GoodMessage;
+import com.goulala.xiayun.home.presenter.SearchResultPresenter;
+import com.goulala.xiayun.home.view.ISearchResultView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -41,8 +48,8 @@ import java.util.Map;
 /**
  * 搜索结果
  */
-public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.presenter>
-        implements SearchResultContact.view, SmartRefreshLoadPageHelper.DataProvider {
+public class SearchResultActivity extends BaseMvpActivity<SearchResultPresenter> implements ISearchResultView,
+        SmartRefreshLoadPageHelper.DataProvider {
 
     private EditText editKey;
     private LinearLayout llHomeSearch;
@@ -75,9 +82,19 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
         context.startActivity(intent);
     }
 
+
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_search_result);
+    public void initData(@Nullable Bundle bundle) {
+        keyWords = bundle.getString(ConstantValue.TITLE); //从搜索界面传递过来的关键字
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_search_result;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
         get(R.id.rl_back).setOnClickListener(this);
         editKey = get(R.id.edit_key);
         llHomeSearch = get(R.id.ll_home_search);
@@ -102,23 +119,19 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
         rlCurrentItemSize = get(R.id.rl_current_item_size);
         tvHaveSaveCarNumber = get(R.id.tv_have_save_car_number);
         rlShopCarNumber = get(R.id.rl_shop_car_number);
+        rlShopCarNumber.setOnClickListener(this);
         llBottomRightLayout = get(R.id.ll_bottom_right_Layout);
-
-    }
-
-    @Override
-    protected void bindViews() {
+        KeyboardUtils.hideSoftInput(this);
         editKey.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         editKey.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-        KeyboardUtils.hideSoftInput(this);
         refreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
         refreshLayout.setEnableLoadMore(false);
         getTotalNumberOfShopCar();
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
-        keyWords = getIntent().getStringExtra(ConstantValue.TITLE); //从搜索界面传递过来的关键字
+    public void processLogic(Bundle savedInstanceState) {
+
         storeKey = ApiParam.ID_DESC_KEY;
         if (!TextUtils.isEmpty(keyWords)) {
             editKey.setText(keyWords);
@@ -129,25 +142,13 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
         smartRecyclerView.setAdapter(sellLotsOfDetailsAdapter);
         smartRefreshLoadPageHelper.attachView(refreshLayout, smartRecyclerView, sellLotsOfDetailsAdapter);
         EmptyViewUtils.bindEmptyView(mContext, sellLotsOfDetailsAdapter, mContext.getString(R.string.No_search_results));
-    }
 
-    private void getTotalNumberOfShopCar() {
-        Map<String, String> totalParam = new HashMap<>();
-        totalParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_TOTAL_GOOD_ITEMS_OF_YOU_SHOP_CAR);
-        String totalParamJson = JsonUtils.toJson(totalParam);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.getTheTotalNumberOfShopCar(userToken, totalParamJson);
-        }
-    }
-
-    @Override
-    protected void setListener() {
         //商品详情
         sellLotsOfDetailsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 int goodId = sellLotsOfDetailsAdapter.getItem(position).getId();
-                HomeGoodsDetailsActivity.start(mContext, goodId,ConstantValue.THE_TYPE_OF_OTHER);
+                HomeGoodsDetailsActivity.start(mContext, goodId, ConstantValue.THE_TYPE_OF_OTHER);
             }
         });
         //搜索键盘
@@ -172,25 +173,27 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
                 refreshLayout.finishRefresh();
             }
         });
-        rlShopCarNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShopCarActivity.start(mContext);
-            }
-        });
-        //recyclerView的滚动监听
-        smartRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    }
 
-            }
-        });
 
+    @Override
+    public void setClickListener(View view) {
+        switch (view.getId()) {
+            case R.id.rl_shop_car_number:
+//                ShopCarActivity.start(mContext);
+                break;
+        }
+
+    }
+
+    private void getTotalNumberOfShopCar() {
+        Map<String, String> totalParam = new HashMap<>();
+        totalParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_TOTAL_GOOD_ITEMS_OF_YOU_SHOP_CAR);
+        String totalParamJson = JsonUtils.toJson(totalParam);
+        if (!TextUtils.isEmpty(userToken)) {
+            mvpPresenter.getTheTotalNumberOfShopCar(userToken, totalParamJson);
+        }
     }
 
     //搜索键盘和右上角搜索的处理
@@ -203,7 +206,7 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
         keyWords = keyWord;
         storeKey = ApiParam.ID_DESC_KEY;
         smartRefreshLoadPageHelper.refreshPage();
-        insertHistoryDao(keyWord);
+//        insertHistoryDao(keyWord);
         tvTheDefault.setTextColor(mContext.getResources().getColor(R.color.color_e53d3d));
         tvSalesNumber.setTextColor(mContext.getResources().getColor(R.color.color_6f6f6f_black));
         tvThePrice.setTextColor(mContext.getResources().getColor(R.color.color_6f6f6f_black));
@@ -258,10 +261,6 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
         }
     }
 
-    @Override
-    public SearchResultContact.presenter createPresenter() {
-        return new SearchResultPresenter(this);
-    }
 
     @Override
     public void loadSearchResultList(GoodMessage goodMessage) {
@@ -291,21 +290,6 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
     }
 
     @Override
-    public void showLoadingDialog(String msg) {
-        LoadDialog.show(mContext);
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
-    }
-
-    @Override
     public void loadMorePageDate(int page) {
         startSearch(keyWords, storeKey, page);
     }
@@ -321,8 +305,23 @@ public class SearchResultActivity extends BaseMVPActivity<SearchResultContact.pr
         searchResultParam.put(ApiParam.PAGE_KEY, String.valueOf(mCurrentPage));
         searchResultParam.put(ApiParam.SIZE_KEY, ApiParam.SIZE_NUMBER_VALUE);
         String searchResultJson = JsonUtils.toJson(searchResultParam);
-        Logger.d("xy", searchResultJson + "token:" + userToken);
-        presenter.getSearchResultList(userToken, searchResultJson);
+        LogUtils.showLog(userToken, searchResultJson);
+        mvpPresenter.getSearchResultList(userToken, searchResultJson);
     }
 
+    @Override
+    public void onNewWorkException(String message) {
+        showToast(message);
+
+    }
+
+    @Override
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
+    }
+
+    @Override
+    protected SearchResultPresenter createPresenter() {
+        return new SearchResultPresenter(this);
+    }
 }

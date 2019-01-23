@@ -3,6 +3,7 @@ package com.goulala.xiayun.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.BaseActivity;
 import com.goulala.xiayun.common.view.NoticeMarqueeView;
 import com.goulala.xiayun.home.adapter.ActivityRulesAdapter;
+import com.goulala.xiayun.home.dialog.MemberSignInDialog;
 import com.goulala.xiayun.home.model.MarqueeViewList;
 
 import java.util.ArrayList;
@@ -40,9 +42,18 @@ public class MemberSignInActivity extends BaseActivity {
 
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_member_sign_in);
+    public void initData(@Nullable Bundle bundle) {
 
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_member_sign_in;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+        initTitle(mContext.getString(R.string.Sign_in_for_cash));
         signInMarqueeView = get(R.id.sign_in_marqueeView);
         tvWithdrawalMoney = get(R.id.tv_Withdrawal_money);
         tvHaveSignForCash = get(R.id.tv_have_Sign_for_cash);
@@ -50,18 +61,10 @@ public class MemberSignInActivity extends BaseActivity {
         tvMoreWaysToMakeMoneyWillOpenUp = get(R.id.tv_More_ways_to_make_money_will_open_up);
         ActivityRulesRecyclerView = get(R.id.Activity_Rules_RecyclerView);
         get(R.id.tv_Withdrawal_way).setOnClickListener(this);
-
-
     }
 
     @Override
-    protected void bindViews() {
-        initTitle(mContext.getString(R.string.Sign_in_for_cash));
-
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
         List<MarqueeViewList> marqueeViewLists = new ArrayList<>();
         marqueeViewLists.add(new MarqueeViewList("5"));
         marqueeViewLists.add(new MarqueeViewList("15"));
@@ -81,19 +84,11 @@ public class MemberSignInActivity extends BaseActivity {
         activityRulesAdapter = new ActivityRulesAdapter(mRulesList);
         ActivityRulesRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayout.VERTICAL, false));
         ActivityRulesRecyclerView.setAdapter(activityRulesAdapter);
-
-
     }
 
     @Override
-    protected void setListener() {
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.tv_Withdrawal_way:
                 WithdrawalZoneActivity.start(mContext);
                 break;

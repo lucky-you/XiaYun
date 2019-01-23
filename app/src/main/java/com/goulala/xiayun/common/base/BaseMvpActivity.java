@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.mvp.MvpActivity;
+import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.view.TitleBuilder;
 
 
@@ -44,6 +45,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends MvpActivi
     protected void onCreate(Bundle savedInstanceState) {
 //        userToken = UserUtils.getUserToken();
         super.onCreate(savedInstanceState);
+        BarUtils.setStatusBarLightMode(this,true);
     }
 
 

@@ -128,4 +128,16 @@ public interface ConstantValue {
 
     int MEMBER_SERVICE_AGREEMENT_URL = 41;//会员服务协议
 
+
+    int COLLECTION_THAT_GOOD_TYPE = 42; // 收藏该商品
+
+    int CANCEL_COLLECTION_THAT_GOOD_TYPE = 43;// 取消收藏商品
+
+    int ADD_THAT_GOOD_TO_SHOP_CAR_TYPE = 44; //添加商品到购物车
+
+    int THAT_GOOD_IS_COLLECTION_TYPE = 45; //商品是否收藏
+
+    int THE_TYPE_OF_BIND_WECHAT = 46;//绑定微信
+
+
 }
