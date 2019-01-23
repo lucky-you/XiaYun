@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_good_details_bottom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View style="@style/DivideLineStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_50"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_Customer_service"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_details_column_cs_n" />
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_2"
+                android:text="@string/Customer_service"
+                android:textColor="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_Shopping_bags"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_details_column_sb_n" />
+
+                <TextView
+                    android:id="@+id/tv_shop_car_number"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_width="@dimen/spacing_14"
+                    android:layout_height="@dimen/spacing_14"
+                    android:layout_marginLeft="@dimen/spacing_8"
+                    android:background="@drawable/shape_red_circle_background"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_10sp" />
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_2"
+                android:text="@string/Shopping_bags"
+                android:textColor="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_11sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_Add_the_shopping_bag"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@color/color_f3683f"
+            android:gravity="center"
+            android:text="@string/Add_the_shopping_bag"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_16sp" />
+
+        <TextView
+            android:id="@+id/tv_Buy_now"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@color/color_e53d3d"
+            android:gravity="center"
+            android:text="@string/Buy_now"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

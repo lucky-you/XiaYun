@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View style="@style/DivideLineStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_50"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/Total_amount"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <TextView
+                    android:id="@+id/tv_the_total_money"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_4"
+                    android:text="@string/the_total_money"
+                    android:textColor="@color/color_f3683f"
+                    android:textSize="@dimen/tv_16sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_Submit_orders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/color_e53d3d"
+            android:gravity="center"
+            android:text="@string/Submit_orders"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_16sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

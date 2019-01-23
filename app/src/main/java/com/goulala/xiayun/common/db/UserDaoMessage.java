@@ -1,40 +1,23 @@
 package com.goulala.xiayun.common.db;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.NotNull;
 
 /**
  * author      : Z_B
  * date       : 2019/1/21
  * function  :
  */
-@Entity
 public class UserDaoMessage {
 
 
-    private String username;
-    private String nickname;
-    private String mobile;
-    private String avatar;
-    @NotNull
-    private String token;
-    private int user_id;
-
-    @Generated(hash = 394095469)
-    public UserDaoMessage(String username, String nickname, String mobile,
-                          String avatar, @NotNull String token, int user_id) {
-        this.username = username;
-        this.nickname = nickname;
-        this.mobile = mobile;
-        this.avatar = avatar;
-        this.token = token;
-        this.user_id = user_id;
-    }
-
-    @Generated(hash = 846459052)
-    public UserDaoMessage() {
-    }
+    public String username;
+    public String nickname;
+    public String mobile;
+    public String avatar;
+    public String token;
+    public int user_id;
 
     public String getUsername() {
         return this.username;
@@ -83,4 +66,5 @@ public class UserDaoMessage {
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
+
 }

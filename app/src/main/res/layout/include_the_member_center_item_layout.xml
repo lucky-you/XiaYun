@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_member_center_item_layout"
+    android:layout_width="@dimen/spacing_110"
+    android:layout_height="@dimen/spacing_130"
+    android:background="@drawable/shape_the_member_center_not_select_background"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/spacing_20"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_Member_of_the_time"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/one_year"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_16sp" />
+
+        <TextView
+            android:id="@+id/tv_Present_price"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_4"
+            android:gravity="center"
+            android:text="@string/the_price"
+            android:textColor="@color/color_f3683f"
+            android:textSize="@dimen/tv_20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_The_original_price"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_4"
+            android:gravity="center"
+            android:text="@string/the_price" />
+
+        <TextView
+            android:id="@+id/tv_Half_price_from_the_second_year"
+            android:layout_width="@dimen/spacing_72"
+            android:layout_height="@dimen/spacing_16"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_4"
+            android:background="@drawable/shape_member_price_background"
+            android:gravity="center"
+            android:text="@string/Half_price_from_the_second_year"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_10sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_Time_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_member_vip_tag_imageview"
+        android:gravity="center"
+        android:text="@string/Time_limit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tv_11sp" />
+</RelativeLayout>

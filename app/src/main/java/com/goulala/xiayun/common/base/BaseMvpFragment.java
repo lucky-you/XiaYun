@@ -4,18 +4,24 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.mvp.MvpFragment;
+import com.goulala.xiayun.common.utils.UserUtils;
+import com.goulala.xiayun.common.view.MProgressDialog;
 import com.goulala.xiayun.common.view.TitleBuilder;
 
 
 public abstract class BaseMvpFragment<P extends BasePresenter> extends MvpFragment<P> {
 
     protected String userToken;
+    protected UserInfo userInfo;
+//    protected KfStartHelper helper;
 
     public TitleBuilder initTitle(Object obj) {
         if (obj instanceof String) {
@@ -81,16 +87,38 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends MvpFragme
         super.onViewCreated(view, savedInstanceState);
     }
 
+
+    /**
+     * 是否登录
+     */
+    public boolean checkLogin() {
+        getCommonUserData();
+        if (TextUtils.isEmpty(userToken)) {
+//            intentToActivity(LoginActivity.class);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public void getCommonUserData() {
+        userToken = UserUtils.userToken();
+        userInfo = BaseApplication.getInstance().getUserInfo();
+    }
+
     @Override
     public void onResume() {
+        getCommonUserData();
         super.onResume();
     }
 
 
     @Override
     protected void firstLoad() {
+        getCommonUserData();
         super.firstLoad();
-//        userToken= UserUtils.getUserToken();
     }
 
 

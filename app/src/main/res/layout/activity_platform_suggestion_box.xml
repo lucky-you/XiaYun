@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <include layout="@layout/include_titlebar_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_220"
+        android:layout_margin="@dimen/spacing_16"
+        android:background="@drawable/shape_edittext_bg">
+
+        <EditText
+            android:id="@+id/editContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="@string/Platform_suggestion_box_hit"
+            android:maxLength="200"
+            android:padding="@dimen/spacing_8"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textColorHint="@color/color_9f9f9f"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvEditNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/spacing_10"
+            android:text="0/200"
+            android:textColor="@color/color_6f6f6f_black"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_marginTop="@dimen/spacing_20"
+        android:background="@drawable/shape_login_red_button_background"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</LinearLayout>

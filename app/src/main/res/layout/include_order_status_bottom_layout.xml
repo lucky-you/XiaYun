@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bottom_status_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/Divide_Bottom_Line"
+        style="@style/DivideLineStyle"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_50"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/spacing_16"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_order_status_one"
+                android:layout_width="@dimen/spacing_68"
+                android:layout_height="@dimen/spacing_30"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_black_1dp_background"
+                android:gravity="center"
+                android:padding="@dimen/spacing_2"
+                android:text="@string/Contact_customer_service"
+                android:textColor="@color/color_3f3f3f_black"
+                android:textSize="@dimen/tv_13sp" />
+
+            <TextView
+                android:id="@+id/tv_order_status_two"
+                android:layout_width="@dimen/spacing_68"
+                android:layout_height="@dimen/spacing_30"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_10"
+                android:background="@drawable/shape_black_1dp_background"
+                android:gravity="center"
+                android:padding="@dimen/spacing_2"
+                android:text="@string/Check_the_logistics"
+                android:textColor="@color/color_3f3f3f_black"
+                android:textSize="@dimen/tv_13sp" />
+
+            <TextView
+                android:id="@+id/tv_order_status_three"
+                android:layout_width="@dimen/spacing_68"
+                android:layout_height="@dimen/spacing_30"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_10"
+                android:background="@drawable/shape_welcome_button_background"
+                android:gravity="center"
+                android:padding="@dimen/spacing_2"
+                android:text="@string/Confirm_the_goods"
+                android:textColor="@color/color_e53d3d"
+                android:textSize="@dimen/tv_13sp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

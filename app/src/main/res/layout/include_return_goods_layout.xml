@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_Return_goods_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_12"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <View style="@style/DivideLIneStyleOf12dp" />
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:gravity="center"
+        android:text="@string/Return_goods"
+        android:textColor="@color/color_3f3f3f_black" />
+
+    <LinearLayout
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_34"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:text="@string/Logistics_company"
+            android:textColor="@color/color_9f9f9f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_Please_select_logistics_company"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:background="@color/color_fafafa">
+
+            <TextView
+                android:id="@+id/tv_Please_select_logistics_company"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/spacing_8"
+                android:text="@string/Please_select_logistics_company"
+                android:textColor="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_13sp" />
+
+            <ImageView
+                android:id="@+id/iv_Please_select_logistics_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/spacing_12"
+                android:src="@drawable/ic_return_good_down"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_34"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:text="@string/Logistics_single_number"
+            android:textColor="@color/color_9f9f9f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:background="@color/color_fafafa">
+
+            <EditText
+                android:id="@+id/edit_Please_fill_in_the_logistics_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/Please_fill_in_the_logistics_number"
+                android:inputType="number"
+                android:paddingLeft="@dimen/spacing_8"
+                android:textColor="@color/color_3f3f3f_black"
+                android:textColorHint="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_13sp" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_30"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:background="@color/color_f3f3f3" />
+
+</LinearLayout>

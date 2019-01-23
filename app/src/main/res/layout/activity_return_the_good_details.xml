@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <include layout="@layout/include_titlebar_layout" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_f3f3f3"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--退款的流程布局-->
+                    <include layout="@layout/include_refund_money_step_view_layout" />
+                    <!--退货的流程布局-->
+                    <include layout="@layout/include_refund_good_details_step_view_layout" />
+
+                </LinearLayout>
+
+                <include layout="@layout/include_recyclerview_layout" />
+
+                <View style="@style/DivideLIneStyleOf12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/spacing_12"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/Number_of_applications"
+                            android:textColor="@color/color_9f9f9f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_Number_of_applications"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_8"
+                            android:textColor="@color/color_3f3f3f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/The_refund_amount"
+                            android:textColor="@color/color_9f9f9f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_The_refund_amount"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_8"
+                            android:text="@string/the_price"
+                            android:textColor="@color/color_3f3f3f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/The_return_reason"
+                            android:textColor="@color/color_9f9f9f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_The_return_reason"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_8"
+                            android:textColor="@color/color_3f3f3f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/To_apply_for_time"
+                            android:textColor="@color/color_9f9f9f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_To_apply_for_time"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_8"
+                            android:textColor="@color/color_3f3f3f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    style="@style/DivideLineStyle"
+                    android:layout_marginTop="@dimen/spacing_12" />
+
+                <LinearLayout
+                    android:id="@+id/ll_refund_good_photo_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_marginLeft="@dimen/spacing_16"
+                        android:layout_marginTop="@dimen/spacing_12"
+                        android:text="@string/Commodity_photograph"
+                        android:textColor="@color/color_3f3f3f_black"
+                        android:textSize="@dimen/tv_13sp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/bgaSortablePhotoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_12"
+                        android:layout_marginTop="@dimen/spacing_12"
+                        android:scrollbars="none"
+                        android:verticalSpacing="@dimen/spacing_8" />
+
+                    <View style="@style/DivideLIneStyleOf12dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_Communication_record_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_centerVertical="true"
+                            android:text="@string/Communication_record"
+                            android:textColor="@color/color_3f3f3f_black" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_details_introduce_more" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/spacing_12"
+                        android:layout_marginLeft="@dimen/spacing_16"
+                        android:layout_marginRight="@dimen/spacing_16"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/Review_the_message"
+                            android:textColor="@color/color_9f9f9f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_Review_the_message"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_8"
+                            android:singleLine="true"
+                            android:textColor="@color/color_3f3f3f_black"
+                            android:textSize="@dimen/tv_13sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <include layout="@layout/include_return_goods_layout" />
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/include_order_status_bottom_layout" />
+</LinearLayout>

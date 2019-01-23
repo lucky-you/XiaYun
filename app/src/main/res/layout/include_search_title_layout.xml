@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_44"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="@dimen/spacing_8"
+                android:layout_height="@dimen/spacing_28"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|left"
+                android:src="@drawable/icon_search_return" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_30"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/spacing_10"
+            android:layout_weight="7"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_home_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_26"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_home_search_grey_background"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:src="@drawable/ic_home_search" />
+
+                <EditText
+                    android:id="@+id/edit_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_8"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionSearch"
+                    android:maxLines="1"
+                    android:textColor="@color/color_b9b9b9"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:text="@string/search"
+            android:textColor="@color/color_6f6f6f_black"
+            android:textSize="@dimen/tv_14sp" />
+
+    </LinearLayout>
+</RelativeLayout>

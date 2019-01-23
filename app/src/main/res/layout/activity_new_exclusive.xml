@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_titlebar_layout" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/ic_np_img_bg"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/new_Exclusive_RecyclerView"
+            style="@style/RecyclerViewStyleOf16Dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="@dimen/spacing_130" />
+
+    </LinearLayout>
+
+    <!--<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_266"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_np_vip_background_picture" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_30"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginRight="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_30"
+                android:background="@drawable/ic_np_vip_xrzx_frame">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/new_Exclusive_RecyclerView"
+                    style="@style/RecyclerViewStyleOf16Dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/spacing_30" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+-->
+</LinearLayout>

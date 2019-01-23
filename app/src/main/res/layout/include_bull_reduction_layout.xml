@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_Full_reduction_text_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_activity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/spacing_16"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/shape_red_button_8dp_background_"
+            android:gravity="center"
+            android:padding="@dimen/spacing_2"
+            android:text="@string/Full_reduction_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_11sp" />
+
+
+        <TextView
+            android:id="@+id/tv_shop_car_good_hit_message"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_10"
+            android:layout_marginRight="@dimen/spacing_50"
+            android:text="@string/shop_car_good_hit_message_one"
+            android:textColor="@color/color_6f6f6f_black"
+            android:textSize="@dimen/tv_11sp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_Visit_again"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:drawableRight="@drawable/ic_red_details_nb_return"
+        android:drawablePadding="@dimen/spacing_4"
+        android:gravity="center_vertical"
+        android:text="@string/Visit_again"
+        android:textColor="@color/color_e53d3d"
+        android:textSize="@dimen/tv_11sp" />
+</RelativeLayout>

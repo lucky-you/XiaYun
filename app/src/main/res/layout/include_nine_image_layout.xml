@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_5"
+    android:orientation="vertical">
+
+    <com.goulala.xiayun.mycenter.view.SameWidthImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_5"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/ivDelete"
+        android:layout_width="@dimen/spacing_20"
+        android:layout_height="@dimen/spacing_20"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_bga_pp_ic_delete"
+        android:visibility="gone" />
+
+</RelativeLayout>

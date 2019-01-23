@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_login_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_f3f3f3"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_login_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_200"
+        android:background="@drawable/ic_login_header_bg">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_44"
+            android:layout_marginTop="@dimen/spacing_16">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/spacing_10"
+                android:src="@drawable/ic_back_white" />
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/the_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tv_16sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="-60dp"
+        android:background="@drawable/shape_white_10dp_background"
+        app:cardCornerRadius="@dimen/spacing_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.goulala.view.RoundImageView
+                android:id="@+id/civ_gll_logo"
+                android:layout_width="@dimen/spacing_77"
+                android:layout_height="@dimen/spacing_77"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_78"
+                android:src="@drawable/ic_login_logo"
+                app:type="round" />
+
+            <TextView
+                android:id="@+id/tv_WeChat_authorizes_login"
+                android:layout_width="@dimen/spacing_255"
+                android:layout_height="@dimen/spacing_44"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/shape_login_red_button_background"
+                android:gravity="center"
+                android:text="@string/WeChat_authorizes_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tv_16sp" />
+
+            <TextView
+                android:id="@+id/tv_Mobile_phone_number_login"
+                android:layout_width="@dimen/spacing_255"
+                android:layout_height="@dimen/spacing_44"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/spacing_20"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/shape_login_white_1dp_background"
+                android:gravity="center"
+                android:text="@string/Mobile_phone_number_login"
+                android:textColor="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_16sp" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <View style="@style/VerticalLineStyleOf0dp" />
+
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_20"
+        android:text="@string/Log_in_to_synchronize_WeChat_account_data" />
+
+</LinearLayout>

@@ -462,6 +462,7 @@
     <string name="permission_phone">状态</string>
     <string name="permission_location">定位</string>
     <string name="permission_audio">录音</string>
+    <string name="day">天</string>
     <string name="hours">小时</string>
     <string name="minutes">分</string>
     <string name="seconds">秒</string>
@@ -497,4 +498,18 @@
     <string name="Platform_suggestion_box">平台意见箱</string>
     <string name="Platform_suggestion_box_hit">请留下您宝贵的意见,以方便我们更好的为您服务...</string>
     <string name="Content_cannot_be_empty">内容不能为空</string>
+    <string name="please_edit_password">请输入支付密码</string>
+    <string name="dialog_withdrawal_money">提现金额¥ %s元</string>
+    <string name="Please_enter_payment_password">请输入佣金支付密码</string>
+    <string name="Please_edit_the_password">请输入支付密码</string>
+    <string name="sdkinitwrong">客服初始化失败</string>
+    <string name="Goods_no_longer_valid">商品已失效</string>
+    <string name="Membership_service_agreement">会员服务协议</string>
+    <string name="Open_Plus_Members_and_Enjoy_Membership">开通Plus会员尊享会员礼遇，更多特权敬请期待~</string>
+    <string name="Full_time_shopping_eight">全场购物八折起</string>
+    <string name="Giving_coupons_and_gift_bags">送优惠券大礼包</string>
+    <string name="Share_Friends_and_Get_Commissions">分享好友获得佣金</string>
+    <string name="Already_received">已领取</string>
+    <string name="Total_price">总价</string>
+    <string name="the_money">¥ %s</string>
 </resources>

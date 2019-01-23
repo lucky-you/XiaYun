@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_40"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_second_kill_good_time"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="12:00"
+        android:textColor="@color/color_9f9f9f_black"
+        android:textSize="@dimen/tv_16sp" />
+
+    <TextView
+        android:id="@+id/tv_second_kill_good_status"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_2"
+        android:gravity="center"
+        android:text="@string/Is_about_to_begin"
+        android:textColor="@color/color_9f9f9f_black"
+        android:textSize="@dimen/tv_10sp" />
+
+    <ImageView
+        android:id="@+id/tv_second_kill_good_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_2"
+        android:src="@drawable/shape_orange_horizontal_background" />
+
+</LinearLayout>

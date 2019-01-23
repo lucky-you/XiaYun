@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * @author : Z_B
- * @date : 2018/8/25
- * @function : json的工具类
+ * author : Z_B
+ * date : 2018/8/25
+ * function : json的工具类
  */
 public class JsonUtils {
 

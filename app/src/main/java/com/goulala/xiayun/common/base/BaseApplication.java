@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.goulala.xiayun.BuildConfig;
+import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.utils.CrashHandler;
 import com.goulala.xiayun.common.utils.FileUtils;
 import com.goulala.xiayun.common.utils.SPUtils;
@@ -19,6 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class BaseApplication extends Application {
 
     protected static BaseApplication instance;
+    private UserInfo userInfo;
 
     @Override
     public void onCreate() {
@@ -52,6 +54,13 @@ public class BaseApplication extends Application {
         return instance;
     }
 
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 
     /**
      * 获取当前进程的名称

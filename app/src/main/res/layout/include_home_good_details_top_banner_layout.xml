@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_320">
+
+    <com.youth.banner.Banner
+        android:id="@+id/homeGoodDetailBanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:indicator_drawable_selected="@drawable/ic_details_picture_spot_solid"
+        app:indicator_drawable_unselected="@drawable/ic_details_picture_spot_hollow" />
+
+
+    <TextView
+        android:id="@+id/tv_have_sold"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginBottom="@dimen/spacing_5"
+        android:text="@string/have_sold" />
+
+</RelativeLayout>

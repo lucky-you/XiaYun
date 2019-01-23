@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_Only_refund_money"
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_80">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/spacing_30"
+                android:layout_height="@dimen/spacing_27"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_apply_return_money" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_8"
+                android:layout_marginRight="@dimen/spacing_10"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:text="@string/Only_refund_money"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:text="@string/refund_money_hit_message"
+                    android:textColor="@color/color_9f9f9f_black"
+                    android:textSize="@dimen/spacing_13" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_details_introduce_more" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLineStyle" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Only_refund_good"
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_80">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/spacing_30"
+                android:layout_height="@dimen/spacing_27"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_apply_return_good" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_8"
+                android:layout_marginRight="@dimen/spacing_10"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:text="@string/Only_refund_good"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:text="@string/refund_good_hit_message"
+                    android:textColor="@color/color_9f9f9f_black"
+                    android:textSize="@dimen/spacing_13" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_details_introduce_more" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

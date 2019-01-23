@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_60">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="@dimen/spacing_40"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_message_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_news_block_logistics" />
+
+                <TextView
+                    android:id="@+id/tv_message_count"
+                    android:layout_width="@dimen/spacing_10"
+                    android:layout_height="@dimen/spacing_10"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_red_circle_background"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_8sp"
+                    android:visibility="gone" />
+
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_message_title"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:text="@string/Logistics_information"
+                android:textColor="@color/color_3f3f3f_black" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_details_introduce_more" />
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_the_shop_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_44"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:gravity="center_vertical"
+        android:text="@string/the_text_shop_name"
+        android:textColor="@color/color_656565"
+        android:textSize="@dimen/tv_14sp" />
+
+    <include layout="@layout/include_recyclerview_layout" />
+
+
+</LinearLayout>

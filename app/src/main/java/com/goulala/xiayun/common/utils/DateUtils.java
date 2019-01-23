@@ -23,4 +23,18 @@ public class DateUtils {
         return format.format(date);
     }
 
+    /**
+     * 时间戳转字符串,服务器的时间给到了秒，需要x1000,转成毫秒
+     */
+    public static String getStrTime(long timeStamp) {
+        Date date = new Date(timeStamp * 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
+    public static String getStrTimeTwo(long timeStamp) {
+        Date date = new Date(timeStamp * 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
 }

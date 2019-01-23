@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_search_title_layout" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_have_search_and_hot_search_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/rl_search_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_30"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginRight="@dimen/spacing_16">
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/Search_history"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <TextView
+                    android:id="@+id/tv_delete"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_search_icon_delete"
+                    android:drawablePadding="@dimen/spacing_2"
+                    android:gravity="center_vertical"
+                    android:text="@string/delete"
+                    android:textColor="@color/color_6f6f6f_black" />
+
+
+            </RelativeLayout>
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/fly_History_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_16"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginRight="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_5"
+                app:max_select="1" />
+
+
+            <View
+                android:id="@+id/history_Divide"
+                style="@style/DivideLineStyle"
+                android:layout_height="@dimen/spacing_12" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_hot_search_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_16"
+                android:text="@string/Top_search"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/fly_Hot_Search_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_16"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginRight="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_8"
+                app:max_select="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f3f3f3" />
+
+
+</LinearLayout>

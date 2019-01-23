@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_margin="@dimen/spacing_16"
+        android:text="@string/The_account_balance" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_21"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_10">
+
+        <TextView
+            android:id="@+id/tv_my_commission_money"
+            style="@style/TextViewStyleOf14Sp"
+            android:text="@string/the_price"
+            android:textColor="@color/color_e53d3d"
+            android:textSize="@dimen/tv_30sp" />
+
+
+        <TextView
+            android:id="@+id/tv_withdrawal"
+            android:layout_width="@dimen/spacing_76"
+            android:layout_height="@dimen/spacing_27"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_my_commission_red_14dp_background"
+            android:gravity="center"
+            android:text="@string/withdrawal" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLIneStyleOf12dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_60"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16">
+
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_centerVertical="true"
+            android:text="@string/Payment_details"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_16sp" />
+
+        <TextView
+            android:id="@+id/tv_check_more_item"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/spacing_10"
+            android:drawableRight="@drawable/ic_details_introduce_more"
+            android:text="@string/To_view_more"
+            android:textColor="@color/color_3f3f3f_black" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/rl_good_number_to_reduce"
+        android:layout_width="@dimen/spacing_20"
+        android:layout_height="@dimen/spacing_20"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/select_good_number_to_reduce" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_good_number"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_width="@dimen/spacing_20"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_10"
+        android:layout_marginRight="@dimen/spacing_10"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/color_3f3f3f_black" />
+
+    <RelativeLayout
+        android:id="@+id/rl_good_number_increase"
+        android:layout_width="@dimen/spacing_20"
+        android:layout_height="@dimen/spacing_20"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/select_good_number_increase" />
+    </RelativeLayout>
+</LinearLayout>

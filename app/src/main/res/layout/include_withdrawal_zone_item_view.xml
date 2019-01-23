@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_1"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="@dimen/spacing_2"
+    app:contentPadding="@dimen/spacing_1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_Full_availability"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/spacing_10"
+            android:text="@string/Full_availability"
+            android:textSize="@dimen/tv_13sp" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_72"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_pt_exchange_icon" />
+
+            <TextView
+                android:id="@+id/tv_coupons_money"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/spacing_7"
+                android:text="@string/total_money"
+                android:textColor="@color/color_f9bf3a"
+                android:textSize="@dimen/tv_20sp" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_Sign_in_gold_money"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/spacing_10"
+            android:text="@string/Sign_in_gold_money"
+            android:textColor="@color/color_e53d3d"
+            android:textSize="@dimen/tv_13sp" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

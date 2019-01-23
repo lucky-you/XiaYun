@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_16"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/shape_orange_vertical_background" />
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_4"
+            android:text="@string/About_the_commission_difference"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_16sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_share_fee_min"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:text="@string/Commission_differences_one"
+        android:textColor="@color/color_9f9f9f_black"
+        android:textSize="@dimen/tv_13sp" />
+
+    <TextView
+        android:id="@+id/tv_share_fee_max"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:text="@string/Commission_differences_two"
+        android:textColor="@color/color_9f9f9f_black"
+        android:textSize="@dimen/tv_13sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_16"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/shape_orange_vertical_background" />
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_4"
+            android:text="@string/About_the_commission_payment"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_16sp" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginBottom="@dimen/spacing_16"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:text="@string/Commission_issued"
+        android:textColor="@color/color_9f9f9f_black"
+        android:textSize="@dimen/tv_13sp" />
+
+</LinearLayout>

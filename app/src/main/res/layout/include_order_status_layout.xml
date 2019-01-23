@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_order_status_background_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_order_state_close_bj">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_status_name"
+            style="@style/TextViewStyleOf14Sp"
+            android:text="@string/Trading_closed"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_17sp" />
+
+        <TextView
+            android:id="@+id/tv_status_description"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_marginTop="@dimen/spacing_15"
+            android:text="@string/Timeout_closure"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_11sp" />
+
+    </LinearLayout>
+</LinearLayout>

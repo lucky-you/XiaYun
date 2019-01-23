@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_good_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_f3f3f3"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_16"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_good_select"
+                android:layout_width="@dimen/spacing_20"
+                android:layout_height="@dimen/spacing_20"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/select_shop_car_all_check"
+                android:padding="@dimen/spacing_5"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_16"
+            android:layout_weight="9"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:layout_width="@dimen/spacing_100"
+                android:layout_height="@dimen/spacing_100"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/spacing_6">
+
+                <ImageView
+                    android:id="@+id/iv_good_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_good_default_image" />
+
+                <ImageView
+                    android:id="@+id/iv_have_sale_off"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_pic_commodity_so"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv_good_name"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@string/good_text_name"
+                    android:textSize="@dimen/tv_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_good_describe"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:text="@string/the_text_specifications"
+                    android:textColor="@color/color_9f9f9f_black"
+                    android:textSize="@dimen/tv_11sp" />
+
+                <TextView
+                    android:id="@+id/tv_good_price"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/the_price"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_good_plus_price"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/the_price"
+                        android:textColor="@color/color_f3683f" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_shop_car_good_pius" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginTop="@dimen/spacing_4"
+                    android:layout_marginBottom="@dimen/spacing_4"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/include_shop_car_good_number_edit_layout" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

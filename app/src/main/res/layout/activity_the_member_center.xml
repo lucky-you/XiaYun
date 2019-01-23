@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_member_default_background"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/fake_status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_40">
+
+                <ImageView
+                    android:id="@+id/iv_member_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_10"
+                    android:src="@drawable/ic_back_white" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_centerInParent="true"
+                    android:text="@string/The_member_center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_16sp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_is_vip_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_204"
+            android:layout_marginTop="-120dp"
+            android:background="@drawable/ic_member_ou_back"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/ll_not_member_hit_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_28"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_user_name_of_not_member"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/Is_not_a_member"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_13sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_open_member_hit_message"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/spacing_13"
+                    android:text="@string/Open_Plus_Members_and_Enjoy_Membership"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_14sp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_26"
+                android:layout_marginTop="@dimen/spacing_14"
+                android:layout_marginRight="@dimen/spacing_26">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_img_discount_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:gravity="center"
+                        android:text="@string/Full_time_shopping_eight"
+                        android:textColor="@color/color_f0dda2"
+                        android:textSize="@dimen/tv_12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_img_coupon_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:gravity="center"
+                        android:text="@string/Giving_coupons_and_gift_bags"
+                        android:textColor="@color/color_f0dda2"
+                        android:textSize="@dimen/tv_12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_img_commission_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_8"
+                        android:gravity="center"
+                        android:text="@string/Share_Friends_and_Get_Commissions"
+                        android:textColor="@color/color_f0dda2"
+                        android:textSize="@dimen/tv_12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+              <TextView
+                  android:id="@+id/tv_have_member_user_name"
+                  style="@style/TextViewStyleOf14Sp"
+                  android:layout_gravity="center_horizontal"
+                  android:layout_marginTop="@dimen/spacing_120"
+                  android:gravity="center"
+                  android:text="@string/Already_member"
+                  android:visibility="gone" />
+        </LinearLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_Opening_member_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_40"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:gravity="center_vertical"
+                    android:text="@string/Opening_member"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/member_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:layout_marginRight="@dimen/spacing_16"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/spacing_20">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/ticket_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_f2f2f2"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        android:scrollbars="none" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+        <!-- <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/spacing_16"
+             android:layout_marginRight="@dimen/spacing_16"
+             android:layout_marginBottom="@dimen/spacing_20"
+             android:orientation="vertical">
+
+             <TextView
+                 android:id="@+id/tv_Immediately_opened"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/spacing_44"
+                 android:background="@drawable/ic_member_bottom_button_background"
+                 android:gravity="center"
+                 android:text="@string/Immediately_opened"
+                 android:textColor="@color/color_6e624a"
+                 android:textSize="@dimen/tv_16sp" />
+
+             <TextView
+                 android:id="@+id/tv_User_agreement"
+                 style="@style/TextViewStyleOf14Sp"
+                 android:layout_gravity="center_vertical"
+                 android:layout_marginTop="@dimen/spacing_8"
+                 android:text="@string/User_agreement_one"
+                 android:textSize="@dimen/tv_11sp" />
+
+         </LinearLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_50"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/spacing_16"
+            android:layout_marginTop="@dimen/spacing_3"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Total_price"
+                    android:textColor="@color/color_6f6f6f_black"
+                    android:textSize="@dimen/spacing_16" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_7"
+                    android:text="@string/the_money"
+                    android:textColor="@color/color_f3683f"
+                    android:textSize="@dimen/spacing_20" />
+
+                <TextView
+                    android:id="@+id/Overdue_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_7"
+                    android:text="148"
+                    android:textColor="@color/color_9f9f9f"
+                    android:textSize="@dimen/spacing_13" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_User_agreement"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center_vertical"
+                android:text="@string/User_agreement_one"
+                android:textSize="@dimen/tv_11sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_Immediately_opened"
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_but_renew_n"
+            android:gravity="center"
+            android:text="@string/Buy_now"
+            android:textColor="@color/color_6e624a"
+            android:textSize="@dimen/spacing_16" />
+
+    </LinearLayout>
+</FrameLayout>

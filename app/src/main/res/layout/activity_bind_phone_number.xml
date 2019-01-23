@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_titlebar_layout" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/spacing_38"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center_vertical"
+                android:text="+86"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <View
+                android:layout_width="@dimen/spacing_1"
+                android:layout_height="@dimen/spacing_16"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/spacing_5"
+                android:background="@color/color_9f9f9f_black" />
+
+            <EditText
+                android:id="@+id/edit_please_edit_phone_number"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/please_edit_phone_number"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingLeft="@dimen/spacing_5" />
+        </LinearLayout>
+
+        <View
+            style="@style/DivideLineStyle"
+            android:layout_marginTop="@dimen/spacing_10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_34"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_please_edit_verification_code"
+                style="@style/EditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:hint="@string/please_edit_verification_code"
+                android:inputType="number"
+                android:paddingLeft="@dimen/spacing_5" />
+
+            <TextView
+                android:id="@+id/tv_Get_the_verification_code"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/Get_the_verification_code"
+                android:textColor="@color/color_e53d3d"
+                android:textSize="@dimen/tv_14sp" />
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/DivideLineStyle"
+            android:layout_marginTop="@dimen/spacing_10" />
+
+        <TextView
+            android:id="@+id/tv_The_binding"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_44"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_90"
+            android:background="@drawable/shape_login_red_button_background"
+            android:gravity="center"
+            android:text="@string/The_binding"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_16sp" />
+
+
+    </LinearLayout>
+</RelativeLayout>

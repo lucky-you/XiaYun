@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_138">
+
+        <ImageView
+            android:id="@+id/iv_foot_good_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_good_default_image" />
+
+        <ImageView
+            android:id="@+id/iv_have_sale_off"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_pic_commodity_so"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tv_foot_good_name"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_6"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:text="@string/good_text_name" />
+
+    <TextView
+        android:id="@+id/tv_The_normal_Price"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginLeft="@dimen/spacing_6"
+        android:gravity="center_vertical"
+        android:text="@string/the_price"
+        android:textColor="@color/color_3f3f3f_black"
+        android:textSize="@dimen/tv_14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_6"
+        android:layout_marginBottom="@dimen/spacing_4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_The_member_price"
+            style="@style/TextViewStyleOf14Sp"
+            android:gravity="center_vertical"
+            android:text="@string/the_price"
+            android:textColor="@color/color_f3683f"
+            android:textSize="@dimen/tv_14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_3"
+            android:src="@drawable/ic_home_good_plus" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_activity_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_6"
+        android:layout_marginBottom="@dimen/spacing_6"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_Limited_time_discount"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/spacing_16"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_home_discount_background"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_2"
+            android:paddingRight="@dimen/spacing_2"
+            android:text="@string/Limited_time_discount"
+            android:textColor="@color/color_f3683f"
+            android:textSize="@dimen/tv_11sp" />
+
+        <TextView
+            android:id="@+id/tv_Full_reduction"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/spacing_16"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/spacing_6"
+            android:background="@color/color_f3683f"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_2"
+            android:paddingRight="@dimen/spacing_2"
+            android:singleLine="true"
+            android:text="@string/Full_reduction"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_11sp" />
+    </LinearLayout>
+</LinearLayout>

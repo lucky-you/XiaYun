@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <include layout="@layout/include_titlebar_layout" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/include_refund_good_and_money_public_layout" />
+
+
+            <View
+                style="@style/DivideLIneStyleOf12dp"
+                android:layout_marginTop="@dimen/spacing_12" />
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:text="@string/Upload_problem_pictures"
+                android:textColor="@color/color_3f3f3f_black"
+                android:textSize="@dimen/tv_13sp" />
+
+            <com.goulala.xiayun.mycenter.view.WrapHeightGridView
+                android:id="@+id/bgaSortablePhotoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_16"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:layout_marginRight="@dimen/spacing_16"
+                android:layout_marginBottom="@dimen/spacing_20"
+                android:horizontalSpacing="@dimen/spacing_8"
+                android:listSelector="@color/transparent"
+                android:numColumns="3"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/spacing_8" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_44"
+        android:background="@color/color_ddd"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tv_16sp" />
+</LinearLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_titlebar_layout" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_marquee_view_layout" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_16"
+                android:background="@drawable/ic_sign_in_picture_back"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/spacing_21"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_Withdrawal_money"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:text="4.89"
+                        android:textColor="@color/color_f3683f"
+                        android:textSize="@dimen/tv_57sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:text="@string/the_price_text"
+                        android:textColor="@color/color_f3683f"
+                        android:textSize="@dimen/tv_16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_Withdrawal_way"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/spacing_30"
+                    android:layout_gravity="center_horizontal"
+                    android:drawablePadding="@dimen/spacing_4"
+                    android:drawableRight="@drawable/ic_sign_but_pf_more"
+                    android:gravity="center"
+                    android:text="@string/Withdrawal_way"
+                    android:textColor="@color/color_f3683f"
+                    android:textSize="@dimen/tv_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_have_Sign_for_cash"
+                    android:layout_width="@dimen/spacing_160"
+                    android:layout_height="@dimen/spacing_44"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:background="@drawable/ic_sign_but_sign_in"
+                    android:gravity="center"
+                    android:text="@string/Sign_for_cash"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/tv_18sp" />
+
+                <TextView
+                    android:id="@+id/tv_More_ways_to_make_money_will_open_up"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/spacing_20"
+                    android:gravity="center"
+                    android:text="@string/Three_days_in_row_plus_bonus"
+                    android:textColor="@color/color_6f6f6f_black" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/spacing_60"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="@dimen/spacing_60"
+                        android:layout_height="@dimen/spacing_1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/white" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/spacing_12"
+                        android:layout_marginRight="@dimen/spacing_12"
+                        android:gravity="center"
+                        android:text="@string/Activity_rules"
+                        android:textColor="@color/white" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_60"
+                        android:layout_height="@dimen/spacing_1"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/white" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/Activity_Rules_RecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:layout_marginRight="@dimen/spacing_16"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

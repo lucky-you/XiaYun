@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_order_number" />
+
+                <TextView
+                    android:id="@+id/tv_order_number"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_8"
+                    android:text="0000" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_order_status"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/To_send_the_goods"
+                android:textColor="@color/color_e53d3d"
+                android:textSize="@dimen/tv_13sp" />
+        </RelativeLayout>
+
+        <include layout="@layout/include_recyclerview_layout" />
+
+        <RelativeLayout
+            style="@style/RelativeLayoutStyleOf44dp"
+            android:layout_height="@dimen/spacing_30">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_total_good_number"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:text="@string/Total_number_of_goods"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <TextView
+                    android:id="@+id/tv_total_order_good_money"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginLeft="@dimen/spacing_4"
+                    android:text="@string/the_total_money"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <include layout="@layout/include_order_status_bottom_layout" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

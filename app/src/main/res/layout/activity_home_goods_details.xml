@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_good_details_bottom_layout"
+        android:visibility="visible">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/good_detailsScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+
+                <include layout="@layout/include_home_good_details_top_banner_layout" />
+
+                <LinearLayout
+                    android:id="@+id/ll_have_no_activity_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_30"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_no_activity_good_price"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/spacing_16"
+                        android:text="@string/the_price"
+                        android:textColor="@color/color_3f3f3f_black"
+                        android:textSize="@dimen/tv_20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_have_activity_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_49"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.8"
+                        android:background="@drawable/ic_good_details_pricebackground"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_16"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_now_price"
+                                    style="@style/TextViewStyleOf14Sp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="@string/the_price"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/tv_20sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_activity_name"
+                                    style="@style/TextViewStyleOf14Sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/spacing_8"
+                                    android:background="@drawable/shape_details_white_1dp_background"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/spacing_2"
+                                    android:paddingRight="@dimen/spacing_2"
+                                    android:text="@string/Timed_promotions"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/tv_11sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ll_activity_price_and_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextViewStyleOf14Sp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="@string/The_original_price"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/tv_12sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_The_original_price"
+                                    style="@style/TextViewStyleOf14Sp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="@string/the_price"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/tv_12sp" />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.2"
+                        android:background="@color/color_f7d7d7"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_activity_CountDown"
+                                style="@style/TextViewStyleOf14Sp"
+                                android:layout_gravity="center"
+                                android:text="@string/Distance_end_time"
+                                android:textColor="@color/color_e53d3d"
+                                android:textSize="@dimen/tv_13sp" />
+
+                            <cn.iwgang.countdownview.CountdownView
+                                android:id="@+id/tv_Distance_end_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/spacing_4"
+                                android:paddingLeft="@dimen/spacing_4"
+                                app:isConvertDaysToHours="true"
+                                app:isHideTimeBackground="true"
+                                app:isShowDay="false"
+                                app:isShowHour="true"
+                                app:isShowMillisecond="false"
+                                app:isShowMinute="true"
+                                app:isShowSecond="true"
+                                app:isTimeTextBold="true"
+                                app:suffixDay="@string/day"
+                                app:suffixGravity="top"
+                                app:suffixHour="@string/hours"
+                                app:suffixMinute="@string/minutes"
+                                app:suffixSecond="@string/seconds"
+                                app:suffixTextColor="@color/color_e53d3d"
+                                app:suffixTextSize="@dimen/tv_12sp"
+                                app:timeTextColor="@color/color_e53d3d"
+                                app:timeTextSize="@dimen/tv_14sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_Open_membership_now"
+                    style="@style/RelativeLayoutStyleOf44dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:id="@+id/tv_member_price"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/the_price"
+                            android:textColor="@color/color_f3683f"
+                            android:textSize="@dimen/tv_16sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_2"
+                            android:src="@drawable/ic_details_icon_plus" />
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_4"
+                            android:text="@string/Member_of_the_exclusive"
+                            android:textColor="@color/color_3f3f3f_black"
+                            android:textSize="@dimen/tv_12sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_Open_membership_now"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableRight="@drawable/ic_details_introduce_more"
+                        android:drawablePadding="@dimen/spacing_2"
+                        android:text="@string/Open_membership_now"
+                        android:textColor="@color/color_9f9f9f_black"
+                        android:textSize="@dimen/tv_12sp" />
+
+                </RelativeLayout>
+
+                <View style="@style/DivideLineStyle" />
+
+                <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/Get_commission_sharing_product" />
+
+                        <TextView
+                            android:id="@+id/tv_sharing_product_get_commission"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/spacing_4"
+                            android:text="@string/the_price"
+                            android:textColor="@color/color_f3683f" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_Check_the_details"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableRight="@drawable/ic_details_introduce_more"
+                        android:drawablePadding="@dimen/spacing_2"
+                        android:text="@string/Check_the_details"
+                        android:textColor="@color/color_9f9f9f_black"
+                        android:textSize="@dimen/tv_12sp" />
+
+                </RelativeLayout>
+
+                <View style="@style/DivideLineStyle" />
+
+                <TextView
+                    android:id="@+id/tv_good_name"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginRight="@dimen/spacing_16"
+                    android:text="@string/good_text_name"
+                    android:textColor="@color/color_3f3f3f_black" />
+
+                <TextView
+                    android:id="@+id/tv_good_details_message"
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_12"
+                    android:layout_marginRight="@dimen/spacing_16"
+                    android:text="@string/good_text_name"
+                    android:textColor="@color/color_9f9f9f_black"
+                    android:textSize="@dimen/tv_13sp" />
+
+                <View
+                    style="@style/DivideLIneStyleOf12dp"
+                    android:layout_marginTop="@dimen/spacing_16" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_Sales_promotion"
+                    style="@style/RelativeLayoutStyleOf44dp">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            style="@style/TextViewStyleOf14Sp"
+                            android:text="@string/Sales_promotion"
+                            android:textColor="@color/color_9f9f9f_black" />
+
+                        <TextView
+                            android:id="@+id/tv_Sales_promotion_Full_reduction_money"
+                            style="@style/TextViewStyleOf14Sp"
+                            android:layout_marginLeft="@dimen/spacing_16"
+                            android:text="@string/Full_reduction"
+                            android:textColor="@color/color_f3683f"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_details_introduce_more" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvIsFailure"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_44"
+                        android:background="@color/color_6f6f6f_black"
+                        android:gravity="center"
+                        android:text="@string/Goods_no_longer_valid"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/llNotFailureLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <View
+                            android:id="@+id/rl_Sales_promotion_Divide_line"
+                            style="@style/DivideLIneStyleOf12dp" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_select_distribution_address"
+                            style="@style/RelativeLayoutStyleOf44dp"
+                            android:layout_height="@dimen/spacing_60">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/spacing_8"
+                                android:layout_marginRight="@dimen/spacing_30"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextViewStyleOf14Sp"
+                                    android:text="@string/distribution"
+                                    android:textColor="@color/color_9f9f9f_black" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/spacing_16"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/tv_The_delivery_address"
+                                            style="@style/TextViewStyleOf14Sp"
+                                            android:layout_gravity="center_vertical"
+                                            android:textColor="@color/color_3f3f3f_black"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            style="@style/TextViewStyleOf14Sp"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="@dimen/spacing_6"
+                                            android:layout_marginRight="@dimen/spacing_6"
+                                            android:text="@string/The_distribution_address" />
+
+                                        <TextView
+                                            android:id="@+id/tv_Shipping_address"
+                                            style="@style/TextViewStyleOf14Sp"
+                                            android:textColor="@color/color_3f3f3f_black"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+
+                                    <TextView
+                                        android:id="@+id/tv_is_Package_mail"
+                                        style="@style/TextViewStyleOf14Sp"
+                                        android:layout_marginTop="@dimen/spacing_2"
+                                        android:text="@string/Package_mail" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_details_distribution_more" />
+
+
+                        </RelativeLayout>
+
+                        <View style="@style/DivideLineStyle" />
+
+                        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:orientation="horizontal">
+
+
+                                <TextView
+                                    style="@style/TextViewOf9f9f9fColorStyle"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="@string/Purchase_quantity" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="@dimen/spacing_10"
+                                    android:orientation="horizontal">
+
+                                    <include layout="@layout/include_shop_car_good_number_edit_layout" />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tv_The_quantity_inventory"
+                                style="@style/TextViewOf9f9f9fColorStyle"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:text="@string/The_quantity_inventory"
+                                android:textSize="@dimen/tv_12sp" />
+                        </RelativeLayout>
+
+                        <View style="@style/DivideLIneStyleOf12dp" />
+
+                        <include layout="@layout/include_show_title_layout" />
+
+                        <View
+                            style="@style/DivideLineStyle"
+                            android:layout_marginLeft="@dimen/spacing_16"
+                            android:layout_marginRight="@dimen/spacing_16" />
+
+
+                        <View style="@style/DivideDottedLineStyle" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/productDetailsRecyclerView"
+                            style="@style/RecyclerViewStyleOf16Dp"
+                            android:focusable="false" />
+
+
+                        <View style="@style/DivideLIneStyleOf12dp" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_product_bottom_imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/rl_details_top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_20" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_40">
+
+
+            <ImageView
+                android:id="@+id/ic_details_nb_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/spacing_10"
+                android:src="@drawable/ic_arrow_left" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/spacing_12"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ic_details_nb_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/spacing_8"
+                    android:padding="@dimen/spacing_5"
+                    android:src="@drawable/ic_details_nb_follow" />
+
+                <ImageView
+                    android:id="@+id/ic_details_nb_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/spacing_5"
+                    android:src="@drawable/ic_details_nb_share" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/include_home_details_bottom_layout" />
+
+    <include
+        layout="@layout/include_empty_view_layout"
+        android:visibility="gone" />
+
+</RelativeLayout>

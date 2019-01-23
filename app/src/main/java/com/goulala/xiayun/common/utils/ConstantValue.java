@@ -5,7 +5,7 @@ package com.goulala.xiayun.common.utils;
  * date       : 2018/11/25
  * function  : 常量值
  */
-public interface ConstantValues {
+public interface ConstantValue {
 
     String POSITION = "position";
     String START_MAIN = "start_main";
@@ -19,6 +19,7 @@ public interface ConstantValues {
     String URL = "url";
     String ID = "id";
     String USER_NAME = "user_name";
+    String USER_ID = "user_id";
     String PHONE_NUMBER = "phone_number";
     String PROVINCES = "provinces";
     String CITY = "city";
@@ -36,6 +37,7 @@ public interface ConstantValues {
     String MONEY = "money";
     String ACTIVE_ID = "active_id";
     String CATEGORY = "category";
+    String NICK_NAME = "nick_name";
 
 
     String ITEM_DETAIL = "item_detail";//商品详情
@@ -85,8 +87,8 @@ public interface ConstantValues {
 
     int THE_MEMBER_SIGNATURE = 20;//个性签名
 
-    int INCREASE_THAT_GOOD_NUMBER = 21; //数量增加
-    int DECREASE_THAT_GOOD_NUMBER = 22;//数量减少
+    int THE_TYPE_OF_SHOP_CAR = 21; //购物车--进入商品详情
+    int THE_TYPE_OF_OTHER = 22;//其他界面进入商品详情
 
     int ITEM_SELECT_STATUS_IS_CHECK = 23;//商品选中状态
 
@@ -115,5 +117,15 @@ public interface ConstantValues {
     int ADVER_DETAILS_TYPE = 35;//广告详情
 
     int THE_USER_MESSAGE_TYPE = 36; //买家留言
+
+    int RULES_OF_THE_PLATFORM_URL = 37;//平台规则
+
+    int COMMON_PROBLEMS_URL = 38;//常见问题说明
+
+    int COUPON_DESCRIPTION_TYPE = 39;//优惠券说明
+
+    int COMMISSION_DESCRIPTION_TYPE = 40;//佣金说明
+
+    int MEMBER_SERVICE_AGREEMENT_URL = 41;//会员服务协议
 
 }

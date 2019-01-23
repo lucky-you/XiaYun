@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <include layout="@layout/include_titlebar_layout" />
+
+    <View style="@style/DivideLineStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f3f3f3"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/Cash_card"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <EditText
+                    android:id="@+id/edit_back_card_number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="7.5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_edit_cash_card"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textColorHint="@color/color_ddd"
+                    android:textCursorDrawable="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/Belongs_to_the_bank"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_back"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7.5">
+
+
+                    <TextView
+                        android:id="@+id/tv_back_name"
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/color_3f3f3f_black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_details_introduce_more" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/Name_of_cardholder"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <EditText
+                    android:id="@+id/edit_please_Name_of_cardholder"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="7.5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_Name_of_cardholder"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textColorHint="@color/color_ddd"
+                    android:textCursorDrawable="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_32"
+                android:background="@color/color_f3f3f3">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_16"
+                    android:src="@drawable/ic_list_notes" />
+
+                <TextView
+                    style="@style/TextViewStyleOf14Sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/spacing_6"
+                    android:text="@string/The_card_holder_name_must_be_the_same_as_the_account_holder_name"
+                    android:textColorHint="@color/color_9f9f9f_black"
+                    android:textSize="@dimen/tv_11sp" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2.5"
+                    android:gravity="center_vertical"
+                    android:text="@string/Withdrawal_amount"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <EditText
+                    android:id="@+id/edit_please_edit_Withdrawal_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="7.5"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_edit_Withdrawal_amount"
+                    android:inputType="number"
+                    android:textColor="@color/color_3f3f3f_black"
+                    android:textColorHint="@color/color_ddd"
+                    android:textCursorDrawable="@color/color_3f3f3f_black"
+                    android:textSize="@dimen/tv_14sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/spacing_30"
+            android:layout_marginLeft="@dimen/spacing_16"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_list_notes" />
+
+            <TextView
+                android:id="@+id/tv_Single_withdrawal_amount"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_6"
+                android:text="@string/Single_withdrawal_amount"
+                android:textColorHint="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_11sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_Determine_the_withdrawal"
+            style="@style/RelativeLayoutStyleOf44dp"
+            android:layout_marginTop="@dimen/spacing_36"
+            android:background="@color/color_e53d3d"
+            android:gravity="center"
+            android:text="@string/Determine_the_withdrawal"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_16sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

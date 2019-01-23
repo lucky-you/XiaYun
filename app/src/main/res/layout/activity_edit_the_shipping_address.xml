@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <include layout="@layout/include_titlebar_layout" />
+
+    <View style="@style/DivideLineStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f3f3f3"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    style="@style/TextViewStyleOf14SpAndColor3f"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:text="@string/The_consignee_two" />
+
+
+                <EditText
+                    android:id="@+id/edit_Fill_in_the_consignee_name"
+                    style="@style/EditTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="8"
+                    android:hint="@string/Fill_in_the_consignee_name"
+                    android:textColor="@color/color_6f6f6f_black"
+                    android:textColorHint="@color/color_ddd" />
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    style="@style/TextViewStyleOf14SpAndColor3f"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:text="@string/Mobile_phone_number" />
+
+
+                <EditText
+                    android:id="@+id/edit_Enter_mobile_phone_number"
+                    style="@style/EditTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="8"
+                    android:hint="@string/Enter_mobile_phone_number"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:textColor="@color/color_6f6f6f_black"
+                    android:textColorHint="@color/color_ddd" />
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <LinearLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <TextView
+                    style="@style/TextViewStyleOf14SpAndColor3f"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:text="@string/the_area" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_Select_city"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="8">
+
+                    <TextView
+                        android:id="@+id/tv_Select_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/spacing_20"
+                        android:gravity="center_vertical"
+                        android:hint="@string/Select_area"
+                        android:textColor="@color/color_6f6f6f_black"
+                        android:textColorHint="@color/color_ddd"
+                        android:textSize="@dimen/tv_14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_details_introduce_more" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <LinearLayout
+                style="@style/RelativeLayoutStyleOf44dp"
+                android:layout_height="@dimen/spacing_60">
+
+                <TextView
+                    style="@style/TextViewStyleOf14SpAndColor3f"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:layout_weight="2"
+                    android:text="@string/Detailed_address" />
+
+
+                <EditText
+                    android:id="@+id/edit_Detailed_address"
+                    style="@style/EditTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/spacing_10"
+                    android:layout_weight="8"
+                    android:hint="@string/Detailed_address_description"
+                    android:textColor="@color/color_6f6f6f_black"
+                    android:textColorHint="@color/color_ddd" />
+            </LinearLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_Set_the_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+
+                    <CheckBox
+                        android:id="@+id/cb_Set_the_default"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/select_shop_car_all_check"
+                        android:button="@null" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/spacing_5"
+                        android:text="@string/Set_the_default"
+                        android:textColor="@color/color_9f9f9f_black" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/RelativeLayoutStyleOf44dp"
+            android:layout_marginTop="@dimen/spacing_36"
+            android:background="@color/color_e53d3d"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_16sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

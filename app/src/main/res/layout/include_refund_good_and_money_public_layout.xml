@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_recyclerview_layout" />
+
+    <View style="@style/DivideLIneStyleOf12dp" />
+
+    <TextView
+        android:id="@+id/tv_choose_the_return_reasons"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_height="@dimen/spacing_36"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:text="@string/Reasons_for_choosing_refund"
+        android:textColor="@color/color_3f3f3f_black" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_30"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_Take_the_wrong_goods"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/select_refund_reasons_background"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="@string/Take_the_wrong_goods"
+            android:textColor="@drawable/select_refund_reasons_text_color_background"
+            android:textSize="@dimen/tv_13sp" />
+
+        <RadioButton
+            android:id="@+id/rb_Don_want_to_buy_the"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_8"
+            android:layout_weight="1"
+            android:background="@drawable/select_refund_reasons_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/Don_want_to_buy_the"
+            android:textColor="@drawable/select_refund_reasons_text_color_background"
+            android:textSize="@dimen/tv_13sp" />
+
+        <RadioButton
+            android:id="@+id/rb_Goods_out_of_stock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_8"
+            android:layout_weight="1"
+            android:background="@drawable/select_refund_reasons_background"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="@string/Goods_out_of_stock"
+            android:textColor="@drawable/select_refund_reasons_text_color_background"
+            android:textSize="@dimen/tv_13sp" />
+
+        <RadioButton
+            android:id="@+id/rb_Other_reasons"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_8"
+            android:layout_weight="1"
+            android:background="@drawable/select_refund_reasons_background"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="@string/Other_reasons"
+            android:textColor="@drawable/select_refund_reasons_text_color_background"
+            android:textSize="@dimen/tv_13sp" />
+
+
+    </RadioGroup>
+
+    <View
+        style="@style/DivideLIneStyleOf12dp"
+        android:layout_marginTop="@dimen/spacing_10" />
+
+    <LinearLayout
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_117"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/spacing_20"
+            android:layout_weight="2"
+            android:text="@string/Problem_description"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+
+        <EditText
+            android:id="@+id/edit_Problem_description"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_93"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="8"
+            android:background="@color/color_fafafa"
+            android:gravity="left"
+            android:hint="@string/optional"
+            android:maxLength="50"
+            android:padding="@dimen/spacing_8"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textColorHint="@color/color_9f9f9f_black"
+            android:textCursorDrawable="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+    </LinearLayout>
+
+    <View style="@style/DivideLIneStyleOf12dp" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_refund_number_layout"
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_height="@dimen/spacing_36"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/Number_of_applications"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+        <TextView
+            android:id="@+id/tv_Number_of_applications_number"
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="8"
+            android:text="1"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/RelativeLayoutStyleOf44dp"
+        android:layout_marginTop="@dimen/spacing_10"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyleOf14Sp"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/The_refund_amount"
+            android:textColor="@color/color_3f3f3f_black"
+            android:textSize="@dimen/tv_13sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:background="@color/color_fafafa">
+
+            <TextView
+                android:id="@+id/tv_The_refund_amount"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_8"
+                android:text="@string/the_price"
+                android:textColor="@color/color_e53d3d"
+                android:textSize="@dimen/tv_16sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

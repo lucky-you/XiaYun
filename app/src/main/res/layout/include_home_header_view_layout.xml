@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.youth.banner.Banner
+        android:id="@+id/home_title_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_174"
+        app:image_scale_type="fit_xy"
+        app:indicator_drawable_selected="@drawable/shape_home_banner_select"
+        app:indicator_drawable_unselected="@drawable/shape_home_banner_unselect" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_140"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/spacing_10"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:text="@string/Membership_list"
+                android:textColor="@color/color_3f3f3f_black"
+                android:textSize="@dimen/tv_13sp" />
+
+            <com.goulala.xiayun.common.view.AutoScrollRecyclerView
+                android:id="@+id/home_MarqueeView"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_100" />
+
+        </LinearLayout>
+
+        <View style="@style/VerticalDivideViewStyle" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/HomeMemberSignIn_banner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:image_scale_type="fit_xy" />
+
+            <View style="@style/DivideLineStyle" />
+
+            <com.youth.banner.Banner
+                android:id="@+id/home_new_envelopes_banner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:image_scale_type="fit_xy" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/DivideLIneStyleOf12dp"
+        android:layout_height="@dimen/spacing_12" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_home_hot_style_kill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_30"
+            android:layout_marginLeft="@dimen/spacing_10"
+            android:layout_marginTop="@dimen/spacing_8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_orange_vertical_background" />
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_10"
+                android:gravity="center_vertical"
+                android:text="@string/Detonation_model_of_seconds_kill"
+                android:textColor="@color/color_3f3f3f_black"
+                android:textSize="@dimen/tv_18sp" />
+        </RelativeLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/home_time_radioButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable">
+
+        </android.support.design.widget.TabLayout>
+
+        <com.goulala.xiayun.common.view.CustomViewPager
+            android:id="@+id/home_Second_kill_good_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_10"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <View
+            style="@style/DivideLIneStyleOf12dp"
+            android:layout_height="@dimen/spacing_12"
+            android:layout_marginTop="@dimen/spacing_10" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

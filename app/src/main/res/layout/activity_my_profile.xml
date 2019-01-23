@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <include layout="@layout/include_titlebar_layout" />
+
+    <View style="@style/DivideLineStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            style="@style/RelativeLayoutStyleOf44dp"
+            android:layout_height="@dimen/spacing_60">
+
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="@string/Head_portrait"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <LinearLayout
+                android:id="@+id/ll_user_photo_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_user_image"
+                    android:layout_width="@dimen/spacing_44"
+                    android:layout_height="@dimen/spacing_44"
+                    android:layout_marginRight="@dimen/spacing_16"
+                    android:src="@drawable/ic_my_info_default_hp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_details_introduce_more" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View style="@style/DivideLineStyle" />
+
+
+        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:text="@string/nickname"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/ic_details_introduce_more"
+                android:drawablePadding="@dimen/spacing_4"
+                android:text="@string/Did_not_fill_in"
+                android:textColor="@color/color_9f9f9f_black" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineStyle" />
+
+
+        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:text="@string/gender"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_that_man"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/select_sex_man_background"
+                    android:drawablePadding="@dimen/spacing_5"
+                    android:text="@string/that_man"
+                    android:textColor="@color/color_6f6f6f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_that_woman"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/spacing_10"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/select_sex_woman_background"
+                    android:drawablePadding="@dimen/spacing_5"
+                    android:text="@string/that_woman"
+                    android:textColor="@color/color_6f6f6f_black"
+                    android:textSize="@dimen/tv_14sp" />
+
+            </RadioGroup>
+
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineStyle" />
+
+
+        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:text="@string/local_address"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <TextView
+                android:id="@+id/tv_local_address"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/ic_details_introduce_more"
+                android:drawablePadding="@dimen/spacing_4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/Did_not_fill_in"
+                android:textColor="@color/color_9f9f9f_black" />
+        </RelativeLayout>
+
+        <View style="@style/DivideLineStyle" />
+
+
+        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:text="@string/birthday"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <TextView
+                android:id="@+id/tv_birthday"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/ic_details_introduce_more"
+                android:drawablePadding="@dimen/spacing_4"
+                android:text="@string/Did_not_fill_in"
+                android:textColor="@color/color_9f9f9f_black" />
+        </RelativeLayout>
+
+        <View style="@style/DivideLineStyle" />
+
+
+        <RelativeLayout style="@style/RelativeLayoutStyleOf44dp">
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerVertical="true"
+                android:text="@string/The_signature"
+                android:textColor="@color/color_3f3f3f_black" />
+
+            <TextView
+                android:id="@+id/tv_The_signature"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_80"
+                android:drawableRight="@drawable/ic_details_introduce_more"
+                android:drawablePadding="@dimen/spacing_4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/Did_not_fill_in"
+                android:textColor="@color/color_9f9f9f_black" />
+        </RelativeLayout>
+
+        <View style="@style/DivideLineStyle" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f3f3f3" />
+
+</LinearLayout>

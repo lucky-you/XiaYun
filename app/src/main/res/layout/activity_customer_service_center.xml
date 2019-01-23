@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_service_background"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/fake_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_40"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/flBack"
+                android:layout_width="@dimen/spacing_44"
+                android:layout_height="@dimen/spacing_40">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_service_return_image" />
+            </FrameLayout>
+
+
+            <TextView
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_centerInParent="true"
+                android:text="@string/Customer_service_center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tv_16sp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlPreSaleService"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_60">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/sp_16"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_csc_but_presale_icon" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14SpAndColor3f"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/sp_12"
+                        android:text="@string/Pre_sale_service" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:src="@drawable/ic_details_introduce_more" />
+
+            </RelativeLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <RelativeLayout
+                android:id="@+id/rlAfterSalesService"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_60">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/sp_16"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_csc_but_sale_icon" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14SpAndColor3f"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/sp_12"
+                        android:text="@string/After_sales_service" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:src="@drawable/ic_details_introduce_more" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_30"
+                android:background="@color/color_fdf1d7"
+                android:gravity="center"
+                android:text="@string/Work_phone"
+                android:textColor="#ff7800" />
+
+            <View style="@style/DivideLIneStyleOf12dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/rlDescriptionOfPlatformRules"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_44">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/sp_16"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_csc_img_platform" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_marginLeft="@dimen/sp_12"
+                        android:text="@string/Description_of_platform_rules"
+                        android:textColor="@color/color_404040" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:src="@drawable/ic_details_introduce_more" />
+            </RelativeLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <RelativeLayout
+                android:id="@+id/rlFrequentlyAskedQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_44">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/sp_16"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_csc_img_cp" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_marginLeft="@dimen/sp_12"
+                        android:text="@string/Frequently_asked_questions"
+                        android:textColor="@color/color_404040" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:src="@drawable/ic_details_introduce_more" />
+            </RelativeLayout>
+
+            <View style="@style/DivideLineStyle" />
+
+            <RelativeLayout
+                android:id="@+id/rlPlatformSuggestionBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_44">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/sp_16"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_csc_img_opinion" />
+
+                    <TextView
+                        style="@style/TextViewStyleOf14Sp"
+                        android:layout_marginLeft="@dimen/sp_12"
+                        android:text="@string/Platform_suggestion_box"
+                        android:textColor="@color/color_404040" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:src="@drawable/ic_details_introduce_more" />
+            </RelativeLayout>
+
+            <View style="@style/DivideLIneStyleOf12dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ServiceRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

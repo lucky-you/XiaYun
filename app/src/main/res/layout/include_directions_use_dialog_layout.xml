@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_300"
+    android:background="@drawable/shape_white_5dp_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_close_dialog"
+        android:layout_width="@dimen/spacing_30"
+        android:layout_height="@dimen/spacing_30"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:layout_marginRight="@dimen/spacing_12">
+
+        <ImageView
+            android:layout_width="@dimen/spacing_12"
+            android:layout_height="@dimen/spacing_12"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_sign_close" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webContent"
+        android:layout_width="@dimen/spacing_300"
+        android:layout_height="@dimen/spacing_200"
+        android:layout_gravity="center"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+</LinearLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <include layout="@layout/include_titlebar_layout" />
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:gravity="center"
+        android:text="@string/Customer_service_review_message"
+        android:textColor="@color/color_3f3f3f_black" />
+
+    <TextView
+        android:id="@+id/tv_The_message_of_the_service"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:text="@string/app_name"
+        android:textSize="@dimen/tv_13sp" />
+
+    <TextView
+        android:id="@+id/tv_tv_The_message_of_the_service_time"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_34"
+        android:text="2018-08-25 10:25:36"
+        android:textSize="@dimen/tv_13sp" />
+
+
+    <View
+        style="@style/DivideLineStyle"
+        android:layout_marginBottom="@dimen/spacing_12"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_33" />
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:gravity="center"
+        android:text="@string/User_problem_description"
+        android:textColor="@color/color_3f3f3f_black" />
+
+    <TextView
+        android:id="@+id/tv_Problem_description"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:text="@string/app_name"
+        android:textSize="@dimen/tv_13sp" />
+
+    <TextView
+        android:id="@+id/tv_tv_Problem_description_time"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="@dimen/spacing_16"
+        android:layout_marginRight="@dimen/spacing_16"
+        android:layout_marginTop="@dimen/spacing_34"
+        android:text="2018-08-25 10:25:36"
+        android:textSize="@dimen/tv_13sp" />
+</LinearLayout>

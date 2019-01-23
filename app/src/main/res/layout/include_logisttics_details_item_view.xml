@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/spacing_16"
+    android:layout_marginRight="@dimen/spacing_10"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="@dimen/spacing_2"
+            android:layout_height="0dp"
+            android:layout_weight="0.03"
+            android:background="@color/color_ddd"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_status_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_logistics_grey_cilcie" />
+
+        <View
+            android:layout_width="@dimen/spacing_2"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/color_ddd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/spacing_6"
+        android:layout_marginLeft="@dimen/spacing_10"
+        android:layout_weight="9"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.03"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_Logistics_information_message"
+                style="@style/TextViewStyleOf14Sp"
+                android:text="@string/Logistics_status"
+                android:textColor="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_13sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_Logistics_information_time"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_marginTop="@dimen/spacing_6"
+                android:text="2018-08-25 14:36:51"
+                android:textColor="@color/color_9f9f9f_black"
+                android:textSize="@dimen/tv_13sp"
+                android:visibility="visible" />
+
+            <View
+                style="@style/DivideLineStyle"
+                android:layout_marginTop="@dimen/spacing_6"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

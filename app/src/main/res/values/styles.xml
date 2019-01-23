@@ -82,6 +82,14 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <style name="TextViewBodyStyleOf15sp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/tv_15sp</item>
+    </style>
+
     <style name="RecyclerViewStyleOf16Dp">
         <item name="android:layout_marginRight">@dimen/spacing_16</item>
         <item name="android:layout_marginLeft">@dimen/spacing_16</item>

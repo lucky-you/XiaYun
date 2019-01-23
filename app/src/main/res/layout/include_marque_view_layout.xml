@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_32"
+    android:orientation="horizontal">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_people_imageView"
+        android:layout_width="@dimen/spacing_22"
+        android:layout_height="@dimen/spacing_22"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_12"
+        android:src="@drawable/ic_user_default_header" />
+
+    <TextView
+        android:id="@+id/tv_who_get_money_of_date"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_8"
+        android:text="@string/who_get_money_of_date"
+        android:textColor="@color/color_cb955c"
+        android:textSize="@dimen/tv_13sp" />
+
+</LinearLayout>

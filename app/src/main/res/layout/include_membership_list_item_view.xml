@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/spacing_20"
+    android:orientation="horizontal">
+
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:text="@string/members"
+        android:visibility="visible"
+        android:textSize="@dimen/tv_11sp" />
+
+    <TextView
+        android:id="@+id/tv_members_number"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_3"
+        android:text="130****1234"
+        android:textColor="@color/color_f9b10c_orange"
+        android:textSize="@dimen/tv_11sp" />
+
+    <TextView
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_5"
+        android:text="@string/Accumulation"
+        android:visibility="visible"
+        android:textSize="@dimen/tv_11sp" />
+
+    <TextView
+        android:id="@+id/tv_Accumulation_price"
+        style="@style/TextViewStyleOf14Sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_3"
+        android:text="@string/total_money"
+        android:visibility="visible"
+        android:textColor="@color/color_f9b10c_orange"
+        android:textSize="@dimen/tv_11sp" />
+
+
+</LinearLayout>
