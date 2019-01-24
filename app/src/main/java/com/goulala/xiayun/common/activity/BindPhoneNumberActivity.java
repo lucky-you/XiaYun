@@ -17,6 +17,7 @@ import com.goulala.xiayun.common.iview.IBindPhoneNumberView;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.utils.PhoneUtils;
 import com.goulala.xiayun.common.utils.UserUtils;
 
@@ -192,8 +193,9 @@ public class BindPhoneNumberActivity extends BaseMvpActivity<BindPhoneNumberPres
         param.put(ApiParam.MOBILE_KEY, phoneNumber);
         param.put(ApiParam.CAPTCHA_KEY, VerificationCode);
         String paramsJsonObject = JsonUtils.toJson(param);
+        LogUtils.showLog(userToken, paramsJsonObject);
         mvpPresenter.startLoginOrBindPhoneNumber(requestType, userToken, paramsJsonObject);
-
+        showDialog("");
     }
 
     @Override
@@ -203,6 +205,7 @@ public class BindPhoneNumberActivity extends BaseMvpActivity<BindPhoneNumberPres
 
     @Override
     public void loginOrBindPhoneNumberSuccess(int requestType, UserInfo userInfo, String message) {
+        dismissDialog();
         if (userInfo != null && !TextUtils.isEmpty(userInfo.getToken())) {
             switch (requestType) {
                 case ConstantValue.THE_CLASS_OF_BIND_PHONE_NUMBER_TYPE:
@@ -237,8 +240,9 @@ public class BindPhoneNumberActivity extends BaseMvpActivity<BindPhoneNumberPres
         wxAccountBindParam.put(ApiParam.HEAD_IMAGE_URL, userImageView);
         wxAccountBindParam.put(ApiParam.SEX, userGender);
         String wxAccountBindParamJson = JsonUtils.toJson(wxAccountBindParam);
+        LogUtils.showLog(userToken, wxAccountBindParamJson);
         mvpPresenter.startLoginOrBindPhoneNumber(ConstantValue.THE_TYPE_OF_BIND_WECHAT, userToken, wxAccountBindParamJson);
-
+        showDialog("");
     }
 
 

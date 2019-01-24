@@ -17,9 +17,9 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     /**
-     * 登录
+     * 使用微信登录
      */
-    public void toLogin(String token, String param) {
+    public void toUseWeChatLogin(String token, String param) {
         addDisposableObserver(apiService.publicResultOfUserInfoDate(token, param), new ApiServiceCallback<UserInfo>() {
             @Override
             public void onSuccess(UserInfo response, String message) {
