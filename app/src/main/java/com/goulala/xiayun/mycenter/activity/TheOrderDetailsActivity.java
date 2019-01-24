@@ -7,53 +7,53 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cnsunrun.alipaylibrary.alipay.AliPayUtils;
-import com.goulala.bean.Notice;
-import com.goulala.callback.CancelOrDetermineClickListener;
-import com.goulala.callback.CancelPaymentClickListener;
-import com.goulala.dialog.PasswordDialogUtils;
-import com.goulala.utils.CommonUtil;
-import com.goulala.utils.DateUtils;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.view.PasswordEditText;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
-import com.goulala.xiayun.base.ApiService;
-import com.goulala.xiayun.common.model.AccountBalance;
-import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.base.ConstantValue;
-import com.goulala.xiayun.common.utils.UserUtils;
+import com.goulala.xiayun.common.callback.CancelOrDetermineClickListener;
+import com.goulala.xiayun.common.callback.CancelPaymentClickListener;
+import com.goulala.xiayun.common.dialog.PasswordDialogUtils;
+import com.goulala.xiayun.common.model.AccountBalance;
+import com.goulala.xiayun.common.model.Notice;
+import com.goulala.xiayun.common.utils.AlertDialogUtils;
+import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.DateUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.PhoneUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
+import com.goulala.xiayun.common.view.PasswordEditText;
 import com.goulala.xiayun.home.dialog.ThePaymentDialog;
-import com.goulala.xiayun.mycenter.IPresenter.TheOrderDetailsPresenter;
 import com.goulala.xiayun.mycenter.adapter.TheOrderDetailsAdapter;
 import com.goulala.xiayun.mycenter.callback.OnRefundGoodOrMoneyClickListener;
-import com.goulala.xiayun.mycenter.contact.GoodOrdersContact;
-import com.goulala.xiayun.mycenter.contact.TheOrderDetailsContact;
+import com.goulala.xiayun.mycenter.model.AllOrderListMessage;
 import com.goulala.xiayun.mycenter.model.OrderAddressBean;
 import com.goulala.xiayun.mycenter.model.OrderDetailsMessage;
 import com.goulala.xiayun.mycenter.model.OrderPayInfo;
 import com.goulala.xiayun.mycenter.model.ShopDateMessage;
 import com.goulala.xiayun.mycenter.model.ShopItemMessage;
-import com.goulala.xiayun.mycenter.utils.AlertDialogUtils;
+import com.goulala.xiayun.mycenter.presenter.GoodListPresenter;
+import com.goulala.xiayun.mycenter.view.IGoodListView;
 import com.goulala.xiayun.wxapi.WeiXinPayUtils;
 import com.goulala.xiayun.wxapi.WxPayReqInfo;
-import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * 订单详情
  */
-public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsContact.presenter> implements TheOrderDetailsContact.view {
+public class TheOrderDetailsActivity extends BaseMvpActivity<GoodListPresenter> implements IGoodListView {
 
     private TextView tvStatusName;
     private TextView tvStatusDescription;
@@ -114,10 +114,30 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
         context.startActivity(intent);
     }
 
+
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_the_order_details);
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+    protected GoodListPresenter createPresenter() {
+        return new GoodListPresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+        payNumber = getIntent().getStringExtra(ApiParam.PAY_NO);
+        shopOrder = getIntent().getStringExtra(ApiParam.SHOP_ORDER);
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_the_order_details;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+        initTitle(mContext.getString(R.string.The_order_details));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         tvStatusName = get(R.id.tv_status_name);
         tvStatusDescription = get(R.id.tv_status_description);
         llOrderStatusBackgroundLayout = get(R.id.ll_order_status_background_layout);
@@ -145,27 +165,26 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
         smartRefreshLayout = get(R.id.smartRefreshLayout);
         llBottomStatusLayout = get(R.id.ll_bottom_status_layout);
         registerEvent();
-
-    }
-
-    @Override
-    protected void bindViews() {
-        initTitle(mContext.getString(R.string.The_order_details));
-        payNumber = getIntent().getStringExtra(ApiParam.PAY_NO);
-        shopOrder = getIntent().getStringExtra(ApiParam.SHOP_ORDER);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
         smartRefreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         smartRefreshLayout.setEnableLoadMore(false);
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
-
+    public void processLogic(Bundle savedInstanceState) {
         theOrderDetailsAdapter = new TheOrderDetailsAdapter(shopDateMessageList);
         publicRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         publicRecyclerView.setAdapter(theOrderDetailsAdapter);
         publicRecyclerView.setNestedScrollingEnabled(false);
         publicRecyclerView.setFocusable(false);
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getDate();
+                refreshLayout.finishRefresh();
+            }
+        });
 
     }
 
@@ -173,11 +192,6 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
     protected void onResume() {
         super.onResume();
         getDate();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     /**
@@ -190,17 +204,6 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
         getAccountBalanceOrCheckPasswordExist(ApiParam.ACCOUNT_BALANCE_URL, ApiParam.GET_ACCOUNT_BALANCE_TYPE);
     }
 
-    @Override
-    protected void setListener() {
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getDate();
-                refreshLayout.finishRefresh();
-            }
-        });
-    }
-
     /**
      * 获取订单信息
      */
@@ -210,13 +213,12 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
         orderDetailsParam.put(ApiParam.PAY_NO, payNumber);
         orderDetailsParam.put(ApiParam.SHOP_ORDER, shopOrder);
         String orderDetailsParamJson = JsonUtils.toJson(orderDetailsParam);
-        Logger.w("xy", orderDetailsParamJson + "userToken=" + userToken);
         if (!TextUtils.isEmpty(userToken)) {
-            presenter.getOrderDetails(mContext, userToken, orderDetailsParamJson);
+            mvpPresenter.getOrderDetails(userToken, orderDetailsParamJson);
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Notice notice) {
         if (notice != null) {
             switch (notice.type) {
@@ -244,7 +246,7 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                     break;
                 case ConstantValue.APPLY_FOR_REFUND_MONEY_OF_NOT_SEND_GOOD_TYPE: //待发货状态下，点击已申请退款按钮，进入退款详情界面
                     String applyRefundOrder = (String) notice.contentOne;
-                    DetailsOfTheRefundActivity.start(mContext, applyRefundOrder);
+                    TheGoodDetailsRefundActivity.start(mContext, applyRefundOrder);
                     break;
                 case ConstantValue.APPLY_FOR_REFUND_MONEY_DETAILS_TYPE: //待收货状态下，点击已申请退款按钮，进入退款详情界面
                     String applyRefundOrderOne = (String) notice.contentOne;
@@ -259,8 +261,8 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.tv_copy_The_order_no:
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 将文本内容放到系统剪贴板里。
@@ -277,21 +279,20 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                 onButtonStatusThreeClick();
                 break;
         }
-
     }
 
     //按钮一的监听
     private void onButtonStatusOneClick() {
         switch (thatOrderStatus) {
             case ApiParam.THE_ORDER_STATUS_TYPE_OF_TO_PAID:
-                helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
+//                helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
                 //联系客服
             case ApiParam.THE_ORDER_STATUS_TYPE_OF_SEND_THE_GOOD:
-                helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
+//                helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
                 //联系客服
                 break;
             case ApiParam.THE_ORDER_STATUS_TYPE_OF_FOR_THE_GOOD:
-                helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
+//                helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
                 //联系客服
                 break;
             case ApiParam.THE_ORDER_STATUS_TYPE_OF_DEAL:
@@ -357,11 +358,6 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                 //在此状态下不显示
                 break;
         }
-    }
-
-    @Override
-    public TheOrderDetailsContact.presenter createPresenter() {
-        return new TheOrderDetailsPresenter(this);
     }
 
     @Override
@@ -664,18 +660,36 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
      */
     private void setAddressDateToView(OrderAddressBean shopAddressBean) {
         tvTheConsigneeName.setText(mContext.getString(R.string.The_consignee_three, shopAddressBean.getConsignee_name()));
-        tvTvTheConsigneePhoneNumber.setText(CommonUtil.mobilNumber(shopAddressBean.getConsignee_mobile()));
+        tvTvTheConsigneePhoneNumber.setText(PhoneUtils.mobilNumber(shopAddressBean.getConsignee_mobile()));
         tvShippingAddress.setText(mContext.getString(R.string.Shipping_address, shopAddressBean.getConsignee_address()));
     }
 
     @Override
-    public void checkPasswordExist(boolean isExist) {
-        if (isExist) {
-            //设置了密码，直接输密码，支付
-            editPayPassword();
-        } else {
-            //没有设置密码，去设置界面，设置支付密码
-            setCommissionPaymentPassword();
+    public void getOrderListSuccess(AllOrderListMessage orderMessage) {
+
+    }
+
+    @Override
+    public void checkPasswordExistOrOperationOrder(int requestType, boolean isExist, String message) {
+        switch (requestType) {
+            case ApiParam.CHECK_PASSWORD_EXIST_TYPE:
+                if (isExist) {
+                    //设置了密码，直接输密码，支付
+                    editPayPassword();
+                } else {
+                    //没有设置密码，去设置界面，设置支付密码
+                    setCommissionPaymentPassword();
+                }
+                break;
+            case ApiParam.CANCEL_THAT_ORDER_TYPE://取消订单:
+            case ApiParam.DELETE_THAT_ORDER_TYPE: //删除订单
+            case ApiParam.CONFIRM_THAT_GOOD_TYPE://确认收货
+                showToast(message);
+                finish();
+//                onResume();
+                break;
+
+
         }
     }
 
@@ -695,7 +709,7 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                 new PasswordEditText.PasswordFullListener() {
                     @Override
                     public void passwordFull(String password) {
-                        selectPayTypeToPaymentOrder(payOrderNumber, payOrderMoney, password, GoodOrdersContact.PAY_OF_BALANCE_TYPE);
+                        selectPayTypeToPaymentOrder(payOrderNumber, payOrderMoney, password, ConstantValue.PAY_OF_BALANCE_TYPE);
                     }
                 });
 
@@ -742,11 +756,11 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                         break;
                     case ThePaymentDialog.PAY_OF_ALIPAY_TYPE:
                         //支付宝支付
-                        selectPayTypeToPaymentOrder(payOrderNumber, payMoney, "", GoodOrdersContact.PAY_OF_ALIPAY_TYPE);
+                        selectPayTypeToPaymentOrder(payOrderNumber, payMoney, "", ConstantValue.PAY_OF_ALIPAY_TYPE);
                         break;
                     case ThePaymentDialog.PAY_OF_WECHAT_TYPE:
                         //微信支付
-                        selectPayTypeToPaymentOrder(payOrderNumber, payMoney, "", GoodOrdersContact.PAY_OF_WECHAT_TYPE);
+                        selectPayTypeToPaymentOrder(payOrderNumber, payMoney, "", ConstantValue.PAY_OF_WECHAT_TYPE);
                         break;
                 }
             }
@@ -765,11 +779,10 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
         Map<String, String> checkParam = new HashMap<>();
         checkParam.put(ApiParam.BASE_METHOD_KEY, requestUrl);
         String checkParamJson = JsonUtils.toJson(checkParam);
-        Logger.w("xy", checkParamJson + "userToken" + userToken);
         if (ApiParam.GET_ACCOUNT_BALANCE_TYPE == requestType) {
-            presenter.getAccountBalance(userToken, checkParamJson);
+            mvpPresenter.getAccountBalance(userToken, checkParamJson);
         } else {
-            presenter.checkPasswordExist(userToken, checkParamJson);
+            mvpPresenter.checkPasswordExistOrDeleteOrder(ApiParam.CHECK_PASSWORD_EXIST_TYPE, userToken, checkParamJson);
         }
 
     }
@@ -785,17 +798,16 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
         paymentOrderParam.put(ApiParam.PAYPASS, password);
         paymentOrderParam.put(ApiParam.TYPE, String.valueOf(payType));
         String paymentOrderParamJson = JsonUtils.toJson(paymentOrderParam);
-        Logger.w("xy", paymentOrderParamJson + "userToken=" + userToken);
         switch (payType) {
             //支付类型 1:余额支付 2:支付宝支付 3:微信支付
-            case GoodOrdersContact.PAY_OF_BALANCE_TYPE:
-                presenter.useBalanceOrAliPayPayment(mContext, GoodOrdersContact.PAY_OF_BALANCE_TYPE, userToken, paymentOrderParamJson);
+            case ConstantValue.PAY_OF_BALANCE_TYPE:
+                mvpPresenter.useBalanceOrAliPayPayment(ConstantValue.PAY_OF_BALANCE_TYPE, userToken, paymentOrderParamJson);
                 break;
-            case GoodOrdersContact.PAY_OF_ALIPAY_TYPE:
-                presenter.useBalanceOrAliPayPayment(mContext, GoodOrdersContact.PAY_OF_ALIPAY_TYPE, userToken, paymentOrderParamJson);
+            case ConstantValue.PAY_OF_ALIPAY_TYPE:
+                mvpPresenter.useBalanceOrAliPayPayment(ConstantValue.PAY_OF_ALIPAY_TYPE, userToken, paymentOrderParamJson);
                 break;
-            case GoodOrdersContact.PAY_OF_WECHAT_TYPE:
-                presenter.useWeChatPayment(mContext, userToken, paymentOrderParamJson);
+            case ConstantValue.PAY_OF_WECHAT_TYPE:
+                mvpPresenter.useWeChatPayment(userToken, paymentOrderParamJson);
                 break;
         }
     }
@@ -837,9 +849,8 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                 break;
         }
         String cancelParamJson = JsonUtils.toJson(cancelOrderParam);
-        Logger.w("xy", cancelParamJson + "userToken=" + userToken);
         if (!TextUtils.isEmpty(userToken)) {
-            presenter.userCancelOrDeleteThatOrder(requestType, userToken, cancelParamJson);
+            mvpPresenter.checkPasswordExistOrDeleteOrder(requestType, userToken, cancelParamJson);
         }
     }
 
@@ -875,14 +886,14 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
     @Override
     public void useBalanceOrAliPayPaymentSuccess(int requestType, String orderMessage) {
         switch (requestType) {
-            case GoodOrdersContact.PAY_OF_BALANCE_TYPE:
+            case ConstantValue.PAY_OF_BALANCE_TYPE:
                 //余额支付成功
                 if (!TextUtils.isEmpty(orderMessage)) {
                     showToast(orderMessage);
                     finish();
                 }
                 break;
-            case GoodOrdersContact.PAY_OF_ALIPAY_TYPE:
+            case ConstantValue.PAY_OF_ALIPAY_TYPE:
                 //支付宝支付成功
                 if (!TextUtils.isEmpty(orderMessage)) {
                     userAliPayPaymentOrder(orderMessage, new AliPayUtils.OnAlipayListener() {
@@ -890,13 +901,11 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
                         public void onSuccess() {
                             showToast(mContext.getString(R.string.Pay_for_success));
                             finish();
-                            super.onSuccess();
                         }
 
                         @Override
                         public void onCancel() {
                             showToast(mContext.getString(R.string.Cancel_the_payment));
-                            super.onCancel();
                         }
                     });
                 }
@@ -907,46 +916,31 @@ public class TheOrderDetailsActivity extends BaseMVPActivity<TheOrderDetailsCont
     @Override
     public void userPaymentFailed(int requestType, String message) {
         switch (requestType) {
-            case GoodOrdersContact.PAY_OF_BALANCE_TYPE:
+            case ConstantValue.PAY_OF_BALANCE_TYPE:
                 //余额支付失败
                 showToast(message);
                 break;
-            case GoodOrdersContact.PAY_OF_ALIPAY_TYPE:
+            case ConstantValue.PAY_OF_ALIPAY_TYPE:
                 //支付宝支付失败
                 showToast(message);
                 break;
-            case GoodOrdersContact.PAY_OF_WECHAT_TYPE:
+            case ConstantValue.PAY_OF_WECHAT_TYPE:
                 //微信支付失败
                 showToast(message);
                 break;
         }
     }
 
+
     @Override
-    public void cancelOrDeleteOrderSuccess(int requestType, String message) {
+    public void onNewWorkException(String message) {
         showToast(message);
-        finish();
+        dismissDialog();
     }
 
     @Override
-    public void applyForAfterSalesSuccess(String message) {
+    public void onRequestFailure(int resultCode, String message) {
         showToast(message);
+        dismissDialog();
     }
-
-    @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
-
-    }
-
 }

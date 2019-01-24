@@ -84,7 +84,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll"
+                android:id="@+id/llCouponLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_26"
@@ -159,14 +159,14 @@
 
             </LinearLayout>
 
-              <TextView
-                  android:id="@+id/tv_have_member_user_name"
-                  style="@style/TextViewStyleOf14Sp"
-                  android:layout_gravity="center_horizontal"
-                  android:layout_marginTop="@dimen/spacing_120"
-                  android:gravity="center"
-                  android:text="@string/Already_member"
-                  android:visibility="gone" />
+            <TextView
+                android:id="@+id/tv_have_member_user_name"
+                style="@style/TextViewStyleOf14Sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_120"
+                android:gravity="center"
+                android:text="@string/Already_member"
+                android:visibility="gone" />
         </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
@@ -218,33 +218,6 @@
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
-        <!-- <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="@dimen/spacing_16"
-             android:layout_marginRight="@dimen/spacing_16"
-             android:layout_marginBottom="@dimen/spacing_20"
-             android:orientation="vertical">
-
-             <TextView
-                 android:id="@+id/tv_Immediately_opened"
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/spacing_44"
-                 android:background="@drawable/ic_member_bottom_button_background"
-                 android:gravity="center"
-                 android:text="@string/Immediately_opened"
-                 android:textColor="@color/color_6e624a"
-                 android:textSize="@dimen/tv_16sp" />
-
-             <TextView
-                 android:id="@+id/tv_User_agreement"
-                 style="@style/TextViewStyleOf14Sp"
-                 android:layout_gravity="center_vertical"
-                 android:layout_marginTop="@dimen/spacing_8"
-                 android:text="@string/User_agreement_one"
-                 android:textSize="@dimen/tv_11sp" />
-
-         </LinearLayout>-->
     </LinearLayout>
 
     <LinearLayout

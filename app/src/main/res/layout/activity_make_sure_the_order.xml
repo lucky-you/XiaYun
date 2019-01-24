@@ -5,10 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <View
-        android:id="@+id/fake_status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
 
     <include layout="@layout/include_titlebar_layout" />
 
@@ -26,6 +22,11 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
+
+            <View
+                android:id="@+id/fake_status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
 
             <include layout="@layout/include_good_have_shipping_address_layout" />
 

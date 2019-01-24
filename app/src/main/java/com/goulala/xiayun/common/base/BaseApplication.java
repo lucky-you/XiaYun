@@ -10,8 +10,11 @@ import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.utils.CrashHandler;
 import com.goulala.xiayun.common.utils.FileUtils;
 import com.goulala.xiayun.common.utils.SPUtils;
+import com.mob.MobSDK;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 
 /**
@@ -21,7 +24,7 @@ public class BaseApplication extends Application {
 
     protected static BaseApplication instance;
     private UserInfo userInfo;
-
+    private RefWatcher mRefWatcher;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,6 +33,8 @@ public class BaseApplication extends Application {
         FileUtils.init("xiayun");
         Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(instance));
         initImageLoader();
+        initLeakCanary();
+        MobSDK.init(this);
     }
 
     private void initImageLoader() {
@@ -42,7 +47,14 @@ public class BaseApplication extends Application {
         }
         ImageLoader.getInstance().init(config.build());
     }
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            mRefWatcher = RefWatcher.DISABLED;
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
 
+    }
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

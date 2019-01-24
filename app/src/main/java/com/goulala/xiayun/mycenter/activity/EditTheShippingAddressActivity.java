@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import com.goulala.xiayun.common.utils.ButtonClickUtils;
 import com.goulala.xiayun.common.utils.InputMethodKeyBroadUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.PhoneUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.model.ShoppingAddressList;
 import com.goulala.xiayun.shopcar.presenter.ShippingAddressPresenter;
 import com.goulala.xiayun.shopcar.view.IShippingAddressView;
@@ -111,7 +113,10 @@ public class EditTheShippingAddressActivity extends BaseMvpActivity<ShippingAddr
 
     @Override
     public void bindViews(View contentView) {
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         editFillInTheConsigneeName = get(R.id.edit_Fill_in_the_consignee_name);
         editEnterMobilePhoneNumber = get(R.id.edit_Enter_mobile_phone_number);
         tvSelectCity = get(R.id.tv_Select_city);

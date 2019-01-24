@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.common.activity.LoginActivity;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.mvp.MvpFragment;
@@ -94,7 +95,7 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends MvpFragme
     public boolean checkLogin() {
         getCommonUserData();
         if (TextUtils.isEmpty(userToken)) {
-//            intentToActivity(LoginActivity.class);
+            intentToActivity(LoginActivity.class);
             return false;
         }
         return true;

@@ -5,8 +5,8 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.goulala.utils.ImageLoaderUtils;
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.common.imageloader.ImageLoaderUtils;
 
 import java.util.List;
 

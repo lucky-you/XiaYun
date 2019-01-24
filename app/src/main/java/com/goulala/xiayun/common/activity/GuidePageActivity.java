@@ -14,6 +14,7 @@ import com.goulala.xiayun.common.permission.AndPermissionListener;
 import com.goulala.xiayun.common.permission.AndPermissionUtils;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.SPUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageC
 
     @Override
     public void bindViews(View contentView) {
+        StatusBarUtil.setStatusBar(this, false, false);
         viewPager = get(R.id.viewPager);
         btStartMain = get(R.id.bt_start_main);
         btStartMain.setOnClickListener(this);

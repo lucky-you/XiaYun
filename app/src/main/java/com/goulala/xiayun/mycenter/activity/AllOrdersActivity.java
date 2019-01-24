@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.flyco.tablayout.SlidingTabLayout;
@@ -16,6 +17,7 @@ import com.goulala.xiayun.common.base.BaseActivity;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.SizeUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.fragment.GoodsListFragment;
 
 import java.util.ArrayList;
@@ -53,7 +55,10 @@ public class AllOrdersActivity extends BaseActivity {
     @Override
     public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.all_the_orders));
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         withdrawalSubsidiaryTabLayout = get(R.id.withdrawal_subsidiary_tabLayout);
         DivDeLine = get(R.id.DivDe_Line);
         withdrawalSubsidiaryViewPager = get(R.id.withdrawal_subsidiary_viewPager);

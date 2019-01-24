@@ -4,7 +4,7 @@ import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.retrofit.ApiServiceCallback;
 import com.goulala.xiayun.mycenter.model.ApplyRefundDetailsDate;
 import com.goulala.xiayun.mycenter.model.BankCardList;
-import com.goulala.xiayun.mycenter.view.IDetailsOfTheRefundView;
+import com.goulala.xiayun.mycenter.view.ITheGoodDetailsRefundView;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import java.util.List;
  * date       : 2019/1/24
  * function  :  退款--退货 公用的presenter
  */
-public class DetailsOfTheRefundPresenter extends BasePresenter<IDetailsOfTheRefundView> {
-    public DetailsOfTheRefundPresenter(IDetailsOfTheRefundView mvpView) {
+public class TheGoodDetailsRefundPresenter extends BasePresenter<ITheGoodDetailsRefundView> {
+    public TheGoodDetailsRefundPresenter(ITheGoodDetailsRefundView mvpView) {
         super(mvpView);
     }
 

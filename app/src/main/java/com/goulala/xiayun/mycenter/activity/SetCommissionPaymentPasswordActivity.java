@@ -3,6 +3,7 @@ package com.goulala.xiayun.mycenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -12,16 +13,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
-import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.base.ConstantValue;
-import com.goulala.xiayun.mycenter.IPresenter.SetCommissionPaymentPasswordPresenter;
-import com.goulala.xiayun.mycenter.contact.SetCommissionPaymentPasswordContact;
-import com.orhanobut.logger.Logger;
+import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.mycenter.presenter.ResetCommissionPaymentPresenter;
+import com.goulala.xiayun.mycenter.view.IResetCommissionPaymentView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +29,7 @@ import java.util.Map;
  * 设置佣金的支付密码 , 重置佣金支付密码 ,第二步，通过获取到的验证码来设置或者重置密码
  * 公用的activity
  */
-public class SetCommissionPaymentPasswordActivity extends BaseMVPActivity<SetCommissionPaymentPasswordContact.presenter> implements SetCommissionPaymentPasswordContact.view {
+public class SetCommissionPaymentPasswordActivity extends BaseMvpActivity<ResetCommissionPaymentPresenter> implements IResetCommissionPaymentView {
 
     private TextView tvSetThePassword;
     private EditText editSetThePassword;
@@ -54,8 +53,22 @@ public class SetCommissionPaymentPasswordActivity extends BaseMVPActivity<SetCom
 
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_set_commission_payment_password);
+    protected ResetCommissionPaymentPresenter createPresenter() {
+        return new ResetCommissionPaymentPresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+        thatClassType = getIntent().getIntExtra(ConstantValue.TITLE, -1);
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_set_commission_payment_password;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
         BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
         tvSetThePassword = get(R.id.tv_Set_the_password);
         editSetThePassword = get(R.id.edit_Set_the_password);
@@ -71,12 +84,6 @@ public class SetCommissionPaymentPasswordActivity extends BaseMVPActivity<SetCom
         tvForgetTheOriginalPassword.setOnClickListener(this);
         tvDetermine = get(R.id.tv_determine);
         tvDetermine.setOnClickListener(this);
-
-    }
-
-    @Override
-    protected void bindViews() {
-        thatClassType = getIntent().getIntExtra(ConstantValue.TITLE, -1);
         if (ConstantValue.SET_THE_COMMISSION_PAYMENT_PASSWORD == thatClassType) {
             initTitle(mContext.getString(R.string.Set_the_commission_payment_password));
         } else {
@@ -86,19 +93,13 @@ public class SetCommissionPaymentPasswordActivity extends BaseMVPActivity<SetCom
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected void setListener() {
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.rl_Set_the_password:
                 //设置密码
                 if (isShowPassword) {
@@ -162,39 +163,33 @@ public class SetCommissionPaymentPasswordActivity extends BaseMVPActivity<SetCom
         resetParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.SET_OR_RESET_PASSWORD_URL);
         resetParam.put(ApiParam.PAYPASS, password);
         String resetParamJson = JsonUtils.toJson(resetParam);
-        Logger.w("xy", resetParamJson + "userToken=" + userToken);
-        presenter.resetPassword(mContext, userToken, resetParamJson);
-
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.validationCodeOrResetPassword(IResetCommissionPaymentView.RESET_PASSWORD, userToken, resetParamJson);
+        showDialog("");
 
     }
 
     @Override
-    public SetCommissionPaymentPasswordContact.presenter createPresenter() {
-        return new SetCommissionPaymentPasswordPresenter(this);
-    }
-
-    @Override
-    public void resetPasswordSuccess(boolean isSuccess, String message) {
+    public void validationCodeOrResetPasswordSuccess(int requestType, boolean isSuccess, String message) {
+        dismissDialog();
         showToast(message);
-        if (isSuccess) {
-            finish();
+        switch (requestType) {
+            case IResetCommissionPaymentView.RESET_PASSWORD:
+                if (isSuccess)
+                    finish();
+                break;
         }
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
-
+    public void onNewWorkException(String message) {
+        dismissDialog();
+        showToast(message);
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
+    public void onRequestFailure(int resultCode, String message) {
+        dismissDialog();
+        showToast(message);
     }
 }

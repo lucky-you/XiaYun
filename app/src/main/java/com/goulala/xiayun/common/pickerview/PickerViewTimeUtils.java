@@ -56,8 +56,9 @@ public class PickerViewTimeUtils {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     Gravity.BOTTOM);
-            params.leftMargin = 0;
-            params.rightMargin = 0;
+//            params.leftMargin = 0;
+//            params.rightMargin = 0;
+            params.setMargins(0,0,0,0);
             pvTime.getDialogContainerLayout().setLayoutParams(params);
             Window dialogWindow = mDialog.getWindow();
             if (dialogWindow != null) {

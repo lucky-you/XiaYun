@@ -20,6 +20,7 @@ import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.LogUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.utils.UserUtils;
 import com.goulala.xiayun.common.view.RoundImageView;
 import com.goulala.xiayun.wxapi.WeiXinPayUtils;
@@ -65,6 +66,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements IL
 
     @Override
     public void bindViews(View contentView) {
+        StatusBarUtil.setStatusBar(this, false, false);
         get(R.id.iv_back).setOnClickListener(this);
         civGllLogo = get(R.id.civ_gll_logo);
         tvWeChatAuthorizesLogin = get(R.id.tv_WeChat_authorizes_login);

@@ -16,7 +16,9 @@ import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.LogUtils;
+import com.goulala.xiayun.common.utils.SizeUtils;
 import com.goulala.xiayun.common.widget.DividerGridItemDecoration;
+import com.goulala.xiayun.common.widget.VipSpacesItemDecoration;
 import com.goulala.xiayun.home.adapter.NewExclusiveAdapter;
 import com.goulala.xiayun.home.model.CoupleCouponsBean;
 import com.goulala.xiayun.home.model.CouponsList;
@@ -90,7 +92,8 @@ public class NewExclusiveActivity extends BaseMvpActivity<NewExclusivePresenter>
     @Override
     public void processLogic(Bundle savedInstanceState) {
         newExclusiveRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        newExclusiveRecyclerView.addItemDecoration(new DividerGridItemDecoration(mContext, mContext.getResources().getColor(R.color.white), 7));
+//        newExclusiveRecyclerView.addItemDecoration(new DividerGridItemDecoration(mContext, mContext.getResources().getColor(R.color.white), 7));
+        newExclusiveRecyclerView.addItemDecoration(new VipSpacesItemDecoration(SizeUtils.dp2px(15), SizeUtils.dp2px(15), SizeUtils.dp2px(15), SizeUtils.dp2px(15)));
         newExclusiveAdapter = new NewExclusiveAdapter(couponList);
         newExclusiveRecyclerView.setAdapter(newExclusiveAdapter);
         EmptyViewUtils.bindEmptyView(mContext, newExclusiveAdapter, mContext.getString(R.string.No_coupons));

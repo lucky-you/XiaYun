@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,32 +17,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.goulala.callback.CancelOrDetermineClickListener;
-import com.goulala.utils.DateUtils;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
-import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.base.ConstantValue;
+import com.goulala.xiayun.common.callback.CancelOrDetermineClickListener;
+import com.goulala.xiayun.common.pickerview.OnSelectConditionsClickListener;
+import com.goulala.xiayun.common.pickerview.PickerViewConditionsUtils;
+import com.goulala.xiayun.common.utils.AlertDialogUtils;
+import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.DateUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
-import com.goulala.xiayun.mycenter.IPresenter.ApplyForAfterSalesPresenter;
 import com.goulala.xiayun.mycenter.adapter.ImageViewAdapter;
 import com.goulala.xiayun.mycenter.adapter.ShopListMessageAdapter;
 import com.goulala.xiayun.mycenter.callback.OnRefundGoodOrMoneyClickListener;
-import com.goulala.xiayun.mycenter.callback.OnSelectConditionsClickListener;
-import com.goulala.xiayun.mycenter.contact.ApplyForAfterSalesContact;
 import com.goulala.xiayun.mycenter.dialog.OperatingResultDialog;
 import com.goulala.xiayun.mycenter.model.ApplyRefundDetailsDate;
 import com.goulala.xiayun.mycenter.model.BankCardList;
 import com.goulala.xiayun.mycenter.model.RecordBean;
 import com.goulala.xiayun.mycenter.model.ShopItemMessage;
-import com.goulala.xiayun.mycenter.utils.AlertDialogUtils;
-import com.goulala.xiayun.mycenter.utils.PickerViewConditionsUtils;
+import com.goulala.xiayun.mycenter.presenter.TheGoodDetailsRefundPresenter;
+import com.goulala.xiayun.mycenter.view.ITheGoodDetailsRefundView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -56,9 +55,10 @@ import java.util.Map;
 /**
  * 申请售后- 退货详情
  * 申请售后- 退款详情
+ * 在发货之后使用
  * 公用的activity
  */
-public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterSalesContact.presenter> implements ApplyForAfterSalesContact.view {
+public class ReturnTheGoodDetailsActivity extends BaseMvpActivity<TheGoodDetailsRefundPresenter> implements ITheGoodDetailsRefundView {
 
 
     private TextView tvRefundStatus;
@@ -129,10 +129,26 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         context.startActivity(intent);
     }
 
+
     @Override
-    protected void loadViewLayout() {
+    protected TheGoodDetailsRefundPresenter createPresenter() {
+        return new TheGoodDetailsRefundPresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+        applyRefundType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
+        applyRefundServiceOrder = getIntent().getStringExtra(ConstantValue.ORDER_NUMBER);
+    }
+
+    @Override
+    public int loadViewLayout() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setContentView(R.layout.activity_return_the_good_details);
+        return R.layout.activity_return_the_good_details;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
         BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
         tvRefundStatus = get(R.id.tv_refund_status);
         ivSubmitAnApplication = get(R.id.iv_Submit_an_application);
@@ -183,18 +199,10 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         tvOrderStatusThree.setOnClickListener(this);
         llBottomStatusLayout = get(R.id.ll_bottom_status_layout);
         smartRefreshLayout = get(R.id.smartRefreshLayout);
-
-
-    }
-
-    @Override
-    protected void bindViews() {
         //底部布局是复用的，所以一开始只显示按钮二
         tvOrderStatusOne.setVisibility(View.GONE);
         tvOrderStatusTwo.setVisibility(View.VISIBLE);
         tvOrderStatusThree.setVisibility(View.GONE);
-        applyRefundType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
-        applyRefundServiceOrder = getIntent().getStringExtra(ConstantValue.ORDER_NUMBER);
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
         smartRefreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
         smartRefreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
@@ -214,7 +222,7 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
         getDate();
         shopListMessageAdapter = new ShopListMessageAdapter(shopItemMessageList);
         publicRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -227,19 +235,6 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         bgaSortablePhotoLayout.setAdapter(imageAdapter);
         bgaSortablePhotoLayout.setNestedScrollingEnabled(false);
 
-
-    }
-
-    private void getDate() {
-        //获取退款详情的数据
-        getApplyRefundMoneyDate();
-        //获取物流公司的信息
-        selectLogisticsCompany();
-
-    }
-
-    @Override
-    protected void setListener() {
         //图片查看大图
         imageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -259,6 +254,14 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         });
     }
 
+    private void getDate() {
+        //获取退款详情的数据
+        getApplyRefundMoneyDate();
+        //获取物流公司的信息
+        selectLogisticsCompany();
+
+    }
+
     /**
      * 获取退款详情的数据
      */
@@ -267,10 +270,9 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         applyRefundParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.AFTER_THE_DETAILS_URL);
         applyRefundParam.put(ApiParam.SERVICE_NO, applyRefundServiceOrder);
         String applyRefundParamJson = JsonUtils.toJson(applyRefundParam);
-        Logger.d("xy", applyRefundParamJson + "userToken=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.getApplyRefundDateDetails(mContext, userToken, applyRefundParamJson);
-        }
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.getApplyRefundDateDetails(userToken, applyRefundParamJson);
+
     }
 
     /**
@@ -280,15 +282,36 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         Map<String, String> LogisticsParam = new HashMap<>();
         LogisticsParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.SELECT_LOGISTICS_COMPANY_URL);
         String LogisticsParamJson = JsonUtils.toJson(LogisticsParam);
-        Logger.d("xy", LogisticsParamJson + "token=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.accessLogisticsCompany(mContext, userToken, LogisticsParamJson);
-        }
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.accessLogisticsCompany(userToken, LogisticsParamJson);
+
     }
 
     @Override
-    public ApplyForAfterSalesContact.presenter createPresenter() {
-        return new ApplyForAfterSalesPresenter(this);
+    public void setClickListener(View view) {
+        switch (view.getId()) {
+            case R.id.ll_Communication_record_layout:
+                //沟通记录
+                CommunicationRecordActivity.start(mContext, applyRefundServiceOrder);
+                break;
+            case R.id.rl_Please_select_logistics_company:
+                //选择物流公司
+                if (applyRefundStatus == ApiParam.CUSTOMER_SERVICE_APPROVAL) {
+                    chooseLogisticsCompany();
+                }
+                break;
+            case R.id.tv_order_status_one:
+                //按钮一
+                bottomButtonOneClick();
+                break;
+            case R.id.tv_order_status_two:
+                //按钮二
+                bottomButtonTwoClick();
+                break;
+            case R.id.tv_order_status_three:
+                //按钮三
+                break;
+        }
     }
 
     @Override
@@ -657,10 +680,10 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
         continueParam.put(ApiParam.SERVICE_INFO, LogisticsNumber);
         continueParam.put(ApiParam.EXPRESS_COMPANY_ID, String.valueOf(logisticsCompanyId));
         String continueParamJson = JsonUtils.toJson(continueParam);
-        Logger.d("xy", continueParamJson + "token=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.continueToSubmit(mContext, userToken, continueParamJson);
-        }
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.cancelTheApplicationOrSubmit(ConstantValue.CONTIUNE_TO_SUBMIT_TYPE, userToken, continueParamJson);
+        showDialog("");
+
     }
 
 
@@ -688,41 +711,12 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
                 cancelParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.CANCEL_THE_APPLICATION_URL);
                 cancelParam.put(ApiParam.SERVICE_NO, applyRefundServiceOrder);
                 String cancelParamJson = JsonUtils.toJson(cancelParam);
-                Logger.d("xy", cancelParamJson + "token=" + userToken);
                 if (!TextUtils.isEmpty(userToken)) {
-                    presenter.cancelTheApplication(mContext, userToken, cancelParamJson);
+                    mvpPresenter.cancelTheApplicationOrSubmit(ConstantValue.CANCEL_THE_APPLICATION_TYPE, userToken, cancelParamJson);
                 }
             }
         });
 
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_Communication_record_layout:
-                //沟通记录
-                CommunicationRecordActivity.start(mContext, applyRefundServiceOrder);
-                break;
-            case R.id.rl_Please_select_logistics_company:
-                //选择物流公司
-                if (applyRefundStatus == ApiParam.CUSTOMER_SERVICE_APPROVAL) {
-                    chooseLogisticsCompany();
-                }
-                break;
-            case R.id.tv_order_status_one:
-                //按钮一
-                bottomButtonOneClick();
-                break;
-            case R.id.tv_order_status_two:
-                //按钮二
-                bottomButtonTwoClick();
-                break;
-            case R.id.tv_order_status_three:
-                //按钮三
-                break;
-        }
     }
 
     /**
@@ -748,9 +742,20 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
     }
 
     @Override
-    public void cancelTheApplicationSuccess(String message) {
-        operatingResultDialog = AlertDialogUtils.showOperatingResultDialog(mContext, message);
-        finish();
+    public void cancelTheApplicationOrToSubmitSuccess(int requestType, String message) {
+        dismissDialog();
+        switch (requestType) {
+            case ConstantValue.CANCEL_THE_APPLICATION_TYPE://撤销申请
+                operatingResultDialog = AlertDialogUtils.showOperatingResultDialog(mContext, message);
+                finish();
+                break;
+            case ConstantValue.CONTIUNE_TO_SUBMIT_TYPE://继续提交
+                showToast(message);
+                //获取退款详情的数据
+                getApplyRefundMoneyDate();
+                break;
+        }
+
     }
 
     @Override
@@ -761,28 +766,15 @@ public class ReturnTheGoodDetailsActivity extends BaseMVPActivity<ApplyForAfterS
     }
 
     @Override
-    public void continueToSubmitSuccess(String message) {
+    public void onNewWorkException(String message) {
+        dismissDialog();
         showToast(message);
-        //获取退款详情的数据
-        getApplyRefundMoneyDate();
-
-    }
-
-
-    @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
 
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
+    public void onRequestFailure(int resultCode, String message) {
+        dismissDialog();
+        showToast(message);
     }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
-    }
-
 }

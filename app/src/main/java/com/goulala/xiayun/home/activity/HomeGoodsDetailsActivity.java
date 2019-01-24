@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.common.activity.LoginActivity;
 import com.goulala.xiayun.common.banner.BannerUtils;
 import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseMvpActivity;
@@ -29,6 +30,7 @@ import com.goulala.xiayun.common.utils.ButtonClickUtils;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.LogUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.home.adapter.ProductDetailsMessageAdapter;
 import com.goulala.xiayun.home.dialog.ShareCommissionDialog;
 import com.goulala.xiayun.home.model.DetailsDescriptionList;
@@ -36,6 +38,9 @@ import com.goulala.xiayun.home.model.GoodActivityBean;
 import com.goulala.xiayun.home.model.GoodsDetailsMessage;
 import com.goulala.xiayun.home.presenter.HomeGoodsDetailsPresenter;
 import com.goulala.xiayun.home.view.IHomeGoodsDetailsView;
+import com.goulala.xiayun.mycenter.activity.TheMemberCenterActivity;
+import com.goulala.xiayun.shopcar.activity.MakeSureTheOrderActivity;
+import com.goulala.xiayun.shopcar.activity.ShopCarActivity;
 import com.goulala.xiayun.shopcar.model.GoodItemList;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -150,6 +155,7 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
     @Override
     public void bindViews(View contentView) {
 //        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
         homeGoodDetailBanner = get(R.id.homeGoodDetailBanner);
         tvHaveSold = get(R.id.tv_have_sold);
         tvNoActivityGoodPrice = get(R.id.tv_no_activity_good_price);
@@ -330,7 +336,7 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
             case R.id.ic_details_nb_follow:
                 //收藏
                 if (TextUtils.isEmpty(userToken)) {
-//                    LoginActivity.start(mContext);
+                    LoginActivity.start(mContext);
                 } else {
                     if (thatGoodIsCollect) {
                         collectionOrCancelThatGood(ApiParam.CANCEL_COLLECTION_THAT_GOOD_VALUE, ConstantValue.CANCEL_COLLECTION_THAT_GOOD_TYPE);
@@ -344,7 +350,7 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
             case R.id.ic_details_nb_share:
                 //分享
                 if (TextUtils.isEmpty(userToken)) {
-//                    LoginActivity.start(mContext);
+                    LoginActivity.start(mContext);
                 } else {
                     startShareGood();
                 }
@@ -353,9 +359,9 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
             case R.id.tv_Open_membership_now:
                 //立即开通会员
                 if (TextUtils.isEmpty(userToken)) {
-//                    LoginActivity.start(mContext);
+                    LoginActivity.start(mContext);
                 } else {
-//                    TheMemberCenterActivity.start(mContext);
+                    TheMemberCenterActivity.start(mContext);
                 }
                 break;
             case R.id.tv_Check_the_details:
@@ -375,7 +381,7 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
             case R.id.ll_Customer_service:
                 //客服
                 if (TextUtils.isEmpty(userToken)) {
-//                    LoginActivity.start(mContext);
+                    LoginActivity.start(mContext);
                 } else {
 //                    helper.initSdkChat(ApiService.QIMO_IM_ACCESSID, UserUtils.getUserName(), UserUtils.getUserID(), "10043315");
                 }
@@ -387,9 +393,9 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
                     finish();
                 } else {
                     if (TextUtils.isEmpty(userToken)) {
-//                        LoginActivity.start(mContext);
+                        LoginActivity.start(mContext);
                     } else {
-//                        ShopCarActivity.start(mContext);
+                        ShopCarActivity.start(mContext);
                     }
                 }
 
@@ -420,13 +426,13 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
                 //立即购买
                 if (!goodStatus) return;
                 if (TextUtils.isEmpty(userToken)) {
-//                    LoginActivity.start(mContext);
+                    LoginActivity.start(mContext);
                 } else {
                     //还需要判断库存
                     if (goodInventoryNumber > 0) {
                         ArrayList<GoodItemList> goodItemLists = new ArrayList<>();
                         goodItemLists.add(new GoodItemList(goodId, goodNumber, merchant_id, ""));
-//                        MakeSureTheOrderActivity.start(mContext, goodItemLists, "", "");
+                        MakeSureTheOrderActivity.start(mContext, goodItemLists, "", "");
                     } else {
                         showToast(mContext.getString(R.string.Insufficient_inventory_two));
                     }

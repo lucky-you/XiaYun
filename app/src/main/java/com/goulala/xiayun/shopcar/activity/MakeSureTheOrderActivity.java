@@ -30,12 +30,21 @@ import com.goulala.xiayun.common.utils.ButtonClickUtils;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.InputMethodKeyBroadUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.utils.PhoneUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.utils.StringUtils;
 import com.goulala.xiayun.common.view.PasswordEditText;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
 import com.goulala.xiayun.home.dialog.ThePaymentDialog;
+import com.goulala.xiayun.mycenter.activity.AllOrdersActivity;
+import com.goulala.xiayun.mycenter.activity.ResetCommissionPaymentPasswordActivity;
+import com.goulala.xiayun.mycenter.activity.TheCouponsActivity;
+import com.goulala.xiayun.mycenter.activity.TheMemberCenterActivity;
 import com.goulala.xiayun.mycenter.model.ShoppingAddressList;
+import com.goulala.xiayun.mycenter.model.TheMemberCenterBean;
+import com.goulala.xiayun.mycenter.model.UserIsMembersBean;
+import com.goulala.xiayun.mycenter.model.VipCouponTicketList;
 import com.goulala.xiayun.shopcar.adapter.MakeSureTheOrderAdapter;
 import com.goulala.xiayun.shopcar.model.GoodItemList;
 import com.goulala.xiayun.shopcar.model.MerchantMessage;
@@ -187,9 +196,10 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
         Map<String, String> shoppingListParam = new HashMap<>();
         shoppingListParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_THE_ADDRESS_LIST_URL);
         String shoppingListParamJson = JsonUtils.toJson(shoppingListParam);
-        if (!TextUtils.isEmpty(userToken)) {
-            mvpPresenter.getShoppingAddress(userToken, shoppingListParamJson);
-        }
+        LogUtils.showLog(userToken, shoppingListParamJson);
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.getShoppingAddress(userToken, shoppingListParamJson);
+
 
     }
 
@@ -220,7 +230,6 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
             if (notice.type == ConstantValue.THE_USER_MESSAGE_TYPE) {
                 String message = (String) notice.contentOne;
                 int goodID = (int) notice.contentTwo;
-//                Logger.d("xy", "message==" + message + "id==" + goodID);
                 if (!TextUtils.isEmpty(message)) {
                     //对比商品的id,确定到底是那件商品的留言
                     for (int i = 0; i < goodItemListArrayList.size(); i++) {
@@ -252,17 +261,17 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
             case R.id.tv_Full_reduction_of_coupons:
                 //优惠券
                 if (!ButtonClickUtils.isFastClick()) {
-//                    Intent intentOne = new Intent(mContext, TheCouponsActivity.class);
-//                    intentOne.putExtra(ConstantValue.TYPE, ConstantValue.CHOOSE_COUPONS_RETURN_TO_ORDER_ACTIVITY);
-//                    intentOne.putExtra(ConstantValue.MONEY, payMoney);
-//                    startActivityForResult(intentOne, ConstantValue.CHOOSE_COUPONS_RETURN_TO_ORDER_ACTIVITY);
+                    Intent intentOne = new Intent(mContext, TheCouponsActivity.class);
+                    intentOne.putExtra(ConstantValue.TYPE, ConstantValue.CHOOSE_COUPONS_RETURN_TO_ORDER_ACTIVITY);
+                    intentOne.putExtra(ConstantValue.MONEY, payMoney);
+                    startActivityForResult(intentOne, ConstantValue.CHOOSE_COUPONS_RETURN_TO_ORDER_ACTIVITY);
                 }
                 break;
             case R.id.rl_Open_the_member:
             case R.id.tv_Open_the_member_to_enjoy_the_discount:
                 //开通plus会员
                 if (!ButtonClickUtils.isFastClick()) {
-//                    TheMemberCenterActivity.start(mContext);
+                    TheMemberCenterActivity.start(mContext);
                 }
                 break;
             case R.id.tv_Submit_orders:
@@ -281,7 +290,6 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
             case ConstantValue.GET_SHOPPING_ADDRESS_RETURN_TO_ORDER_ACTIVITY:
                 //收货地址
@@ -327,7 +335,7 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
 
     @Override
     public void getShoppingAddressSuccess(List<ShoppingAddressList> shoppingAddressLists) {
-        if (shoppingAddressLists != null && shoppingAddressLists.size() > 0) {
+        if (shoppingAddressLists != null && !shoppingAddressLists.isEmpty()) {
             rlGoodHaveAddressLayout.setVisibility(View.VISIBLE);
             rlGoodNoHaveAddressLayout.setVisibility(View.GONE);
             addressId = shoppingAddressLists.get(0).getId();
@@ -434,7 +442,7 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
 
             @Override
             public void determineClick(View view) {
-//                ResetCommissionPaymentPasswordActivity.start(mContext, ConstantValue.SET_THE_COMMISSION_PAYMENT_PASSWORD);
+                ResetCommissionPaymentPasswordActivity.start(mContext, ConstantValue.SET_THE_COMMISSION_PAYMENT_PASSWORD);
             }
         });
     }
@@ -443,7 +451,7 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
      * 取消支付，或者支付失败的跳转
      */
     private void cancelPayOrPayFailedToJump(int jumpType) {
-//        AllOrdersActivity.start(mContext, jumpType);
+        AllOrdersActivity.start(mContext, jumpType);
         finish(); //销毁当前界面
     }
 
@@ -589,6 +597,21 @@ public class MakeSureTheOrderActivity extends BaseMvpActivity<MakeSureTheOrderPr
             //获取到了余额
             balanceMoney = balance.getAmount();
         }
+    }
+
+    @Override
+    public void useIsMembers(UserIsMembersBean userIsMembersBean) {
+
+    }
+
+    @Override
+    public void getMemberCenterDate(TheMemberCenterBean theMemberCenterBean) {
+
+    }
+
+    @Override
+    public void getCouponSuccess(List<VipCouponTicketList> vipCouponTicketLists) {
+
     }
 
     @Override

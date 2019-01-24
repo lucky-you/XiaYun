@@ -44,8 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_16"
-        android:layout_marginRight="@dimen/spacing_16"
         android:layout_marginTop="-60dp"
+        android:layout_marginRight="@dimen/spacing_16"
         android:background="@drawable/shape_white_10dp_background"
         app:cardCornerRadius="@dimen/spacing_10">
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.goulala.view.RoundImageView
+            <com.goulala.xiayun.common.view.RoundImageView
                 android:id="@+id/civ_gll_logo"
                 android:layout_width="@dimen/spacing_77"
                 android:layout_height="@dimen/spacing_77"
@@ -80,8 +80,8 @@
                 android:layout_width="@dimen/spacing_255"
                 android:layout_height="@dimen/spacing_44"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/spacing_20"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="@dimen/spacing_20"
                 android:background="@drawable/shape_login_white_1dp_background"
                 android:gravity="center"
                 android:text="@string/Mobile_phone_number_login"

@@ -19,6 +19,9 @@ public class ReturnGoodApplicationPresenter extends BasePresenter<IReturnGoodApp
     }
 
 
+    /**
+     * 获取商品信息
+     */
     public void getRefundGoodMessage(String token, String param) {
         addDisposableObserver(apiService.getRefundMoneyDate(token, param), new ApiServiceCallback<RefundMoneyDate>() {
             @Override
@@ -40,6 +43,9 @@ public class ReturnGoodApplicationPresenter extends BasePresenter<IReturnGoodApp
 
     }
 
+    /**
+     * 提交信息
+     */
     public void submitApplyRefund(String token, String param) {
         addDisposableObserver(apiService.submitApplyRefundDate(token, param), new ApiServiceCallback<RefundResultDate>() {
             @Override
@@ -60,6 +66,9 @@ public class ReturnGoodApplicationPresenter extends BasePresenter<IReturnGoodApp
 
     }
 
+    /**
+     * 七牛云的配置
+     */
     public void getQinIuSetMessage(String token, String param) {
         addDisposableObserver(apiService.getQinIuSetMessage(token, param), new ApiServiceCallback<QinIuBean>() {
             @Override

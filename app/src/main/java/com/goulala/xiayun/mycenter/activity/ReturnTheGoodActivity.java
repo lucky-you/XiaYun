@@ -3,6 +3,7 @@ package com.goulala.xiayun.mycenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,31 +16,29 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.qiniu.QinIuUpLoadListener;
 import com.goulala.xiayun.common.qiniu.QinIuUtils;
 import com.goulala.xiayun.common.utils.BarUtils;
-import com.goulala.xiayun.common.base.ConstantValue;
-import com.goulala.xiayun.common.utils.PictureSelectUtils;
+import com.goulala.xiayun.common.utils.ButtonClickUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.PictureSelectorUtils;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
-import com.goulala.xiayun.home.utils.ButtonClickUtils;
-import com.goulala.xiayun.mycenter.IPresenter.ReturnTheGoodOrMoneyPresenter;
 import com.goulala.xiayun.mycenter.adapter.PostGridImageAdapter;
 import com.goulala.xiayun.mycenter.adapter.ShopListMessageAdapter;
-import com.goulala.xiayun.mycenter.contact.ReturnTheGoodOrMoneyContact;
 import com.goulala.xiayun.mycenter.model.QinIuBean;
 import com.goulala.xiayun.mycenter.model.RefundMoneyDate;
 import com.goulala.xiayun.mycenter.model.RefundResultDate;
 import com.goulala.xiayun.mycenter.model.ShopItemMessage;
-import com.goulala.xiayun.mycenter.view.WrapHeightGridView;
+import com.goulala.xiayun.mycenter.presenter.ReturnGoodApplicationPresenter;
+import com.goulala.xiayun.mycenter.view.IReturnGoodApplicationView;
+import com.goulala.xiayun.mycenter.widget.WrapHeightGridView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,9 +48,11 @@ import java.util.Map;
 /**
  * 申请售后-退货
  * 申请售后-退款
+ * 在发货之后使用
  * 公用的activity
  */
-public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyContact.presenter> implements ReturnTheGoodOrMoneyContact.view {
+public class ReturnTheGoodActivity extends BaseMvpActivity<ReturnGoodApplicationPresenter> implements IReturnGoodApplicationView,
+        AdapterView.OnItemClickListener {
 
 
     private RecyclerView publicRecyclerView;
@@ -94,24 +95,37 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
     }
 
     @Override
-    protected void loadViewLayout() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setContentView(R.layout.activity_return_the_good);
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+    protected ReturnGoodApplicationPresenter createPresenter() {
+        return new ReturnGoodApplicationPresenter(this);
+    }
 
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+        applyRefundType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
+        shopOrderNumber = getIntent().getStringExtra(ApiParam.SHOP_ORDER);
+        payOrderNumber = getIntent().getStringExtra(ApiParam.ITEM_ORDER);
+        itemNumber = getIntent().getStringExtra(ApiParam.ITEM_NUM);
+    }
+
+    @Override
+    public int loadViewLayout() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        return R.layout.activity_return_the_good;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
         publicRecyclerView = get(R.id.public_RecyclerView);
         tvChooseTheReturnReasons = get(R.id.tv_choose_the_return_reasons);
-
         rbTakeTheWrongGoods = get(R.id.rb_Take_the_wrong_goods);
         rbDonWantToBuyThe = get(R.id.rb_Don_want_to_buy_the);
         rbGoodsOutOfStock = get(R.id.rb_Goods_out_of_stock);
         rbOtherReasons = get(R.id.rb_Other_reasons);
-
         rbTakeTheWrongGoods.setOnClickListener(this);
         rbDonWantToBuyThe.setOnClickListener(this);
         rbGoodsOutOfStock.setOnClickListener(this);
         rbOtherReasons.setOnClickListener(this);
-
         editProblemDescription = get(R.id.edit_Problem_description);
         tvNumberOfApplicationsNumber = get(R.id.tv_Number_of_applications_number);
         llRefundNumberLayout = get(R.id.ll_refund_number_layout);
@@ -119,16 +133,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         bgaSortablePhotoLayout = get(R.id.bgaSortablePhotoLayout);
         tvSubmit = get(R.id.tv_submit);
         tvSubmit.setOnClickListener(this);
-
-
-    }
-
-    @Override
-    protected void bindViews() {
-        applyRefundType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
-        shopOrderNumber = getIntent().getStringExtra(ApiParam.SHOP_ORDER);
-        payOrderNumber = getIntent().getStringExtra(ApiParam.ITEM_ORDER);
-        itemNumber = getIntent().getStringExtra(ApiParam.ITEM_NUM);
         llRefundNumberLayout.setVisibility(View.VISIBLE); //显示申请数量
         switch (applyRefundType) {
             case ConstantValue.APPLY_FOR_REFUND_GOOD_TYPE:
@@ -147,7 +151,7 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         imageAdapter = new PostGridImageAdapter(mContext, mSelectImagePath);
         imageAdapter.setMaxNum(MAX_NUM);
         bgaSortablePhotoLayout.setAdapter(imageAdapter);
-
+        bgaSortablePhotoLayout.setOnItemClickListener(this);
     }
 
     /**
@@ -163,7 +167,7 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
         shopListMessageAdapter = new ShopListMessageAdapter(goodItemMessageList);
         publicRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         publicRecyclerView.setAdapter(shopListMessageAdapter);
@@ -187,9 +191,8 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         Map<String, String> qinIuMapParam = new HashMap<>();
         qinIuMapParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_QIN_IU_SET_UP_URL);
         String qinIuMapParamJson = JsonUtils.toJson(qinIuMapParam);
-        Logger.w("xy", qinIuMapParamJson + "userToken=" + userToken);
         if (!TextUtils.isEmpty(userToken)) {
-            presenter.getQinIuSetMessage(userToken, qinIuMapParamJson);
+            mvpPresenter.getQinIuSetMessage(userToken, qinIuMapParamJson);
         }
     }
 
@@ -203,35 +206,15 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         refundGoodMonetParam.put(ApiParam.ITEM_ORDER, payOrderNumber);
         refundGoodMonetParam.put(ApiParam.ITEM_NUM, String.valueOf(itemNumber));
         String refundGoodMonetParamJson = JsonUtils.toJson(refundGoodMonetParam);
-        Logger.w("xy", refundGoodMonetParamJson + "userToken=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.getRefundGoodMessage(mContext, userToken, refundGoodMonetParamJson);
-        }
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.getRefundGoodMessage(userToken, refundGoodMonetParamJson);
+        showDialog("");
 
     }
 
-
     @Override
-    protected void setListener() {
-        //选择图片
-        bgaSortablePhotoLayout.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (position == imageAdapter.getCount() - 1 && imageAdapter.isShow()) {
-                    if (mSelectImagePath.size() == MAX_NUM) {
-                        showToast("最多上传" + MAX_NUM + "张图片");
-                    } else {
-                        if (qinIuImages.size() > 0) qinIuImages.clear();
-                        PictureSelectUtils.selectImageOfMore(ReturnTheGoodActivity.this, 3);
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.rb_Take_the_wrong_goods:
                 radioButtonIsSelect(rbTakeTheWrongGoods);
                 break;
@@ -251,7 +234,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
                     switch (applyRefundType) {
                         case ConstantValue.APPLY_FOR_REFUND_MONEY_TYPE: //退款
                             if (mSelectImagePath.size() > 0) {//有照片
-                                LoadDialog.show(mContext);
                                 for (int i = 0; i < mSelectImagePath.size(); i++) {
                                     qinIuUpLoad(mSelectImagePath.get(i), i, ConstantValue.APPLY_FOR_REFUND_MONEY_TYPE);
                                 }
@@ -265,7 +247,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
                                 showToast(mContext.getString(R.string.Choose_at_least_one_picture));
                                 return;
                             }
-                            LoadDialog.show(mContext);
                             for (int i = 0; i < mSelectImagePath.size(); i++) {
                                 qinIuUpLoad(mSelectImagePath.get(i), i, ConstantValue.APPLY_FOR_REFUND_GOOD_TYPE);
                             }
@@ -287,7 +268,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
                 qinIuImages.add(imageUrl);
                 //先要把图片上传到七牛云,然后在提交
                 if (qinIuImages.size() == mSelectImagePath.size()) { //集合数量相等，说明，选择的图片全部上传了
-                    LoadDialog.dismiss(mContext);
                     if (requestType == ConstantValue.APPLY_FOR_REFUND_MONEY_TYPE) {
                         submitApplyRefundDate("1", remarkText); //退款
                     } else {
@@ -316,7 +296,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         }
         if (stringBuffer != null && stringBuffer.length() > 0) {
             imagePaths = stringBuffer.substring(0, stringBuffer.length() - 1);
-            Logger.d("qiniu", "imagePaths=" + imagePaths);
         }
         Map<String, String> submitParam = new HashMap<>();
         submitParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.APPLY_FOR_AFTER_SALES_URL);
@@ -331,10 +310,9 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         submitParam.put(ApiParam.IMAGES, imagePaths);
         submitParam.put(ApiParam.STATUS, String.valueOf(orderStatus));
         String submitParamJson = JsonUtils.toJson(submitParam);
-        Logger.d("xy", submitParamJson + "userToken=" + userToken);
-        if (!TextUtils.isEmpty(userToken)) {
-            presenter.submitApplyRefund(mContext, userToken, submitParamJson);
-        }
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.submitApplyRefund(userToken, submitParamJson);
+        showDialog("");
 
     }
 
@@ -348,11 +326,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
         } else {
             tvSubmit.setBackgroundColor(mContext.getResources().getColor(R.color.color_ddd));
         }
-    }
-
-    @Override
-    public ReturnTheGoodOrMoneyContact.presenter createPresenter() {
-        return new ReturnTheGoodOrMoneyPresenter(this);
     }
 
     @Override
@@ -384,7 +357,6 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
             ReturnTheGoodDetailsActivity.start(mContext, applyRefundType, applyRefundOrder);
         }
         finish();
-
     }
 
     @Override
@@ -395,18 +367,15 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
+    public void onNewWorkException(String message) {
+        dismissDialog();
+        showToast(message);
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
+    public void onRequestFailure(int resultCode, String message) {
+        dismissDialog();
+        showToast(message);
     }
 
     @Override
@@ -432,6 +401,18 @@ public class ReturnTheGoodActivity extends BaseMVPActivity<ReturnTheGoodOrMoneyC
             imageAdapter.notifyDataSetChanged();
         } else {
             bgaSortablePhotoLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        if (position == imageAdapter.getCount() - 1 && imageAdapter.isShow()) {
+            if (mSelectImagePath.size() == MAX_NUM) {
+                showToast("最多上传" + MAX_NUM + "张图片");
+            } else {
+                if (qinIuImages.size() > 0) qinIuImages.clear();
+                PictureSelectorUtils.selectImageOfMore(this, 3);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseActivity;
 import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 
 
 /**
@@ -40,7 +42,10 @@ public class IndividualitySignatureActivity extends BaseActivity {
     @Override
     public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.Individuality_signature));
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         editPersonalizedSignatureText = get(R.id.edit_Personalized_signature_text);
         tvSignatureNumber = get(R.id.tv_Signature_number);
         get(R.id.tv_save).setOnClickListener(this);

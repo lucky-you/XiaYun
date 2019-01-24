@@ -29,8 +29,8 @@ import com.goulala.xiayun.mycenter.model.ApplyRefundDetailsDate;
 import com.goulala.xiayun.mycenter.model.BankCardList;
 import com.goulala.xiayun.mycenter.model.RecordBean;
 import com.goulala.xiayun.mycenter.model.ShopItemMessage;
-import com.goulala.xiayun.mycenter.presenter.DetailsOfTheRefundPresenter;
-import com.goulala.xiayun.mycenter.view.IDetailsOfTheRefundView;
+import com.goulala.xiayun.mycenter.presenter.TheGoodDetailsRefundPresenter;
+import com.goulala.xiayun.mycenter.view.ITheGoodDetailsRefundView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * 退款售后详情-->只在待发货的情况下申请退款的使用
  */
-public class DetailsOfTheRefundActivity extends BaseMvpActivity<DetailsOfTheRefundPresenter> implements IDetailsOfTheRefundView {
+public class TheGoodDetailsRefundActivity extends BaseMvpActivity<TheGoodDetailsRefundPresenter> implements ITheGoodDetailsRefundView {
 
     private TextView tvRefundStatus;
     private RecyclerView publicRecyclerView;
@@ -75,14 +75,14 @@ public class DetailsOfTheRefundActivity extends BaseMvpActivity<DetailsOfTheRefu
     private OperatingResultDialog operatingResultDialog;
 
     public static void start(Context context, String applyOrder) {
-        Intent intent = new Intent(context, DetailsOfTheRefundActivity.class);
+        Intent intent = new Intent(context, TheGoodDetailsRefundActivity.class);
         intent.putExtra(ConstantValue.ORDER_NUMBER, applyOrder);
         context.startActivity(intent);
     }
 
     @Override
-    protected DetailsOfTheRefundPresenter createPresenter() {
-        return new DetailsOfTheRefundPresenter(this);
+    protected TheGoodDetailsRefundPresenter createPresenter() {
+        return new TheGoodDetailsRefundPresenter(this);
     }
 
     @Override

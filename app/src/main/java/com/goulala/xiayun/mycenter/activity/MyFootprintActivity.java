@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.goulala.xiayun.R;
@@ -17,6 +18,7 @@ import com.goulala.xiayun.common.callback.CancelOrDetermineClickListener;
 import com.goulala.xiayun.common.model.Notice;
 import com.goulala.xiayun.common.utils.AlertDialogUtils;
 import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.fragment.MyFootprintFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +51,10 @@ public class MyFootprintActivity extends BaseActivity {
 
     @Override
     public void bindViews(View contentView) {
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         withdrawalSubsidiaryTabLayout = get(R.id.withdrawal_subsidiary_tabLayout);
         withdrawalSubsidiaryViewPager = get(R.id.withdrawal_subsidiary_viewPager);
         initTitle(mContext.getString(R.string.My_footprint))

@@ -33,6 +33,7 @@ import com.goulala.xiayun.home.model.GoodItemMessage;
 import com.goulala.xiayun.home.model.HomeValueSellingBean;
 import com.goulala.xiayun.home.presenter.SellLotsOfDetailsPresenter;
 import com.goulala.xiayun.home.view.ISellLotsOfDetailsView;
+import com.goulala.xiayun.shopcar.activity.ShopCarActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
@@ -166,7 +167,7 @@ public class SellLotsOfDetailsActivity extends BaseMvpActivity<SellLotsOfDetails
                 if (classFormType == ConstantValue.THAT_CLASS_TYPE_OF_SHOP_CAR) {
                     finish();
                 } else {
-//                    ShopCarActivity.start(mContext);
+                    ShopCarActivity.start(mContext);
                 }
                 break;
 
@@ -216,7 +217,6 @@ public class SellLotsOfDetailsActivity extends BaseMvpActivity<SellLotsOfDetails
             goodItemMessageList = activityDateList.get(0).getData();
             if (goodItemMessageList.size() > 0) {
                 tvTotalNumberSize.setText(goodItemMessageList.size() + "");
-//                sellLotsOfDetailsAdapter.setNewData(goodItemMessageList);
                 pageLimitDelegate.setData(goodItemMessageList);
             }
         } else {

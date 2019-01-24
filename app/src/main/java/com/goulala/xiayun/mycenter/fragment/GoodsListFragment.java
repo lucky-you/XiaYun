@@ -34,6 +34,7 @@ import com.goulala.xiayun.mycenter.adapter.AllFragmentListGoodAdapter;
 import com.goulala.xiayun.mycenter.callback.OnOrderListStatusClickListener;
 import com.goulala.xiayun.mycenter.model.AllOrderListMessage;
 import com.goulala.xiayun.mycenter.model.OrderDateMessage;
+import com.goulala.xiayun.mycenter.model.OrderDetailsMessage;
 import com.goulala.xiayun.mycenter.presenter.GoodListPresenter;
 import com.goulala.xiayun.mycenter.view.IGoodListView;
 import com.goulala.xiayun.wxapi.WeiXinPayUtils;
@@ -381,6 +382,11 @@ public class GoodsListFragment extends BaseMvpFragment<GoodListPresenter> implem
     }
 
     @Override
+    public void getOrderDetailsSuccess(OrderDetailsMessage orderDetailsMessage) {
+
+    }
+
+    @Override
     public void getOrderListSuccess(AllOrderListMessage orderMessage) {
         if (orderMessage != null) {
             orderDateList = orderMessage.getData();
@@ -416,15 +422,28 @@ public class GoodsListFragment extends BaseMvpFragment<GoodListPresenter> implem
     }
 
     @Override
-    public void checkPasswordExist(boolean isExist) {
-        if (isExist) {
-            //设置了密码，直接输密码，支付
-            editPayPassword();
-        } else {
-            //没有设置密码，去设置界面，设置支付密码
-            setCommissionPaymentPassword();
+    public void checkPasswordExistOrOperationOrder(int requestType, boolean isExist, String message) {
+        switch (requestType) {
+            case ApiParam.CHECK_PASSWORD_EXIST_TYPE:
+                if (isExist) {
+                    //设置了密码，直接输密码，支付
+                    editPayPassword();
+                } else {
+                    //没有设置密码，去设置界面，设置支付密码
+                    setCommissionPaymentPassword();
+                }
+                break;
+            case ApiParam.CANCEL_THAT_ORDER_TYPE://取消订单
+            case ApiParam.DELETE_THAT_ORDER_TYPE: //删除订单
+            case ApiParam.CONFIRM_THAT_GOOD_TYPE://确认收货
+                showToast(message);
+                smartRefreshLoadPageHelper.refreshPage();
+                break;
+
+
         }
     }
+
 
     /**
      * 去设置支付密码
@@ -555,11 +574,6 @@ public class GoodsListFragment extends BaseMvpFragment<GoodListPresenter> implem
         }
     }
 
-    @Override
-    public void cancelOrDeleteOrderSuccess(int requestType, String message) {
-        showToast(message);
-        smartRefreshLoadPageHelper.refreshPage();
-    }
 
     @Override
     public void onNewWorkException(String message) {

@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.presenter.PlatformSuggestionBoxPresenter;
 import com.goulala.xiayun.mycenter.view.IPlatformSuggestionBoxView;
 
@@ -55,7 +57,10 @@ public class PlatformSuggestionBoxActivity extends BaseMvpActivity<PlatformSugge
     @Override
     public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.Platform_suggestion_box));
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         editContent = get(R.id.editContent);
         tvEditNumber = get(R.id.tvEditNumber);
         get(R.id.tvSubmit).setOnClickListener(this);

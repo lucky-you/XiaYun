@@ -1,7 +1,7 @@
 package com.goulala.xiayun.common.activity;
 
-import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,11 +20,6 @@ public class MainActivity extends BaseActivity {
     private LinearLayout llBottom;
     private TextView tvMessageNumber;
     private View lastSelected;
-    private static MainActivity instance;
-
-    public static MainActivity getInstance() {
-        return instance;
-    }
 
     @Override
     public void initData(@Nullable Bundle bundle) {
@@ -45,7 +40,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void processLogic(Bundle savedInstanceState) {
-        instance = this;
         controller = FragmentController.getInstance(this, R.id.container, true);
         initBottomTab();
     }
@@ -59,7 +53,8 @@ public class MainActivity extends BaseActivity {
             tab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setSelect(v, llBottom.indexOfChild(v));
+                    if (checkLogin())
+                        setSelect(v, llBottom.indexOfChild(v));
                 }
             });
         }
@@ -86,5 +81,11 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setClickListener(View view) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        controller.onDestroy();
+        super.onDestroy();
     }
 }

@@ -7,7 +7,7 @@ import com.goulala.xiayun.mycenter.model.PaymentDetailsBean;
 /**
  * author      : Z_B
  * date       : 2019/1/24
- * function  :
+ * function  : 收支明细  提现  公用
  */
 public interface IMyCommissionView extends IBaseView {
 
@@ -16,4 +16,7 @@ public interface IMyCommissionView extends IBaseView {
 
     //收支明细
     void paymentDetailsSuccess(PaymentDetailsBean paymentDetailsBean);
+
+    //提现成功
+    void withdrawalMoneySuccess(String message);
 }

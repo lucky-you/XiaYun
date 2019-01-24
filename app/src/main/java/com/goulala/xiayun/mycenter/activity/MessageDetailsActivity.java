@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.widget.SmartRefreshLoadPageHelper;
 import com.goulala.xiayun.mycenter.adapter.MessageDetailsAdapter;
 import com.goulala.xiayun.mycenter.adapter.SystemMessageAdapter;
@@ -93,7 +95,10 @@ public class MessageDetailsActivity extends BaseMvpActivity<MessageDetailsPresen
 
     @Override
     public void bindViews(View contentView) {
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         smartRecyclerView = get(R.id.smart_RecyclerView);
         refreshLayout = get(R.id.refreshLayout);
         ivHint = get(R.id.ivHint);
@@ -134,7 +139,6 @@ public class MessageDetailsActivity extends BaseMvpActivity<MessageDetailsPresen
 
     @Override
     public void processLogic(Bundle savedInstanceState) {
-
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {

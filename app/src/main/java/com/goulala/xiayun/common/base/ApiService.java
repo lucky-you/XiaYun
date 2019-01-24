@@ -32,6 +32,7 @@ import com.goulala.xiayun.mycenter.model.ServiceCenterList;
 import com.goulala.xiayun.mycenter.model.ShoppingAddressList;
 import com.goulala.xiayun.mycenter.model.TheMemberCenterBean;
 import com.goulala.xiayun.mycenter.model.UserIsMembersBean;
+import com.goulala.xiayun.mycenter.model.VipCouponTicketList;
 import com.goulala.xiayun.mycenter.model.VipCouponTicketMessage;
 import com.goulala.xiayun.shopcar.model.OrderMessage;
 import com.goulala.xiayun.shopcar.model.ShopCarBaseDate;
@@ -384,7 +385,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(HEADER_URL)
-    Observable<ResultResponse<VipCouponTicketMessage>> getVipCoupon(@Field(TOKEN) String userToken, @Field(PARAM) String param);
+    Observable<ResultResponse<List<VipCouponTicketList>>> getVipCoupon(@Field(TOKEN) String userToken, @Field(PARAM) String param);
 
 
 }

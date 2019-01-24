@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.ApiParam;
@@ -17,6 +18,7 @@ import com.goulala.xiayun.common.model.AccountBalance;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
 import com.goulala.xiayun.common.widget.SmartRefreshLoadPageHelper;
 import com.goulala.xiayun.home.adapter.WithdrawalSubsidiaryAdapter;
@@ -72,7 +74,10 @@ public class PaymentDetailsActivity extends BaseMvpActivity<MyCommissionPresente
     @Override
     public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.Payment_details));
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         smartRecyclerView = get(R.id.smart_RecyclerView);
         refreshLayout = get(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
@@ -139,6 +144,11 @@ public class PaymentDetailsActivity extends BaseMvpActivity<MyCommissionPresente
 //                showToast(mContext.getString(R.string.All_content_is_displayed));
 //            }
         }
+    }
+
+    @Override
+    public void withdrawalMoneySuccess(String message) {
+
     }
 
     @Override

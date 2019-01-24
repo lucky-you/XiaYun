@@ -211,7 +211,7 @@ public class RefundApplicationActivity extends BaseMvpActivity<ReturnGoodApplica
     public void submitApplyRefundSuccess(RefundResultDate refundResultDate) {
         if (refundResultDate != null) {
             String applyRefundOrder = refundResultDate.getService_no();
-            DetailsOfTheRefundActivity.start(mContext, applyRefundOrder);
+            TheGoodDetailsRefundActivity.start(mContext, applyRefundOrder);
         }
         finish();
     }

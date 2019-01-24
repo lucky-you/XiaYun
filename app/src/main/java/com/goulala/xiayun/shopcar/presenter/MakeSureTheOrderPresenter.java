@@ -4,6 +4,9 @@ import com.goulala.xiayun.common.model.AccountBalance;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.retrofit.ApiServiceCallback;
 import com.goulala.xiayun.mycenter.model.ShoppingAddressList;
+import com.goulala.xiayun.mycenter.model.TheMemberCenterBean;
+import com.goulala.xiayun.mycenter.model.UserIsMembersBean;
+import com.goulala.xiayun.mycenter.model.VipCouponTicketList;
 import com.goulala.xiayun.shopcar.model.OrderMessage;
 import com.goulala.xiayun.shopcar.view.IMakeSureTheOrderView;
 import com.goulala.xiayun.wxapi.WxPayReqInfo;
@@ -13,7 +16,7 @@ import java.util.List;
 /**
  * author      : Z_B
  * date       : 2019/1/23
- * function  :
+ * function  : 下单 和 会员中心公用
  */
 public class MakeSureTheOrderPresenter extends BasePresenter<IMakeSureTheOrderView> {
     public MakeSureTheOrderPresenter(IMakeSureTheOrderView mvpView) {
@@ -149,5 +152,67 @@ public class MakeSureTheOrderPresenter extends BasePresenter<IMakeSureTheOrderVi
 
     }
 
+    //是否是会员
+    public void useIsMembers(String token, String param) {
+        addDisposableObserver(apiService.checkUserIsMember(token, param), new ApiServiceCallback<UserIsMembersBean>() {
+            @Override
+            public void onSuccess(UserIsMembersBean response, String message) {
+                mvpView.useIsMembers(response);
+            }
+
+            @Override
+            public void onFailure(int resultCode, String failureMessage) {
+                mvpView.onRequestFailure(resultCode, failureMessage);
+            }
+
+            @Override
+            public void onErrorThrowable(String errorMessage) {
+                mvpView.onNewWorkException(errorMessage);
+            }
+        });
+
+    }
+
+    //会员中心
+    public void getMemberCenterDate(String token, String param) {
+        addDisposableObserver(apiService.getOpenOrRenewalMemberRules(token, param), new ApiServiceCallback<TheMemberCenterBean>() {
+            @Override
+            public void onSuccess(TheMemberCenterBean response, String message) {
+                mvpView.getMemberCenterDate(response);
+            }
+
+            @Override
+            public void onFailure(int resultCode, String failureMessage) {
+                mvpView.onRequestFailure(resultCode, failureMessage);
+            }
+
+            @Override
+            public void onErrorThrowable(String errorMessage) {
+                mvpView.onNewWorkException(errorMessage);
+            }
+        });
+
+    }
+
+
+    //获取优惠券
+    public void getCouponList(String token, String param) {
+        addDisposableObserver(apiService.getVipCoupon(token, param), new ApiServiceCallback<List<VipCouponTicketList>>() {
+            @Override
+            public void onSuccess(List<VipCouponTicketList> response, String message) {
+                mvpView.getCouponSuccess(response);
+            }
+
+            @Override
+            public void onFailure(int resultCode, String failureMessage) {
+                mvpView.onRequestFailure(resultCode, failureMessage);
+            }
+
+            @Override
+            public void onErrorThrowable(String errorMessage) {
+                mvpView.onNewWorkException(errorMessage);
+            }
+        });
+    }
 
 }

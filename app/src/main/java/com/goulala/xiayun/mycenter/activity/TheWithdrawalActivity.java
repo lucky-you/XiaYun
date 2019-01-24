@@ -3,22 +3,24 @@ package com.goulala.xiayun.mycenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.model.AccountBalance;
 import com.goulala.xiayun.common.utils.BarUtils;
-import com.goulala.xiayun.mycenter.IPresenter.TheWithdrawalPresenter;
-import com.goulala.xiayun.mycenter.contact.TheWithdrawalContact;
-import com.orhanobut.logger.Logger;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
+import com.goulala.xiayun.mycenter.model.PaymentDetailsBean;
+import com.goulala.xiayun.mycenter.presenter.MyCommissionPresenter;
+import com.goulala.xiayun.mycenter.view.IMyCommissionView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +29,7 @@ import java.util.Map;
 /**
  * 提现的activity
  */
-public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.presenter> implements TheWithdrawalContact.view {
+public class TheWithdrawalActivity extends BaseMvpActivity<MyCommissionPresenter> implements IMyCommissionView {
 
     private EditText editBackCardNumber;
     private TextView tvBackName;
@@ -46,9 +48,27 @@ public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.
     }
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_the_withdrawal);
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+    protected MyCommissionPresenter createPresenter() {
+        return new MyCommissionPresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_the_withdrawal;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+        initTitle(mContext.getString(R.string.withdrawal));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         editBackCardNumber = get(R.id.edit_back_card_number);
         tvBackName = get(R.id.tv_back_name);
         rlSelectBack = get(R.id.rl_select_back);
@@ -58,21 +78,11 @@ public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.
         tvSingleWithdrawalAmount = get(R.id.tv_Single_withdrawal_amount);
         tvDetermineTheWithdrawal = get(R.id.tv_Determine_the_withdrawal);
         tvDetermineTheWithdrawal.setOnClickListener(this);
-
-    }
-
-    @Override
-    protected void bindViews() {
-        initTitle(mContext.getString(R.string.withdrawal));
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
         tvSingleWithdrawalAmount.setText(mContext.getString(R.string.Single_withdrawal_amount, "50", "50"));
     }
 
     @Override
-    protected void setListener() {
+    public void processLogic(Bundle savedInstanceState) {
 
     }
 
@@ -89,14 +99,14 @@ public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.
         Map<String, String> balanceParam = new HashMap<>();
         balanceParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.ACCOUNT_BALANCE_URL);
         String balanceParamJson = JsonUtils.toJson(balanceParam);
-        Logger.w("xy", balanceParamJson + "token:" + userToken);
-        presenter.getUserBalance(userToken, balanceParamJson);
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.getUserBalance(userToken, balanceParamJson);
 
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.rl_select_back:
                 //选择银行
                 Intent intent = new Intent(mContext, SelectBankCardActivity.class);
@@ -158,9 +168,8 @@ public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.
             withdrawalAmountParam.put(ApiParam.CARD_NAME, userNameOfCardholder);
             withdrawalAmountParam.put(ApiParam.MONEY, withdrawalAmount);
             String withdrawalAmountParamJson = JsonUtils.toJson(withdrawalAmountParam);
-            Logger.d("xy", withdrawalAmountParamJson + "token=" + userToken);
             if (!TextUtils.isEmpty(userToken)) {
-                presenter.withdrawalMoney(mContext, userToken, withdrawalAmountParamJson);
+                mvpPresenter.withdrawalMoney(userToken, withdrawalAmountParamJson);
             }
         } else {
             showToast(mContext.getString(R.string.The_withdrawal_amount_cannot_be_0));
@@ -184,15 +193,15 @@ public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.
     }
 
     @Override
-    public TheWithdrawalContact.presenter createPresenter() {
-        return new TheWithdrawalPresenter(this);
-    }
-
-    @Override
     public void getAccountBalanceSuccess(AccountBalance balance) {
         if (balance != null) {
             userBalance = balance.getAmount();
         }
+    }
+
+    @Override
+    public void paymentDetailsSuccess(PaymentDetailsBean paymentDetailsBean) {
+
     }
 
     @Override
@@ -202,18 +211,14 @@ public class TheWithdrawalActivity extends BaseMVPActivity<TheWithdrawalContact.
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
+    public void onNewWorkException(String message) {
+        showToast(message);
+        dismissDialog();
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
-
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
+        dismissDialog();
     }
 }

@@ -9,9 +9,12 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnsunrun.alipaylibrary.alipay.AliPayUtils;
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.common.activity.LoginActivity;
+import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.mvp.MvpActivity;
 import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.UserUtils;
 import com.goulala.xiayun.common.view.TitleBuilder;
 import com.goulala.xiayun.wxapi.WeiXinPayUtils;
 import com.goulala.xiayun.wxapi.WxPayReqInfo;
@@ -22,6 +25,8 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends MvpActivi
 
 
     protected String userToken;
+    protected UserInfo userInfo;
+//    protected KfStartHelper helper;
 
     public TitleBuilder initTitle(Object obj) {
         if (obj instanceof String) {
@@ -48,10 +53,38 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends MvpActivi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        userToken = UserUtils.getUserToken();
         super.onCreate(savedInstanceState);
-        BarUtils.setStatusBarLightMode(this,true);
+        userToken = UserUtils.userToken();
+        BarUtils.setStatusBarLightMode(this, true);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCommonUserData();
+//        helper = new KfStartHelper(this);
+    }
+
+    /**
+     * 是否登录
+     */
+    public boolean checkLogin() {
+        getCommonUserData();
+        if (TextUtils.isEmpty(userToken)) {
+            intentToActivity(LoginActivity.class);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public void getCommonUserData() {
+        userToken = UserUtils.userToken();
+        userInfo = BaseApplication.getInstance().getUserInfo();
+    }
+
 
     /**
      * 使用微信支付

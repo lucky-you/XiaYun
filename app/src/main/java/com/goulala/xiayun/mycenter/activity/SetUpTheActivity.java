@@ -3,26 +3,28 @@ package com.goulala.xiayun.mycenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.goulala.cache.DataCleanManager;
-import com.goulala.callback.CancelOrDetermineClickListener;
-import com.goulala.utils.JsonUtils;
-import com.goulala.view.LoadDialog;
-import com.goulala.xiayun.Basemvp.BaseMVPActivity;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.ApiParam;
 import com.goulala.xiayun.common.activity.LoginActivity;
 import com.goulala.xiayun.common.activity.WebDetailsActivity;
-import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.base.ApiParam;
+import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.base.ConstantValue;
+import com.goulala.xiayun.common.cache.DataCleanManager;
+import com.goulala.xiayun.common.callback.CancelOrDetermineClickListener;
+import com.goulala.xiayun.common.utils.AlertDialogUtils;
+import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.utils.UserUtils;
-import com.goulala.xiayun.mycenter.IPresenter.SetUpThePresenter;
-import com.goulala.xiayun.mycenter.contact.SetUpTheContact;
-import com.goulala.xiayun.mycenter.utils.AlertDialogUtils;
+import com.goulala.xiayun.mycenter.presenter.SetUpThePresenter;
+import com.goulala.xiayun.mycenter.view.ISetUpTheView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +32,7 @@ import java.util.Map;
 /**
  * 设置
  */
-public class SetUpTheActivity extends BaseMVPActivity<SetUpTheContact.presenter> implements SetUpTheContact.view {
+public class SetUpTheActivity extends BaseMvpActivity<SetUpThePresenter> implements ISetUpTheView {
 
     private RelativeLayout rlAboutUs;
     private TextView tvClearTheCache;
@@ -44,9 +46,27 @@ public class SetUpTheActivity extends BaseMVPActivity<SetUpTheContact.presenter>
     }
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_set_up_the);
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+    protected SetUpThePresenter createPresenter() {
+        return new SetUpThePresenter(this);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_set_up_the;
+    }
+
+    @Override
+    public void bindViews(View contentView) {
+        initTitle(mContext.getString(R.string.Set_up_the));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         rlAboutUs = get(R.id.rl_About_us);
         rlAboutUs.setOnClickListener(this);
         tvClearTheCache = get(R.id.tv_Clear_the_cache);
@@ -55,16 +75,10 @@ public class SetUpTheActivity extends BaseMVPActivity<SetUpTheContact.presenter>
         tvIsSetCommissionPaymentPassword.setOnClickListener(this);
         tvLogOut = get(R.id.tv_Log_out);
         tvLogOut.setOnClickListener(this);
-
     }
 
     @Override
-    protected void bindViews() {
-        initTitle(mContext.getString(R.string.Set_up_the));
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
         tvClearTheCache.setText(DataCleanManager.getTotalCacheSize(mContext));
     }
 
@@ -82,19 +96,14 @@ public class SetUpTheActivity extends BaseMVPActivity<SetUpTheContact.presenter>
         checkParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.DOES_PASSWORD_EXIST_URL);
         String checkParamJson = JsonUtils.toJson(checkParam);
         if (!TextUtils.isEmpty(userToken)) {
-            presenter.checkPassword(mContext, userToken, checkParamJson);
+            mvpPresenter.checkPassword(userToken, checkParamJson);
         }
     }
 
 
     @Override
-    protected void setListener() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void setClickListener(View view) {
+        switch (view.getId()) {
             case R.id.rl_About_us:
                 WebDetailsActivity.start(mContext, ConstantValue.CLASS_TYPE_OF_ABOUT_US);
                 break;
@@ -135,11 +144,6 @@ public class SetUpTheActivity extends BaseMVPActivity<SetUpTheContact.presenter>
     }
 
     @Override
-    public SetUpTheContact.presenter createPresenter() {
-        return new SetUpThePresenter(this);
-    }
-
-    @Override
     public void isSettingPassword(boolean isSetPassword) {
         this.isSetPassword = isSetPassword;
         if (isSetPassword) {
@@ -148,21 +152,15 @@ public class SetUpTheActivity extends BaseMVPActivity<SetUpTheContact.presenter>
             tvIsSetCommissionPaymentPassword.setText(mContext.getString(R.string.Has_been_not_set));
             tvIsSetCommissionPaymentPassword.setTextColor(mContext.getResources().getColor(R.color.color_e53d3d));
         }
-
     }
 
     @Override
-    public void showLoadingDialog(String message) {
-        LoadDialog.show(mContext, message);
+    public void onNewWorkException(String message) {
+        showToast(message);
     }
 
     @Override
-    public void dismissLoadingDialog() {
-        LoadDialog.dismiss(mContext);
-    }
-
-    @Override
-    public void onRequestFailure(String error) {
-        showToast(error);
+    public void onRequestFailure(int resultCode, String message) {
+        showToast(message);
     }
 }

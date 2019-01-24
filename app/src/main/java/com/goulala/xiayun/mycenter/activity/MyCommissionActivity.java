@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.ApiParam;
@@ -18,6 +19,7 @@ import com.goulala.xiayun.common.model.AccountBalance;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
 import com.goulala.xiayun.home.adapter.WithdrawalSubsidiaryAdapter;
 import com.goulala.xiayun.mycenter.model.PaymentDetailsBean;
@@ -72,7 +74,10 @@ public class MyCommissionActivity extends BaseMvpActivity<MyCommissionPresenter>
 
     @Override
     public void bindViews(View contentView) {
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         smartRecyclerView = get(R.id.smart_RecyclerView);
         refreshLayout = get(R.id.refreshLayout);
         refreshLayout.setRefreshHeader(new ClassicsHeader(mContext));
@@ -164,6 +169,11 @@ public class MyCommissionActivity extends BaseMvpActivity<MyCommissionPresenter>
             this.paymentDetailsLists = paymentDetailsBean.getData();
             withdrawalSubsidiaryAdapter.setNewData(paymentDetailsLists);
         }
+    }
+
+    @Override
+    public void withdrawalMoneySuccess(String message) {
+
     }
 
     @Override

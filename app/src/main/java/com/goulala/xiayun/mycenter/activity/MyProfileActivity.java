@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -26,7 +27,9 @@ import com.goulala.xiayun.common.utils.AlertDialogUtils;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.ButtonClickUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.utils.PictureSelectorUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.dialog.EditNickNameDialog;
 import com.goulala.xiayun.mycenter.model.QinIuBean;
 import com.goulala.xiayun.mycenter.presenter.MyProfilePresenter;
@@ -83,7 +86,10 @@ public class MyProfileActivity extends BaseMvpActivity<MyProfilePresenter> imple
 
     @Override
     public void bindViews(View contentView) {
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         civUserImage = get(R.id.civ_user_image);
         get(R.id.ll_user_photo_image).setOnClickListener(this);
         tvNickname = get(R.id.tv_nickname);
@@ -141,9 +147,10 @@ public class MyProfileActivity extends BaseMvpActivity<MyProfilePresenter> imple
         Map<String, String> qinIuMapParam = new HashMap<>();
         qinIuMapParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.GET_QIN_IU_SET_UP_URL);
         String qinIuMapParamJson = JsonUtils.toJson(qinIuMapParam);
-        if (!TextUtils.isEmpty(userToken)) {
-            mvpPresenter.getQinIuSetMessage(userToken, qinIuMapParamJson);
-        }
+        LogUtils.showLog(userToken, qinIuMapParamJson);
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.getQinIuSetMessage(userToken, qinIuMapParamJson);
+
     }
 
     private void showBackDialog() {
@@ -174,7 +181,7 @@ public class MyProfileActivity extends BaseMvpActivity<MyProfilePresenter> imple
         switch (view.getId()) {
             case R.id.ll_user_photo_image:
                 //头像
-                PictureSelectorUtils.selectImageOfOne(this,PictureConfig.CHOOSE_REQUEST);
+                PictureSelectorUtils.selectImageOfOne(this, PictureConfig.CHOOSE_REQUEST);
                 break;
             case R.id.tv_nickname:
                 //昵称
@@ -217,6 +224,7 @@ public class MyProfileActivity extends BaseMvpActivity<MyProfilePresenter> imple
                 break;
         }
     }
+
     /**
      * 保存用户的信息
      */
@@ -235,7 +243,7 @@ public class MyProfileActivity extends BaseMvpActivity<MyProfilePresenter> imple
         saveMemberMessageParam.put(ApiParam.BIO, signName);
         String saveMemberMessageParamJson = JsonUtils.toJson(saveMemberMessageParam);
         if (!TextUtils.isEmpty(userToken)) {
-            mvpPresenter.modifyMemberInformation( userToken, saveMemberMessageParamJson);
+            mvpPresenter.modifyMemberInformation(userToken, saveMemberMessageParamJson);
             isModifyTheMessage = 1;
         }
 

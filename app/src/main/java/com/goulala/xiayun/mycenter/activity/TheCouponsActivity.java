@@ -3,21 +3,25 @@ package com.goulala.xiayun.mycenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.goulala.bean.Notice;
 import com.goulala.xiayun.R;
-import com.goulala.xiayun.base.BaseActivity;
 import com.goulala.xiayun.common.adapter.HomeViewPageAdapter;
-import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.base.BaseActivity;
 import com.goulala.xiayun.common.base.ConstantValue;
+import com.goulala.xiayun.common.model.Notice;
+import com.goulala.xiayun.common.utils.BarUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.fragment.MyCouponsFragment;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +46,22 @@ public class TheCouponsActivity extends BaseActivity {
 
 
     @Override
-    protected void loadViewLayout() {
-        setContentView(R.layout.activity_the_coupons);
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
-        registerEvent();
-        withdrawalSubsidiaryTabLayout = get(R.id.withdrawal_subsidiary_tabLayout);
-        withdrawalSubsidiaryViewPager = get(R.id.withdrawal_subsidiary_viewPager);
+    public void initData(@Nullable Bundle bundle) {
+
     }
 
+    @Override
+    public int loadViewLayout() {
+        return R.layout.activity_the_coupons;
+    }
 
     @Override
-    protected void bindViews() {
+    public void bindViews(View contentView) {
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
+        registerEvent();
         initTitle(mContext.getString(R.string.My_coupons))
                 .setRightText(mContext.getString(R.string.Directions_for_use))
                 .setRightOnClickListener(new View.OnClickListener() {
@@ -61,11 +70,12 @@ public class TheCouponsActivity extends BaseActivity {
                         DirectionsForUseActivity.start(mContext, ConstantValue.COUPON_DESCRIPTION_TYPE);
                     }
                 });
+        withdrawalSubsidiaryTabLayout = get(R.id.withdrawal_subsidiary_tabLayout);
+        withdrawalSubsidiaryViewPager = get(R.id.withdrawal_subsidiary_viewPager);
     }
 
-
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    public void processLogic(Bundle savedInstanceState) {
         String[] titles = mContext.getResources().getStringArray(R.array.My_coupon_title);
         classFormType = getIntent().getIntExtra(ConstantValue.TYPE, -1);
         payMoney = getIntent().getStringExtra(ConstantValue.MONEY);
@@ -79,10 +89,9 @@ public class TheCouponsActivity extends BaseActivity {
         withdrawalSubsidiaryTabLayout.setIndicatorWidth(43);
         titleLeft = withdrawalSubsidiaryTabLayout.getTitleView(0);
         titleRight = withdrawalSubsidiaryTabLayout.getTitleView(1);
-
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Notice notice) {
         if (notice != null) {
             switch (notice.type) {
@@ -102,10 +111,8 @@ public class TheCouponsActivity extends BaseActivity {
         }
     }
 
-
     @Override
-    protected void setListener() {
+    public void setClickListener(View view) {
 
     }
-
 }

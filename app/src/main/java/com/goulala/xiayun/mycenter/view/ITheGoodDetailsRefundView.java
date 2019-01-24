@@ -11,7 +11,7 @@ import java.util.List;
  * date       : 2019/1/24
  * function  : 退款--退货公用
  */
-public interface IDetailsOfTheRefundView extends IBaseView {
+public interface ITheGoodDetailsRefundView extends IBaseView {
 
     //获取售后详情
     void getApplyRefundDetailsSuccess(ApplyRefundDetailsDate applyRefundDetailsDate);

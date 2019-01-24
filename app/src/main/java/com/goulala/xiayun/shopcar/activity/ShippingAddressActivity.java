@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,7 +21,9 @@ import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
+import com.goulala.xiayun.mycenter.activity.EditTheShippingAddressActivity;
 import com.goulala.xiayun.mycenter.callback.OnSetDefaultClickListener;
 import com.goulala.xiayun.mycenter.model.ShoppingAddressList;
 import com.goulala.xiayun.shopcar.adapter.ShippingAddressAdapter;
@@ -72,7 +75,10 @@ public class ShippingAddressActivity extends BaseMvpActivity<ShippingAddressPres
     @Override
     public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.my_Shipping_address));
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         smartRecyclerView = get(R.id.smart_RecyclerView);
         refreshLayout = get(R.id.refreshLayout);
         tvTheNewAddress = get(R.id.tv_The_new_address);
@@ -125,7 +131,7 @@ public class ShippingAddressActivity extends BaseMvpActivity<ShippingAddressPres
     @Override
     public void setClickListener(View view) {
         if (view.getId() == R.id.tv_The_new_address) {
-//            EditTheShippingAddressActivity.start(mContext, ConstantValue.TYPE_OF_ADDRESS_CLASS);
+            EditTheShippingAddressActivity.start(mContext, ConstantValue.TYPE_OF_ADDRESS_CLASS);
         }
     }
 
@@ -168,18 +174,18 @@ public class ShippingAddressActivity extends BaseMvpActivity<ShippingAddressPres
                 String userCityAddress = shippingAddressAdapter.getItem(position).getProvince() + shippingAddressAdapter.getItem(position).getCity()
                         + shippingAddressAdapter.getItem(position).getArea();
                 String userAreaDetailsAddress = shippingAddressAdapter.getItem(position).getAddress();
-//                EditTheShippingAddressActivity.start(mContext,
-//                        ConstantValue.TYPE_OF_EDITTEXT_CLASS,
-//                        addressId,
-//                        isDefaultAddress,
-//                        provinceId,
-//                        cityId,
-//                        areaId,
-//                        userName,
-//                        userPhoneNumber,
-//                        userCityAddress,
-//                        userAreaDetailsAddress
-//                );
+                EditTheShippingAddressActivity.start(mContext,
+                        ConstantValue.TYPE_OF_EDITTEXT_CLASS,
+                        addressId,
+                        isDefaultAddress,
+                        provinceId,
+                        cityId,
+                        areaId,
+                        userName,
+                        userPhoneNumber,
+                        userCityAddress,
+                        userAreaDetailsAddress
+                );
                 break;
             case R.id.tv_delete_address:
                 //删除

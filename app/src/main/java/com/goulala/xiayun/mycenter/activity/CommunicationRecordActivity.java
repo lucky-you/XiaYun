@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.goulala.xiayun.R;
@@ -15,6 +16,7 @@ import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.DateUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.goulala.xiayun.mycenter.model.RecordBean;
 import com.goulala.xiayun.mycenter.presenter.CommunicationRecordPresenter;
 import com.goulala.xiayun.mycenter.view.ICommunicationRecordView;
@@ -59,7 +61,10 @@ public class CommunicationRecordActivity extends BaseMvpActivity<CommunicationRe
     @Override
     public void bindViews(View contentView) {
         initTitle(mContext.getString(R.string.Communication_record));
-        BarUtils.addMarginTopEqualStatusBarHeight(get(R.id.fake_status_bar));
+        StatusBarUtil.setStatusBar(this, false, false);
+        View fakeStatusBar = get(R.id.fake_status_bar);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fakeStatusBar.getLayoutParams();
+        layoutParams.height = StatusBarUtil.getStatusBarHeight();
         tvTheMessageOfTheService = get(R.id.tv_The_message_of_the_service);
         tvTvTheMessageOfTheServiceTime = get(R.id.tv_tv_The_message_of_the_service_time);
         tvProblemDescription = get(R.id.tv_Problem_description);
