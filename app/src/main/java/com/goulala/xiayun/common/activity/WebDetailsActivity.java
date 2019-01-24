@@ -14,7 +14,7 @@ import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.ipresenter.WebDetailsPresenter;
 import com.goulala.xiayun.common.iview.IWebDetailsView;
 import com.goulala.xiayun.common.utils.BarUtils;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.webview.WebViewClientBase;
 import com.goulala.xiayun.common.webview.WebViewClientUtils;

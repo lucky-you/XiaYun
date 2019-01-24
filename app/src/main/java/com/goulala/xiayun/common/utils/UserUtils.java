@@ -3,6 +3,7 @@ package com.goulala.xiayun.common.utils;
 import android.content.Context;
 
 import com.goulala.xiayun.common.base.BaseApplication;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.lib.ActivityManager;
 import com.goulala.xiayun.common.model.UserInfo;
 

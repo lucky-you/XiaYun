@@ -1,12 +1,10 @@
 package com.goulala.xiayun.home.presenter;
 
 
-import android.content.Context;
-
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.retrofit.ApiServiceCallback;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.home.model.GoodsDetailsMessage;
 import com.goulala.xiayun.home.view.IHomeGoodsDetailsView;
 

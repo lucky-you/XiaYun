@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.BaseFragment;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.home.adapter.WithdrawalSubsidiaryAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;

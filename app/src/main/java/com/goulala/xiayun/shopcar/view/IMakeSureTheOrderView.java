@@ -18,12 +18,9 @@ import java.util.List;
  */
 public interface IMakeSureTheOrderView extends IBaseView {
 
-    int GET_ORDER_MESSAGE_CODE = 1; //获取订单信息
-    int SUBMIT_ORDER_MESSAGE_CODE = 2; //提交订单
 
-    int PAY_OF_BALANCE_TYPE = 3; //余额支付
-    int PAY_OF_ALIPAY_TYPE = 4; //支付宝支付
-    int PAY_OF_WECHAT_TYPE = 5; // 微信支付
+
+
 
 
     //获取收货地址成功
@@ -36,7 +33,7 @@ public interface IMakeSureTheOrderView extends IBaseView {
     void useBalanceOrAliPayPaymentSuccess(int requestType, String orderMessage);
 
     //余额支付失败--支付宝支付失败
-    void useBalanceOrAliPayPayPaymentFailed(int requestType, String message);
+    void useBalanceOrAliPayPaymentFailed(int requestType, String message);
 
     //微信支付
     void useWeChatPaymentSuccess(WxPayReqInfo wxPayReqInfo);

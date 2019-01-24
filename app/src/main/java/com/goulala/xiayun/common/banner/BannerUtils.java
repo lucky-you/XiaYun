@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.imageloader.BannerImageLoader;
 import com.goulala.xiayun.common.imageloader.ImageLoaderUtils;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.SizeUtils;
 import com.goulala.xiayun.home.model.HomeBannerDate;
 import com.youth.banner.Banner;

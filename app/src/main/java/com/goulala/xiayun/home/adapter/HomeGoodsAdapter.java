@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.imageloader.ImageLoaderUtils;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.home.activity.HomeGoodsDetailsActivity;
 import com.goulala.xiayun.home.model.GoodItemMessage;
 import com.goulala.xiayun.home.model.HomeValueSellingBean;

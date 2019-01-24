@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.BaseActivity;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.SPUtils;
 
 /**

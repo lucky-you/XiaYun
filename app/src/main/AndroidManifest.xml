@@ -166,7 +166,19 @@
             android:name=".home.activity.HomeGoodsDetailsActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".shopcar.activity.MakeSureTheOrderActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".shopcar.activity.ShippingAddressActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shopcar.activity.ShopCarActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
     </application>
 

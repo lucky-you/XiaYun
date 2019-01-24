@@ -1,4 +1,4 @@
-package com.goulala.xiayun.common.utils;
+package com.goulala.xiayun.common.base;
 
 /**
  * author      : Z_B
@@ -128,7 +128,6 @@ public interface ConstantValue {
 
     int MEMBER_SERVICE_AGREEMENT_URL = 41;//会员服务协议
 
-
     int COLLECTION_THAT_GOOD_TYPE = 42; // 收藏该商品
 
     int CANCEL_COLLECTION_THAT_GOOD_TYPE = 43;// 取消收藏商品
@@ -138,6 +137,18 @@ public interface ConstantValue {
     int THAT_GOOD_IS_COLLECTION_TYPE = 45; //商品是否收藏
 
     int THE_TYPE_OF_BIND_WECHAT = 46;//绑定微信
+
+    int PAY_OF_BALANCE_TYPE = 47; //余额支付
+    int PAY_OF_ALIPAY_TYPE = 48; //支付宝支付
+    int PAY_OF_WECHAT_TYPE = 49; // 微信支付
+
+    int GET_ORDER_MESSAGE_CODE = 50; //获取订单信息
+
+    int SUBMIT_ORDER_MESSAGE_CODE = 51; //提交订单
+
+    int CANCEL_THE_APPLICATION_TYPE = 52;//撤销申请
+
+    int CONTIUNE_TO_SUBMIT_TYPE = 53;//继续提交
 
 
 }

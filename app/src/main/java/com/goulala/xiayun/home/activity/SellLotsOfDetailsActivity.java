@@ -21,7 +21,7 @@ import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.imageloader.ImageLoaderUtils;
 import com.goulala.xiayun.common.utils.BarUtils;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.LogUtils;

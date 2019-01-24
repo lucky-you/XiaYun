@@ -74,7 +74,7 @@ public class MakeSureTheOrderPresenter extends BasePresenter<IMakeSureTheOrderVi
 
             @Override
             public void onFailure(int resultCode, String failureMessage) {
-                mvpView.useBalanceOrAliPayPayPaymentFailed(requestType, failureMessage);
+                mvpView.useBalanceOrAliPayPaymentFailed(requestType, failureMessage);
             }
 
             @Override

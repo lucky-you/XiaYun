@@ -15,7 +15,7 @@ import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.ipresenter.BindPhoneNumberPresenter;
 import com.goulala.xiayun.common.iview.IBindPhoneNumberView;
 import com.goulala.xiayun.common.model.UserInfo;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.PhoneUtils;
 import com.goulala.xiayun.common.utils.UserUtils;

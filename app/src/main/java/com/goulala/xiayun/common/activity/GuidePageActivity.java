@@ -12,7 +12,7 @@ import com.goulala.xiayun.common.adapter.GuidePageAdapter;
 import com.goulala.xiayun.common.base.BaseActivity;
 import com.goulala.xiayun.common.permission.AndPermissionListener;
 import com.goulala.xiayun.common.permission.AndPermissionUtils;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.SPUtils;
 import com.yanzhenjie.permission.Permission;
 

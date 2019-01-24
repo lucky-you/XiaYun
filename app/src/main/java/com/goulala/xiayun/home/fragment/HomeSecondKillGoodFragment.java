@@ -9,7 +9,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.base.BaseFragment;
-import com.goulala.xiayun.common.utils.ConstantValue;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.home.activity.HomeGoodsDetailsActivity;
 import com.goulala.xiayun.home.adapter.HomeSecondKillGoodAdapter;
 import com.goulala.xiayun.home.model.GoodItemMessage;
