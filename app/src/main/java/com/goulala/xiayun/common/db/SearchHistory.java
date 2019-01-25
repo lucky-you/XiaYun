@@ -1,18 +1,41 @@
 package com.goulala.xiayun.common.db;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.NotNull;
+
 /**
  * author      : Z_B
  * date       : 2019/1/21
  * function  : 历史搜索记录
  */
+@Entity
 public class SearchHistory {
 
+    @Id(autoincrement = true)
     public Long id;
+    @NotNull
     public String name;
     public String user_id;
     public String hit;
     public String createtime;
     public String updatetime;
+
+    @Generated(hash = 1315973898)
+    public SearchHistory(Long id, @NotNull String name, String user_id, String hit,
+                         String createtime, String updatetime) {
+        this.id = id;
+        this.name = name;
+        this.user_id = user_id;
+        this.hit = hit;
+        this.createtime = createtime;
+        this.updatetime = updatetime;
+    }
+
+    @Generated(hash = 1905904755)
+    public SearchHistory() {
+    }
 
     public Long getId() {
         return this.id;
@@ -61,4 +84,5 @@ public class SearchHistory {
     public void setUpdatetime(String updatetime) {
         this.updatetime = updatetime;
     }
+
 }

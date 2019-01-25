@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import com.goulala.xiayun.common.iview.ILoginView;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.share.PlatformAuthorizeUserInfoManager;
+import com.goulala.xiayun.common.share.SharePlatformAuthorizeUserInfoListener;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.utils.StatusBarUtil;
@@ -38,7 +40,9 @@ import cn.sharesdk.framework.PlatformActionListener;
  * Created by：Z_B on 2018/6/15 12:00
  * Effect：登录界面
  */
-public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements ILoginView, PlatformActionListener {
+public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements ILoginView,
+        PlatformActionListener,
+        SharePlatformAuthorizeUserInfoListener {
 
 
     private RoundImageView civGllLogo;
@@ -90,7 +94,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements IL
     @Override
     public void processLogic(Bundle savedInstanceState) {
         if (platformAuthorizeUserInfoManager == null) {
-            platformAuthorizeUserInfoManager = new PlatformAuthorizeUserInfoManager(this);
+            platformAuthorizeUserInfoManager = new PlatformAuthorizeUserInfoManager(this, this);
         }
     }
 
@@ -107,7 +111,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements IL
                     return;
                 }
                 platformAuthorizeUserInfoManager.WeiXinAuthorize();
-
+                showDialog("");
                 break;
             case R.id.tv_Mobile_phone_number_login:
                 //直接使用手机号码登录
@@ -116,7 +120,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements IL
                 break;
         }
     }
-
     /**
      * 使用微信登录
      */
@@ -171,11 +174,17 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements IL
 
     @Override
     public void onComplete(final Platform platform, int i, HashMap<String, Object> hashMap) {
+        dismissDialog();
+        Log.d("xy", "获取用户信息成功");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 userImageView = platform.getDb().getUserIcon();
-                userGender = platform.getDb().getUserGender();  //m为男
+                if (TextUtils.equals("m", platform.getDb().getUserGender())) {
+                    userGender = "1";  //1为男
+                } else {
+                    userGender = "2";  //2为女
+                }
                 userName = platform.getDb().getUserName();
                 userOpenId = platform.getDb().get("openid");
                 userUnionId = platform.getDb().get("unionid");
@@ -193,11 +202,34 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements IL
 
     @Override
     public void onError(Platform platform, int i, Throwable throwable) {
+        dismissDialog();
         showToast(mContext.getString(R.string.Authorization_failure, throwable.getMessage()));
     }
 
     @Override
     public void onCancel(Platform platform, int i) {
+        dismissDialog();
+    }
 
+    @Override
+    public void getAuthorizeUserSuccess(Platform platform) {
+        dismissDialog();
+        userImageView = platform.getDb().getUserIcon();
+        if (TextUtils.equals("m", platform.getDb().getUserGender())) {
+            userGender = "1";  //1为男
+        } else {
+            userGender = "2";  //2为女
+        }
+        userName = platform.getDb().getUserName();
+        userOpenId = platform.getDb().get("openid");
+        userUnionId = platform.getDb().get("unionid");
+        Log.d("xy",
+                "userImageView=" + userImageView + "\n"
+                        + "userGender=" + userGender + "\n"
+                        + "userName=" + userName + "\n"
+                        + "userOpenId=" + userOpenId + "\n"
+                        + "userUnionId=" + userUnionId + "\n"
+        );
+        useWeChatLogin(userUnionId, userOpenId);
     }
 }

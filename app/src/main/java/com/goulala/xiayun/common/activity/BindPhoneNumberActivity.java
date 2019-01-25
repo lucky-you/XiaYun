@@ -213,12 +213,14 @@ public class BindPhoneNumberActivity extends BaseMvpActivity<BindPhoneNumberPres
                     WeChatAccountBinding(userInfo.getToken());
                     break;
                 case ConstantValue.THE_CLASS_OF_VERIFY_NUMBER_LOGIN_TYPE:
+                    showToast(message);
                     //直接登录
                     UserUtils.loginIn(userInfo);
                     intentToActivity(MainActivity.class);
                     finish();
                     break;
                 case ConstantValue.THE_TYPE_OF_BIND_WECHAT:
+                    showToast(message);
                     UserUtils.loginIn(userInfo);
                     //微信绑定成功
                     intentToActivity(MainActivity.class);

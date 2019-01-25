@@ -1,11 +1,6 @@
 package com.goulala.xiayun.common.share;
 
-import android.app.Activity;
-import android.widget.Toast;
-
-import com.mob.MobSDK;
-
-import java.util.HashMap;
+import android.util.Log;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
@@ -23,10 +18,13 @@ import cn.sharesdk.wechat.moments.WechatMoments;
  */
 public class PlatformAuthorizeUserInfoManager {
 
-    private PlatformActionListener myPlatformActionListener = null;
+    private PlatformActionListener platformActionListener; //首次授权的回调---》回调在子线程
+    private SharePlatformAuthorizeUserInfoListener sharePlatformAuthorizeUserInfoListener; //首次授权之后，获取用户信息的回调，回调在主线程
 
-    public PlatformAuthorizeUserInfoManager(PlatformActionListener myPlatformActionListener) {
-        this.myPlatformActionListener = myPlatformActionListener;
+    public PlatformAuthorizeUserInfoManager(PlatformActionListener platformActionListener,
+                                            SharePlatformAuthorizeUserInfoListener sharePlatformAuthorizeUserInfoListener) {
+        this.platformActionListener = platformActionListener;
+        this.sharePlatformAuthorizeUserInfoListener = sharePlatformAuthorizeUserInfoListener;
     }
 
     /**
@@ -61,7 +59,6 @@ public class PlatformAuthorizeUserInfoManager {
         doAuthorize(moments);
     }
 
-
     /**
      * QQ
      */
@@ -76,13 +73,17 @@ public class PlatformAuthorizeUserInfoManager {
      */
     public void doAuthorize(Platform platform) {
         if (platform != null) {
-            platform.setPlatformActionListener(myPlatformActionListener);
+            platform.setPlatformActionListener(platformActionListener);
             if (platform.isAuthValid()) {
-                platform.removeAccount(true);
+//                platform.removeAccount(true);
+                Log.d("xy", "已经授权过了");
+                //已经授权过了,直接在这里获取用户信息
+                sharePlatformAuthorizeUserInfoListener.getAuthorizeUserSuccess(platform);
                 return;
             }
+            Log.d("xy", "第一次授权");
             platform.SSOSetting(true);
-            platform.authorize();
+            platform.authorize();  //执行到了authorize，，才会走回调的
         }
     }
 
@@ -117,9 +118,8 @@ public class PlatformAuthorizeUserInfoManager {
     }
 
     /**
-     * @param platform  平台名称
-     * @param shareType 分享类型
-     *                  用户信息的代码
+     * @param platform 平台名称
+     *                 用户信息的代码
      */
     public void doUserInfo(Platform platform, String account) {
         if (platform != null) {
@@ -128,9 +128,8 @@ public class PlatformAuthorizeUserInfoManager {
     }
 
     /**
-     * @param platform  平台名称
-     * @param shareType 分享类型
-     *                  用户信息的代码
+     * @param platform 平台名称
+     *                 用户信息的代码
      */
     public void doUserInfo(Platform platform, String account, PlatformActionListener listener) {
         if (platform != null) {

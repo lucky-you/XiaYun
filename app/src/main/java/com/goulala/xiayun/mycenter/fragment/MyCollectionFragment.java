@@ -19,6 +19,7 @@ import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.model.Notice;
 import com.goulala.xiayun.common.utils.EmptyViewUtils;
 import com.goulala.xiayun.common.utils.JsonUtils;
+import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.widget.DivideLineItemDecoration;
 import com.goulala.xiayun.common.widget.SmartRefreshLoadPageHelper;
 import com.goulala.xiayun.home.activity.HomeGoodsDetailsActivity;
@@ -113,18 +114,20 @@ public class MyCollectionFragment extends BaseMvpFragment<MyCollectionOrMyFootpr
                 myCollectionAndFootprintAdapter = new MyCollectionAndFootprintAdapter(collectionGoodLists, ConstantValue.THE_CLASS_OF_MY_COLLECTION_TYPE);
                 smartRecyclerView.setAdapter(myCollectionAndFootprintAdapter);
                 smartRefreshLoadPageHelper.attachView(refreshLayout, smartRecyclerView, myCollectionAndFootprintAdapter);
+                myCollectionAndFootprintAdapter.setOnItemClickListener(this);
+                myCollectionAndFootprintAdapter.setOnItemChildClickListener(this);
                 EmptyViewUtils.bindEmptyView(mContext, myCollectionAndFootprintAdapter, mContext.getString(R.string.No_goods_have_been_collected));
                 break;
             case 1: //虾记
-                refreshLayout.setEnableLoadMore(false);
                 tvDeleteTheGoods.setText(mContext.getString(R.string.Delete_the_shrimp_remember));
+                refreshLayout.setEnableLoadMore(false);
                 myCollectionAndFootprintArticleAdapter = new MyCollectionAndFootprintArticleAdapter(null, ConstantValue.THE_CLASS_OF_MY_COLLECTION_TYPE);
                 smartRecyclerView.setAdapter(myCollectionAndFootprintArticleAdapter);
+//                myCollectionAndFootprintArticleAdapter.setOnItemClickListener(this);
+//                myCollectionAndFootprintArticleAdapter.setOnItemChildClickListener(this);
                 EmptyViewUtils.bindEmptyView(mContext, myCollectionAndFootprintArticleAdapter, mContext.getString(R.string.No_shrimp_records));
                 break;
         }
-        myCollectionAndFootprintAdapter.setOnItemClickListener(this);
-        myCollectionAndFootprintAdapter.setOnItemChildClickListener(this);
         smartRecyclerView.addItemDecoration(new DivideLineItemDecoration(mContext, mContext.getResources().getColor(R.color.color_f3f3f3), 1));
         smartRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -198,9 +201,11 @@ public class MyCollectionFragment extends BaseMvpFragment<MyCollectionOrMyFootpr
         collectionOrFootParam.put(ApiParam.PAGE_KEY, String.valueOf(currentPage));
         collectionOrFootParam.put(ApiParam.SIZE_KEY, ApiParam.SIZE_NUMBER_VALUE);
         String collectionOrFootParamJson = JsonUtils.toJson(collectionOrFootParam);
-        if (!TextUtils.isEmpty(userToken)) {
-            mvpPresenter.getGoodList(userToken, collectionOrFootParamJson);
-        }
+        LogUtils.showLog(userToken, collectionOrFootParamJson);
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.getGoodList(userToken, collectionOrFootParamJson);
+        showDialog("");
+
     }
 
     /**
@@ -211,9 +216,9 @@ public class MyCollectionFragment extends BaseMvpFragment<MyCollectionOrMyFootpr
         deleteGoodParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.CANCEL_COLLECTION_THAT_GOOD_VALUE);
         deleteGoodParam.put(ApiParam.ITEM_IDS_KEY, item_ids);
         String deleteGoodParamJson = JsonUtils.toJson(deleteGoodParam);
-        if (!TextUtils.isEmpty(userToken)) {
-            mvpPresenter.deleteThatGood(userToken, deleteGoodParamJson);
-        }
+        if (TextUtils.isEmpty(userToken)) return;
+        mvpPresenter.deleteThatGood(userToken, deleteGoodParamJson);
+        showDialog("");
     }
 
     @Override
@@ -223,6 +228,7 @@ public class MyCollectionFragment extends BaseMvpFragment<MyCollectionOrMyFootpr
 
     @Override
     public void getListSuccess(CollectGoodMessage goodMessages) {
+        dismissDialog();
         if (goodMessages != null) {
             this.collectionGoodLists = goodMessages.getData();
             smartRefreshLoadPageHelper.setData(collectionGoodLists);
@@ -232,18 +238,20 @@ public class MyCollectionFragment extends BaseMvpFragment<MyCollectionOrMyFootpr
     @Override
     public void deleteGoodSuccess(String message) {
         showToast(message);
+        dismissDialog();
         smartRefreshLoadPageHelper.refreshPage();
     }
 
     @Override
     public void onNewWorkException(String message) {
         showToast(message);
+        dismissDialog();
     }
 
     @Override
     public void onRequestFailure(int resultCode, String message) {
         showToast(message);
-
+        dismissDialog();
     }
 
     @Override

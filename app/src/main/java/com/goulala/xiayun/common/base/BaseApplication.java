@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.goulala.xiayun.BuildConfig;
+import com.goulala.xiayun.common.db.DBManager;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.utils.CrashHandler;
 import com.goulala.xiayun.common.utils.FileUtils;
@@ -31,6 +32,7 @@ public class BaseApplication extends Application {
         instance = this;
         SPUtils.init(this);
         FileUtils.init("xiayun");
+        DBManager.initDao();
         Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(instance));
         initImageLoader();
         initLeakCanary();

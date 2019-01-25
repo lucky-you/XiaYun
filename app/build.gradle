@@ -43,7 +43,7 @@ android {
 }
 
 greendao {
-    schemaVersion 5
+    schemaVersion 6
     daoPackage 'com.goulala.xiayun'
     targetGenDir 'src/main/java/dao'
 }
@@ -119,6 +119,7 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation 'com.github.lucky-you:AliPayUtils:v1.0.7'
+    implementation 'com.amap.api:location:latest.integration'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 }

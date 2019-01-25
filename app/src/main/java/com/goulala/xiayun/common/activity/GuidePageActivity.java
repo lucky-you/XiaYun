@@ -3,16 +3,22 @@ package com.goulala.xiayun.common.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.goulala.xiayun.R;
 import com.goulala.xiayun.common.adapter.GuidePageAdapter;
 import com.goulala.xiayun.common.base.BaseActivity;
+import com.goulala.xiayun.common.base.ConstantValue;
+import com.goulala.xiayun.common.db.DaoManagerUtils;
+import com.goulala.xiayun.common.db.LocationBean;
+import com.goulala.xiayun.common.location.LocationMapUtils;
 import com.goulala.xiayun.common.permission.AndPermissionListener;
 import com.goulala.xiayun.common.permission.AndPermissionUtils;
-import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.SPUtils;
 import com.goulala.xiayun.common.utils.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
@@ -23,13 +29,14 @@ import java.util.List;
 /**
  * 引导页面
  */
-public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
+        AMapLocationListener {
 
     private ViewPager viewPager;
     private TextView btStartMain;
     private List<ImageView> imageViews = new ArrayList<>();
     private GuidePageAdapter guidePageAdapter;
-    //    private LocationMapUtils locationMapUtils;
+    private LocationMapUtils locationMapUtils;
 
     @Override
     public void initData(@Nullable Bundle bundle) {
@@ -65,6 +72,7 @@ public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageC
         guidePageAdapter = new GuidePageAdapter(imageViews, mContext);
         viewPager.setAdapter(guidePageAdapter);
         viewPager.addOnPageChangeListener(this);
+
     }
 
     @Override
@@ -88,7 +96,7 @@ public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageC
         AndPermissionUtils.requestPermission(mContext, new AndPermissionListener() {
             @Override
             public void PermissionSuccess(List<String> permissions) {
-//                localCurrentAddress();
+                localCurrentAddress();
                 intentToActivity(MainActivity.class);
                 finish();
             }
@@ -99,6 +107,13 @@ public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageC
             }
         }, permissions);
 
+
+    }
+
+    //定位当前城市
+    public void localCurrentAddress() {
+        locationMapUtils = new LocationMapUtils(mContext, this);
+        locationMapUtils.initOnLocationMap();
     }
 
     @Override
@@ -124,37 +139,27 @@ public class GuidePageActivity extends BaseActivity implements ViewPager.OnPageC
     }
 
 
-//    //定位当前城市
-//    public void localCurrentAddress() {
-//        locationMapUtils = new LocationMapUtils(this);
-//        locationMapUtils.initOnLocationMap(new LocationMapUtils.LocationChangeListener() {
-//            @Override
-//            public void onLocationChangedSuccess(AMapLocation aMapLocation) {
-//                if (aMapLocation != null && aMapLocation.getErrorCode() == 0) { //定位成功
-//                    double Longitude = aMapLocation.getLongitude();
-//                    double Latitude = aMapLocation.getLatitude();
-//                    String provinceName = aMapLocation.getProvince();
-//                    String cityName = aMapLocation.getCity();
-//                    String areaName = aMapLocation.getDistrict();//城区信息,定位到县区
-//                    Logger.e("xy", "地址:" + provinceName + cityName + areaName);
-//                    LocationBean locationBean = new LocationBean(Longitude, Latitude, provinceName, cityName, areaName);
-//                    DaoManagerUtils.insertLocationBeanData(locationBean);
-//                }
-//            }
-//
-//            @Override
-//            public void onLocationChangedFailed(String message) {
-//                showToast(mContext.getString(R.string.To_locate_failure) + message);
-//                Logger.e("xy", mContext.getString(R.string.To_locate_failure) + message);
-//            }
-//        });
-//    }
+    @Override
+    protected void onDestroy() {
+        locationMapUtils.stopLocation();
+        locationMapUtils.destroyLocation();
+        super.onDestroy();
 
-//    @Override
-//    protected void onDestroy() {
-//        locationMapUtils.stopLocation();
-//        locationMapUtils.destroyLocation();
-//        super.onDestroy();
-//
-//    }
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null && 0 == aMapLocation.getErrorCode()) { //定位成功
+            double Longitude = aMapLocation.getLongitude();
+            double Latitude = aMapLocation.getLatitude();
+            String provinceName = aMapLocation.getProvince();
+            String cityName = aMapLocation.getCity();
+            String areaName = aMapLocation.getDistrict();//城区信息,定位到县区
+            LocationBean locationBean = new LocationBean(Longitude, Latitude, provinceName, cityName, areaName);
+            DaoManagerUtils.insertLocationBeanData(locationBean);
+            Log.e("xy", "地址存储成功:" + provinceName + cityName + areaName);
+        } else {
+            showToast(mContext.getString(R.string.To_locate_failure) + aMapLocation.getErrorCode() + aMapLocation.getErrorInfo());
+        }
+    }
 }

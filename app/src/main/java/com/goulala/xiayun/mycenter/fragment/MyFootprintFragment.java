@@ -93,11 +93,11 @@ public class MyFootprintFragment extends BaseMvpFragment<MyCollectionOrMyFootpri
 
     @Override
     public void processLogic(Bundle savedInstanceState) {
-
         switch (tagIndex) {
             case 0://商品
                 myCollectionAndFootprintAdapter = new MyCollectionAndFootprintAdapter(collectionGoodLists, ConstantValue.THE_CLASS_OF_MY_FOOTPRINT_TYPE);
                 smartRecyclerView.setAdapter(myCollectionAndFootprintAdapter);
+                myCollectionAndFootprintAdapter.setOnItemClickListener(this);
                 smartRefreshLoadPageHelper.attachView(refreshLayout, smartRecyclerView, myCollectionAndFootprintAdapter);
                 EmptyViewUtils.bindEmptyView(mContext, myCollectionAndFootprintAdapter, mContext.getString(R.string.No_tracks_of_mine));
                 break;
@@ -105,13 +105,12 @@ public class MyFootprintFragment extends BaseMvpFragment<MyCollectionOrMyFootpri
                 refreshLayout.setEnableLoadMore(false);
                 myCollectionAndFootprintArticleAdapter = new MyCollectionAndFootprintArticleAdapter(null, ConstantValue.THE_CLASS_OF_MY_FOOTPRINT_TYPE);
                 smartRecyclerView.setAdapter(myCollectionAndFootprintArticleAdapter);
+//                myCollectionAndFootprintArticleAdapter.setOnItemClickListener(this);
                 EmptyViewUtils.bindEmptyView(mContext, myCollectionAndFootprintArticleAdapter, mContext.getString(R.string.No_shrimp_records));
                 break;
         }
         smartRecyclerView.addItemDecoration(new DivideLineItemDecoration(mContext, mContext.getResources().getColor(R.color.color_f3f3f3), 1));
         smartRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        myCollectionAndFootprintAdapter.setOnItemClickListener(this);
-
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -185,9 +184,6 @@ public class MyFootprintFragment extends BaseMvpFragment<MyCollectionOrMyFootpri
         if (goodMessages != null) {
             this.collectionGoodLists = goodMessages.getData();
             smartRefreshLoadPageHelper.setData(collectionGoodLists);
-//            if (collectionGoodLists.size() < 1) {
-//                showToast(mContext.getString(R.string.All_content_is_displayed));
-//            }
         }
     }
 
@@ -199,11 +195,12 @@ public class MyFootprintFragment extends BaseMvpFragment<MyCollectionOrMyFootpri
 
     @Override
     public void onNewWorkException(String message) {
+        showToast(message);
 
     }
 
     @Override
     public void onRequestFailure(int resultCode, String message) {
-
+        showToast(message);
     }
 }

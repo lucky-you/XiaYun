@@ -1,18 +1,47 @@
 package com.goulala.xiayun.common.db;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * author      : Z_B
  * date       : 2019/1/21
  * function  : 定位的信息
  */
+@Entity
 public class LocationBean {
-
+    @Id(autoincrement = true)
     public Long id;
     public double Longitude;
     public double Latitude;
     public String province;
     public String city;
     public String area;
+
+    @Generated(hash = 1325748771)
+    public LocationBean(Long id, double Longitude, double Latitude, String province,
+                        String city, String area) {
+        this.id = id;
+        this.Longitude = Longitude;
+        this.Latitude = Latitude;
+        this.province = province;
+        this.city = city;
+        this.area = area;
+    }
+
+    @Generated(hash = 516751439)
+    public LocationBean() {
+    }
+
+
+    public LocationBean(double longitude, double latitude, String province, String city, String area) {
+        Longitude = longitude;
+        Latitude = latitude;
+        this.province = province;
+        this.city = city;
+        this.area = area;
+    }
 
     public Long getId() {
         return this.id;
@@ -61,5 +90,6 @@ public class LocationBean {
     public void setArea(String area) {
         this.area = area;
     }
+
 
 }

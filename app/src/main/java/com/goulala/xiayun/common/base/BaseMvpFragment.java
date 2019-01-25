@@ -86,6 +86,7 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends MvpFragme
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getCommonUserData();
     }
 
 
@@ -111,15 +112,15 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends MvpFragme
 
     @Override
     public void onResume() {
-        getCommonUserData();
         super.onResume();
+        getCommonUserData();
     }
 
 
     @Override
     protected void firstLoad() {
-        getCommonUserData();
         super.firstLoad();
+        getCommonUserData();
     }
 
 

@@ -24,10 +24,12 @@ import com.goulala.xiayun.common.activity.LoginActivity;
 import com.goulala.xiayun.common.banner.BannerUtils;
 import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseMvpActivity;
+import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.pickerview.PickerViewCityUtils;
+import com.goulala.xiayun.common.share.ShareCallBackListener;
+import com.goulala.xiayun.common.share.ShareSDKShareUtils;
 import com.goulala.xiayun.common.utils.ButtonClickUtils;
-import com.goulala.xiayun.common.base.ConstantValue;
 import com.goulala.xiayun.common.utils.JsonUtils;
 import com.goulala.xiayun.common.utils.LogUtils;
 import com.goulala.xiayun.common.utils.StatusBarUtil;
@@ -398,7 +400,6 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
                         ShopCarActivity.start(mContext);
                     }
                 }
-
                 break;
             case R.id.tv_Add_the_shopping_bag:
                 //加入购物车
@@ -462,24 +463,28 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
      * 分享商品
      */
     protected void startShareGood() {
-//        ShareSDKShareUtils.showShare(mContext,
-//                goodTitleName,
-//                goodDescription,
-//                goodShareUrl,
-//                goodImageView,
-//                new ShareSDKShareUtils.ShareCallBackListener() {
-//                    @Override
-//                    public void onSuccess() {
-//                        showToast(mContext.getString(R.string.share_success));
-//                    }
-//
-//                    @Override
-//                    public void onCancel() {
-//                        showToast(mContext.getString(R.string.share_cancel));
-//                    }
-//                }
-//        );
+        ShareSDKShareUtils.showShare(mContext,
+                goodTitleName,
+                goodDescription,
+                goodShareUrl,
+                goodImageView,
+                new ShareCallBackListener() {
+                    @Override
+                    public void onSuccess() {
+                        showToast(mContext.getString(R.string.share_success));
+                    }
 
+                    @Override
+                    public void onFailed() {
+                        showToast(mContext.getString(R.string.share_failed));
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        showToast(mContext.getString(R.string.share_cancel));
+                    }
+                }
+        );
     }
 
     /**

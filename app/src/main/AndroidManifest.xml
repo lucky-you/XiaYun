@@ -98,6 +98,12 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <!-- 高德地图密钥: 03a5d68fb0cf9d882ada2dc249f7552e -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="03a5d68fb0cf9d882ada2dc249f7552e" />
+
+
 
         <activity
             android:name=".common.activity.SplashActivity"
