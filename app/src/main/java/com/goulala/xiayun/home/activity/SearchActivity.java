@@ -99,10 +99,8 @@ public class SearchActivity extends BaseMvpActivity<SearchPresenter> implements 
         llHaveSearchAndHotSearchList = get(R.id.ll_have_search_and_hot_search_list);
         searchRecyclerView = get(R.id.search_recyclerView);
         get(R.id.rl_back).setOnClickListener(this);
-
         editKey.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         editKey.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-
         hotSearch();//热门搜索
 
     }
@@ -167,7 +165,7 @@ public class SearchActivity extends BaseMvpActivity<SearchPresenter> implements 
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String keyWords = startSearchAdapter.getItem(position).getName();
                 SearchResultActivity.start(mContext, keyWords);
-//                insertHistoryDao(keyWords);
+                insertHistoryDao(keyWords);
                 editKey.getText().clear();
             }
         });
@@ -181,8 +179,8 @@ public class SearchActivity extends BaseMvpActivity<SearchPresenter> implements 
         if (historyList.size() > 0) {
             rlSearchHistory.setVisibility(View.VISIBLE);
             historyDivide.setVisibility(View.VISIBLE);
-//            historyAndHotSearchTagAdapter = new HistoryAndHotSearchTagAdapter(getHistoryData(), mContext);
-//            flyHistoryList.setAdapter(historyAndHotSearchTagAdapter);
+            historyAndHotSearchTagAdapter = new HistoryAndHotSearchTagAdapter(getHistoryData(), mContext);
+            flyHistoryList.setAdapter(historyAndHotSearchTagAdapter);
         } else {
             rlSearchHistory.setVisibility(View.GONE);
             historyDivide.setVisibility(View.GONE);
@@ -228,12 +226,12 @@ public class SearchActivity extends BaseMvpActivity<SearchPresenter> implements 
         String keyWords = editKey.getText().toString().trim();
         if (TextUtils.isEmpty(keyWords)) {
             String defaultKeyWord = editKey.getHint().toString().trim();
-//            insertHistoryDao(defaultKeyWord);
+            insertHistoryDao(defaultKeyWord);
             InputMethodKeyBroadUtils.hideKeyboard(this);
             SearchResultActivity.start(mContext, defaultKeyWord);
             editKey.getText().clear();
         } else {
-//            insertHistoryDao(keyWords);
+            insertHistoryDao(keyWords);
             InputMethodKeyBroadUtils.hideKeyboard(this);
             SearchResultActivity.start(mContext, keyWords);
             editKey.getText().clear();
@@ -248,11 +246,11 @@ public class SearchActivity extends BaseMvpActivity<SearchPresenter> implements 
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 if (HISTORY_SEARCH_TAG_CLICK_TYPE == tagType) {
                     String keyWords = historyList.get(position).getName();
-//                    insertHistoryDao(keyWords);
+                    insertHistoryDao(keyWords);
                     SearchResultActivity.start(mContext, keyWords);
                 } else {
                     String keyWords = hotSearchList.get(position).getName();
-//                    insertHistoryDao(keyWords);
+                    insertHistoryDao(keyWords);
                     SearchResultActivity.start(mContext, keyWords);
                 }
                 return true;

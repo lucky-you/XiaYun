@@ -20,6 +20,8 @@ import com.goulala.xiayun.common.activity.LoginActivity;
 import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseMvpFragment;
 import com.goulala.xiayun.common.callback.CancelOrDetermineClickListener;
+import com.goulala.xiayun.common.db.DaoManagerUtils;
+import com.goulala.xiayun.common.db.TouristsGoodList;
 import com.goulala.xiayun.common.utils.AlertDialogUtils;
 import com.goulala.xiayun.common.utils.BarUtils;
 import com.goulala.xiayun.common.utils.ButtonClickUtils;
@@ -32,6 +34,7 @@ import com.goulala.xiayun.home.activity.HomeGoodsDetailsActivity;
 import com.goulala.xiayun.home.adapter.HomeFootGoodsAdapter;
 import com.goulala.xiayun.home.model.GoodItemMessage;
 import com.goulala.xiayun.home.model.GoodMessage;
+import com.goulala.xiayun.shopcar.activity.MakeSureTheOrderActivity;
 import com.goulala.xiayun.shopcar.adapter.ShopCarActivityOfStoreOfGoodAdapter;
 import com.goulala.xiayun.shopcar.callback.ShopCarGoodNumberListener;
 import com.goulala.xiayun.shopcar.model.GoodItemList;
@@ -194,16 +197,16 @@ public class ShopCarFragment extends BaseMvpFragment<ShopCarPresenter> implement
     private void getShopCarDateList() {
         if (TextUtils.isEmpty(userToken)) {
             //没有token，表示没有登录，查询本地的数据传给服务器
-//            List<TouristsGoodList> touristsGoodLists = DaoManagerUtils.queryAll();
-//            if (touristsGoodLists != null && touristsGoodLists.size() > 0) {
-//                String touristsGoodListsJson = JsonUtils.toJson(touristsGoodLists);
-//                Map<String, String> touristsGoodParam = new HashMap<>();
-//                touristsGoodParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.THE_TOURIST_SHOP_LIST);
-//                touristsGoodParam.put(ApiParam.CART_KEY, touristsGoodListsJson);
-//                touristsGoodParam.put(ApiParam.DEVICE_KEY, ApiParam.DEVICE_VALUE);
-//                String touristsGoodParamJson = JsonUtils.toJson(touristsGoodParam);
-//                mvpPresenter.getShopCarGoodList(IShopCarView.THE_TYPE_OF_GET_TOURIST_GOOD_LIST, "", touristsGoodParamJson);
-//            }
+            List<TouristsGoodList> touristsGoodLists = DaoManagerUtils.queryAll();
+            if (touristsGoodLists != null && touristsGoodLists.size() > 0) {
+                String touristsGoodListsJson = JsonUtils.toJson(touristsGoodLists);
+                Map<String, String> touristsGoodParam = new HashMap<>();
+                touristsGoodParam.put(ApiParam.BASE_METHOD_KEY, ApiParam.THE_TOURIST_SHOP_LIST);
+                touristsGoodParam.put(ApiParam.CART_KEY, touristsGoodListsJson);
+                touristsGoodParam.put(ApiParam.DEVICE_KEY, ApiParam.DEVICE_VALUE);
+                String touristsGoodParamJson = JsonUtils.toJson(touristsGoodParam);
+                mvpPresenter.getShopCarGoodList(IShopCarView.THE_TYPE_OF_GET_TOURIST_GOOD_LIST, "", touristsGoodParamJson);
+            }
         } else {
             //有token，表示登录了，获取服务器的数据
             Map<String, String> shopCarParam = new HashMap<>();
@@ -266,7 +269,7 @@ public class ShopCarFragment extends BaseMvpFragment<ShopCarPresenter> implement
                             showToast(mContext.getString(R.string.Please_select_the_commodity_to_be_settled));
                             return;
                         }
-//                        MakeSureTheOrderActivity.start(mContext, totalGoodItemLists, "", "");
+                        MakeSureTheOrderActivity.start(mContext, totalGoodItemLists, "", "");
                         totalGoodItemLists.clear();
                         break;
                     case SHOP_CAR_STATUS_OF_DELETE_THE_GOOD://删除商品

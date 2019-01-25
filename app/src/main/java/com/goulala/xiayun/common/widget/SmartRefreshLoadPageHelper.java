@@ -73,7 +73,6 @@ public class SmartRefreshLoadPageHelper<T> {
 
     /**
      * 设置数据,
-     *
      * @param data
      */
     public void setData(List<T> data) {
@@ -102,19 +101,14 @@ public class SmartRefreshLoadPageHelper<T> {
         refreshLayout.setEnableScrollContentWhenLoaded(true);
         refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
         quickAdapter.loadMoreComplete();
-//        if (!quickAdapter.isLoadMoreEnable()) {
-//            quickAdapter.loadMoreEnd(true);
-//        } else {
-//            quickAdapter.loadMoreEnd(false);
-//        }
         if (!quickAdapter.isLoadMoreEnable()) {
-//            if (quickAdapter.getFooterLayoutCount() == 0) {
-            quickAdapter.addFooterView(View.inflate(BaseApplication.getInstance(), R.layout.include_recyclerview_foot_view, null));
-//            }
+            if (quickAdapter.getFooterLayoutCount() == 0) {
+                quickAdapter.addFooterView(View.inflate(BaseApplication.getInstance(), R.layout.include_recyclerview_foot_view, null));
+            }
         } else {
-//            if (quickAdapter.getFooterLayoutCount() > 0) {
-            quickAdapter.removeAllFooterView();
-//            }
+            if (quickAdapter.getFooterLayoutCount() > 0) {
+                quickAdapter.removeAllFooterView();
+            }
         }
     }
 
@@ -123,26 +117,6 @@ public class SmartRefreshLoadPageHelper<T> {
      */
     public interface DataProvider {
         void loadMorePageDate(int page);
-
-    }
-
-
-    public static void addData2List(List src, List data) {
-        if (data != null) {
-            Iterator var3 = data.iterator();
-            while (true) {
-                while (var3.hasNext()) {
-                    Object object = var3.next();
-                    int index = src.indexOf(object);
-                    if (index != -1) {
-                        src.set(index, object);
-                    } else {
-                        src.add(object);
-                    }
-                }
-                return;
-            }
-        }
     }
 
     public boolean isAttach() {

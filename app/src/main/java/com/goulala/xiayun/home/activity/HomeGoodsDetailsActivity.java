@@ -25,6 +25,8 @@ import com.goulala.xiayun.common.banner.BannerUtils;
 import com.goulala.xiayun.common.base.ApiParam;
 import com.goulala.xiayun.common.base.BaseMvpActivity;
 import com.goulala.xiayun.common.base.ConstantValue;
+import com.goulala.xiayun.common.db.DaoManagerUtils;
+import com.goulala.xiayun.common.db.TouristsGoodList;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.pickerview.PickerViewCityUtils;
 import com.goulala.xiayun.common.share.ShareCallBackListener;
@@ -406,15 +408,15 @@ public class HomeGoodsDetailsActivity extends BaseMvpActivity<HomeGoodsDetailsPr
                 if (!goodStatus) return;
                 if (TextUtils.isEmpty(userToken)) {
                     //游客登录,先把信息存储到本地，登陆之后，再合并到购物车
-//                    if (goodId != 0 && merchant_id != 0) {
-//                        TouristsGoodList touristsGoodList = new TouristsGoodList();
-//                        touristsGoodList.setItem_id((long) goodId);
-//                        touristsGoodList.setItem_num(goodNumber);
-//                        touristsGoodList.setMerchant_id(merchant_id);
-//                        DaoManagerUtils.saveTouristsGoodListDate(touristsGoodList);
-//                        showToast(mContext.getString(R.string.Add_shopping_cart_successfully));
-//                        getDate();
-//                    }
+                    if (goodId != 0 && merchant_id != 0) {
+                        TouristsGoodList touristsGoodList = new TouristsGoodList();
+                        touristsGoodList.setItem_id((long) goodId);
+                        touristsGoodList.setItem_num(goodNumber);
+                        touristsGoodList.setMerchant_id(merchant_id);
+                        DaoManagerUtils.saveTouristsGoodListDate(touristsGoodList);
+                        showToast(mContext.getString(R.string.Add_shopping_cart_successfully));
+                        getDate();
+                    }
                 } else {
                     if (goodInventoryNumber > 0) {
                         addThatGoodToShopCar();

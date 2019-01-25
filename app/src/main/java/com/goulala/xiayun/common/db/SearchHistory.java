@@ -37,6 +37,10 @@ public class SearchHistory {
     public SearchHistory() {
     }
 
+    public SearchHistory(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return this.id;
     }

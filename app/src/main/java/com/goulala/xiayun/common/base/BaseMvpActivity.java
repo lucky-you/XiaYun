@@ -9,7 +9,10 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cnsunrun.alipaylibrary.alipay.AliPayUtils;
 import com.goulala.xiayun.R;
+import com.goulala.xiayun.SearchHistoryDao;
 import com.goulala.xiayun.common.activity.LoginActivity;
+import com.goulala.xiayun.common.db.DBManager;
+import com.goulala.xiayun.common.db.SearchHistory;
 import com.goulala.xiayun.common.model.UserInfo;
 import com.goulala.xiayun.common.mvp.BasePresenter;
 import com.goulala.xiayun.common.mvp.MvpActivity;
@@ -19,6 +22,8 @@ import com.goulala.xiayun.common.view.TitleBuilder;
 import com.goulala.xiayun.wxapi.WeiXinPayUtils;
 import com.goulala.xiayun.wxapi.WxPayReqInfo;
 import com.tencent.mm.opensdk.modelpay.PayReq;
+
+import java.util.List;
 
 
 public abstract class BaseMvpActivity<P extends BasePresenter> extends MvpActivity<P> {
@@ -85,6 +90,26 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends MvpActivi
         userInfo = BaseApplication.getInstance().getUserInfo();
     }
 
+    //从数据库获取历史记录
+    protected List<SearchHistory> getHistoryData() {
+        return DBManager.getInstance().getHistoryDao().queryBuilder().orderDesc(SearchHistoryDao.Properties.Id).list();
+    }
+
+    //存放历史记录到数据库
+    protected void insertHistoryDao(String key) {
+        SearchHistory history = new SearchHistory(key.trim());
+        SearchHistoryDao dao = DBManager.getInstance().getHistoryDao();
+        List<SearchHistory> list = dao.queryBuilder().where(SearchHistoryDao.Properties.Name.eq(key)).list();
+        if (list.size() > 0) {// 去重
+            dao.delete(list.get(0));
+        }
+        long count = dao.queryBuilder().count();
+        if (count == 10) { //只保留10个搜索历史
+            List<SearchHistory> list1 = dao.queryBuilder().limit(1).list();
+            dao.delete(list1.get(0));
+        }
+        dao.insert(history);
+    }
 
     /**
      * 使用微信支付

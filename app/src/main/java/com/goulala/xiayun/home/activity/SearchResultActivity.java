@@ -34,6 +34,7 @@ import com.goulala.xiayun.home.model.GoodItemMessage;
 import com.goulala.xiayun.home.model.GoodMessage;
 import com.goulala.xiayun.home.presenter.SearchResultPresenter;
 import com.goulala.xiayun.home.view.ISearchResultView;
+import com.goulala.xiayun.shopcar.activity.ShopCarActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -180,7 +181,7 @@ public class SearchResultActivity extends BaseMvpActivity<SearchResultPresenter>
     public void setClickListener(View view) {
         switch (view.getId()) {
             case R.id.rl_shop_car_number:
-//                ShopCarActivity.start(mContext);
+                ShopCarActivity.start(mContext);
                 break;
         }
 
@@ -205,7 +206,7 @@ public class SearchResultActivity extends BaseMvpActivity<SearchResultPresenter>
         keyWords = keyWord;
         storeKey = ApiParam.ID_DESC_KEY;
         smartRefreshLoadPageHelper.refreshPage();
-//        insertHistoryDao(keyWord);
+        insertHistoryDao(keyWord);
         tvTheDefault.setTextColor(mContext.getResources().getColor(R.color.color_e53d3d));
         tvSalesNumber.setTextColor(mContext.getResources().getColor(R.color.color_6f6f6f_black));
         tvThePrice.setTextColor(mContext.getResources().getColor(R.color.color_6f6f6f_black));
